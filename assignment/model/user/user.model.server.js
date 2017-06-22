@@ -17,7 +17,7 @@ userModel.findUserByFacebookId = findUserByFacebookId;
 module.exports = userModel;
 
 function findUserByFacebookId(facebookId) {
-    return User.findOne({'facebook.id': facebookId});
+    return userModel.findOne({'facebook.id': facebookId});
 }
 
 function findUserByGoogleId(googleId) {
