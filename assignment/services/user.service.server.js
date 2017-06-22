@@ -280,7 +280,7 @@ function googleStrategy(token, refreshToken, profile, done) {
 }
 
 function facebookStrategy(token, refreshToken, profile, done) {
-    developerModel
+    userModel
         .findUserByFacebookId(profile.id)
         .then(
             function(user) {
