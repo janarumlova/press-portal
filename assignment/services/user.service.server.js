@@ -6,20 +6,38 @@ passport.use(new LocalStrategy(localStrategy));
 passport.serializeUser(serializeUser);
 passport.deserializeUser(deserializeUser);
 
+//for password encryption
 var bcrypt = require("bcrypt-nodejs");
-var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-var googleConfig = {
-    clientID     : '222671963957-205m5fibvtpc223bpdsid045fd4vjg1u.apps.googleusercontent.com',
-    clientSecret : 'Gm8CnkQKjc4_SkE9-naJmnGa',
-    callbackURL  : '/auth/google/callback'
-};
-// var googleConfig = {
-//     clientID     : process.env.GOOGLE_CLIENT_ID,
-//     clientSecret : process.env.GOOGLE_CLIENT_SECRET,
-//     callbackURL  : process.env.GOOGLE_CALLBACK_URL
-// };
-passport.use(new GoogleStrategy(googleConfig, googleStrategy));
 
+//Facebook and Google Login
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
+
+// var googleConfig = {
+//     clientID     : '222671963957-205m5fibvtpc223bpdsid045fd4vjg1u.apps.googleusercontent.com',
+//     clientSecret : 'Gm8CnkQKjc4_SkE9-naJmnGa',
+//     callbackURL  : '/auth/google/callback'
+// };
+//
+// var facebookConfig = {
+//     clientID     : '1093632250736728',
+//     clientSecret : '34c72e7877802295b1a10682fdac6e85',
+//     callbackURL  : '/auth/facebook/callback'
+// };
+
+var facebookConfig = {
+    clientID     : process.env.FACEBOOK_CLIENT_ID,
+    clientSecret : process.env.FACEBOOK_CLIENT_SECRET,
+    callbackURL  : process.env.FACEBOOK_CALLBACK_URL
+};
+
+var googleConfig = {
+    clientID     : process.env.GOOGLE_CLIENT_ID,
+    clientSecret : process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL  : process.env.GOOGLE_CALLBACK_URL
+};
+passport.use(new GoogleStrategy(googleConfig, googleStrategy));
+passport.use(new FacebookStrategy(facebookConfig, facebookStrategy));
 
 app.get    ('/api/assignment/user', findAllUsers);
 app.get    ('/api/assignment/user/:userId', findUserById);
@@ -45,6 +63,18 @@ app.get('/auth/google/callback',
         successRedirect: '/assignment/index.html#!/profile',
         failureRedirect: '/assignment/index.html#!/login'
     }));
+
+app.get ('/auth/facebook',
+    passport.authenticate('facebook',
+        { scope : 'email'
+        }));
+
+app.get('/auth/facebook/callback',
+    passport.authenticate('facebook', {
+        successRedirect: '/assignment/index.html#!/profile',
+        failureRedirect: '/assignment/index.html#!/login'
+    }));
+
 
 function isAdmin(req, res, next) {
     if(req.isAuthenticated() && req.user.roles.indexOf('ADMIN') > -1) {
@@ -248,3 +278,42 @@ function googleStrategy(token, refreshToken, profile, done) {
             }
         );
 }
+
+function facebookStrategy(token, refreshToken, profile, done) {
+    developerModel
+        .findUserByFacebookId(profile.id)
+        .then(
+            function(user) {
+                if(user) {
+                    return done(null, user);
+                } else {
+                    var email = profile.emails[0].value;
+                    var emailParts = email.split("@");
+                    var newFacebookUser = {
+                        username:  emailParts[0],
+                        firstName: profile.name.givenName,
+                        lastName:  profile.name.familyName,
+                        email:     email,
+                        facebook: {
+                            id:    profile.id,
+                            token: token
+                        }
+                    };
+                    return userModel.createUser(newFacebookUser);
+                }
+            },
+            function(err) {
+                if (err) { return done(err); }
+            }
+        )
+        .then(
+            function(user){
+                return done(null, user);
+            },
+            function(err){
+                if (err) { return done(err); }
+            }
+        );
+}
+
+

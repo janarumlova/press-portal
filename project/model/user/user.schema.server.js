@@ -9,9 +9,13 @@ var userSchema = mongoose.Schema({
     firstName: String,
     lastName: String,
     email: String,
-    roles:[{type: String,
-        enum: ['READER', 'ADMIN', 'PUBLISHER']}],
+    roles:{type: String,
+        enum: ['READER', 'ADMIN', 'PUBLISHER']},
     google: {
+        id:    String,
+        token: String
+    },
+    facebook: {
         id:    String,
         token: String
     },
@@ -19,7 +23,7 @@ var userSchema = mongoose.Schema({
     subscriptions: [{type:mongoose.Schema.Types.ObjectId, ref: "UserModel"}],
     followers: [{type:mongoose.Schema.Types.ObjectId, ref: "UserModel"}],
     followedBy: [{type:mongoose.Schema.Types.ObjectId, ref: "UserModel"}],
-    comments: [{type:mongoose.Schema.Types.ObjectId, ref: "CommentModel"}],
+    //comments: [{type:mongoose.Schema.Types.ObjectId, ref: "CommentModel"}],
     dateCreated: {type: Date, default: Date.now}
 }, {collection: "user"});
 
