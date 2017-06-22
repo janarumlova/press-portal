@@ -284,6 +284,8 @@ function facebookStrategy(token, refreshToken, profile, done) {
         .findUserByFacebookId(profile.id)
         .then(
             function(user) {
+                console.log(user);
+                console.log(profile);
                 if(user) {
                     return done(null, user);
                 } else {
