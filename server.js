@@ -31,6 +31,6 @@ app.get('/env', function(req, res) {
 require("./assignment/app");
 // require("./project/app");
 
-var port = process.env.PORT || 5000;
+var port = process.env.PORT || 3000;
 
 app.listen(port);
