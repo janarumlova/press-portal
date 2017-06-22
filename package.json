@@ -1,7 +1,7 @@
 {
-  "name": "web-dev",
+  "name": "press-portal",
   "version": "1.0.0",
-  "description": "Web Dev at Northeastern University",
+  "description": "Press-Portal Full-Stack MEAN App",
   "main": "server.js",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
@@ -22,17 +22,17 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "author": "Jose G. Annunziato",
+  "author": "Sidharth Thapar",
   "license": "ISC",
   "directories": {
     "test": "test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sidharththapar/thapar-sidharth-webdev.git"
+    "url": "git+https://github.com/sidharththapar/press-portal.git"
   },
   "bugs": {
-    "url": "https://github.com/sidharththapar/thapar-sidharth-webdev/issues"
+    "url": "https://github.com/sidharththapar/press-portal/issues"
   },
-  "homepage": "https://github.com/sidharththapar/thapar-sidharth-webdev#readme"
+  "homepage": "https://github.com/sidharththapar/press-portal#readme"
 }
