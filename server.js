@@ -28,8 +28,8 @@ app.get('/env', function(req, res) {
   res.json({connectionString: connectionString});
 });
 
-// require("./assignment/app");
-require("./project/app");
+require("./assignment/app");
+// require("./project/app");
 
 var port = process.env.PORT || 5000;
 
