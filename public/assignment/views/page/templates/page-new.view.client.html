@@ -1,0 +1,121 @@
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-header hidden-sm hidden-xs col-md-4">
+        <a class="navbar-brand pull-left"
+           href="#!/website/{{model.websiteId}}/page">
+            <span class="glyphicon glyphicon-chevron-left"></span></a>
+        <a class="navbar-brand pull-left">Pages</a>
+    </div>
+    <div class="navbar-header col-xs-9 hidden-md hidden-lg">
+        <a class="navbar-brand pull-left"
+           href="#!/website/{{model.websiteId}}/page">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </a>
+        <a class="navbar-brand pull-left">New Page</a>
+    </div>
+    <div class="navbar-header hidden-sm hidden-xs col-md-1">
+        <a class="navbar-brand pull-right">
+            <span class="glyphicon glyphicon-plus"></span>
+        </a>
+    </div>
+    <div class="navbar-header hidden-sm hidden-xs col-md-4">
+        <a class="navbar-brand pull-left">New Page</a>
+    </div>
+    <div class="navbar-header col-xs-3">
+        <a class="navbar-brand pull-right"
+           ng-click="model.createPage(page)">
+            <span class="glyphicon glyphicon-ok"></span>
+        </a>
+    </div>
+</nav>
+
+<div class="container-fluid col-xs-5 hidden-xs hidden-sm">
+    <div class="container-fluid">
+        <ul class="list-group con">
+
+            <li class="list-group-item active">
+                <div class="row">
+                    <div class="col-md-10 col-lg-5">
+                        Name
+                    </div>
+                    <div class="col-lg-3 hidden-md">
+                        Created
+                    </div>
+                    <div class="col-md-3 hidden-md">
+                        Accessed
+                    </div>
+                    <div class="col-md-2 col-lg-1">
+                    </div>
+                </div>
+            </li>
+
+
+            <li ng-repeat="page in model.pages"
+                class="list-group-item">
+                <div class="row">
+                    <div class="col-md-10 col-lg-5">
+                        <a href="#!/website/{{model.websiteId}}/page/{{page._id}}/widget">
+                            {{page.name}}
+                        </a>
+                    </div>
+                    <div class="col-lg-3 hidden-md">
+                        {{page.created | date}}
+                    </div>
+                    <div class="col-md-3 hidden-md">
+                        {{page.accessed | date}}
+                    </div>
+                    <div class="col-md-2 col-lg-1">
+                        <a href="#!/website/{{model.websiteId}}/page/{{page._id}}">
+                            <span class="glyphicon glyphicon-cog pull-right"></span>
+                        </a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="container-fluid col-xs-12 col-md-7">
+    <div class="container-fluid">
+        <div ng-show="model.error" class="alert alert-danger">
+            {{model.error}}
+        </div>
+        <form name="userForm"
+              ng-submit="model.createPage(userForm.$valid, page)"
+              novalidate>
+
+            <div class="form-group"
+                 ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine && model.submitted}">
+                <label for="name">
+                    Name
+                </label>
+                <input class="form-control"
+                       name="name"
+                       ng-model="page.name"
+                       placeholder="facebook"
+                       value="Blogger"
+                       id="name"
+                       required/>
+                <p ng-show="userForm.name.$invalid && !userForm.name.$pristine && model.submitted" class="help-block">
+                    Name is required.
+                </p>
+            </div>
+
+            <label for="title">
+                Title
+            </label>
+            <input class="form-control"
+                   id="title"
+                   ng-model="page.title"
+                   rows="5"
+                   placeholder="So big it is its own country">
+
+            <button type="submit"
+               class="btn btn-block btn-success">
+                Create
+            </button>
+        </form>
+    </div>
+</div>
+
+<div ng-include="'views/common/footer.view.client.html'"></div>
