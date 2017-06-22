@@ -60,8 +60,8 @@ app.get('/auth/google',
 
 app.get('/auth/google/callback',
     passport.authenticate('google', {
-        successRedirect: '/assignment/index.html#!/profile',
-        failureRedirect: '/assignment/index.html#!/login'
+        successRedirect: '/index.html#!/profile',
+        failureRedirect: '/index.html#!/login'
     }));
 
 app.get ('/auth/facebook',
@@ -71,8 +71,8 @@ app.get ('/auth/facebook',
 
 app.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
-        successRedirect: '/assignment/index.html#!/profile',
-        failureRedirect: '/assignment/index.html#!/login'
+        successRedirect: '/index.html#!/profile',
+        failureRedirect: '/index.html#!/login'
     }));
 
 
