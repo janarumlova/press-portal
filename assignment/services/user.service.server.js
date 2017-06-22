@@ -287,13 +287,11 @@ function facebookStrategy(token, refreshToken, profile, done) {
                 if(user) {
                     return done(null, user);
                 } else {
-                    var email = profile.emails[0].value;
-                    var emailParts = email.split("@");
                     var newFacebookUser = {
-                        username:  emailParts[0],
-                        firstName: profile.name.givenName,
-                        lastName:  profile.name.familyName,
-                        email:     email,
+                        username:  profile.name,
+                        firstName: profile.name.firstName,
+                        lastName:  profile.name.lastName,
+                        email:     profile.name,
                         facebook: {
                             id:    profile.id,
                             token: token
