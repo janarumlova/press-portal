@@ -18,7 +18,7 @@
         // model.getArticlesForUser = getArticlesForUser;
 
         function init() {
-            // model.welcome = true;
+            model.display = "welcome";
             userService
             .findUserById(model.userId)
             .then(renderUser, userError);

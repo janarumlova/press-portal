@@ -119,6 +119,8 @@
                 controller: 'widgetEditController',
                 controllerAs: 'model'
             });
+
+
     }
 
         function checkLoggedIn(userService, $q, $location) {

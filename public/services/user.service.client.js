@@ -73,7 +73,7 @@
         }
 
         function updateUser(userId, user) {
-            var url = "/api/assignment/user/"+userId;
+            var url = "/api/user/"+userId;
             return $http.put(url, user)
                 .then(function (response) {
                     return response.data;

@@ -39,10 +39,12 @@ var facebookConfig = {
 passport.use(new GoogleStrategy(googleConfig, googleStrategy));
 passport.use('facebook', new FacebookStrategy(facebookConfig, facebookStrategy));
 
+
+app.put    ('/api/user/:userId', updateUser);
+
 app.get    ('/api/assignment/user', findAllUsers);
 app.get    ('/api/assignment/user/:userId', findUserById);
 app.post   ('/api/assignment/user', isAdmin, createUser);
-app.put    ('/api/assignment/user/:userId', updateUser);
 app.delete ('/api/assignment/user/:userId', isAdmin, deleteUser);
 
 

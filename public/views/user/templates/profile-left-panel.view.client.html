@@ -3,17 +3,16 @@
 <!--Profile Features-->
 <ul class="list-group con">
     <li class="list-group-item active">
-        Welcome {{model.username}}!
+        <b>
+            MENU
+        </b>
     </li>
 
     <!--READER OPERATIONS-->
 
     <li ng-if="model.role === 'READER' && !show-publishers"
         class="list-group-item btn-default"
-        ng-click="show-edit = false;
-                  show-articles = false;
-                  show-publishers = true;
-                  show-welcome = false">
+        ng-click="model.display = 'publishers'">
         My Subscriptions
     </li>
     <li ng-if="model.role === 'READER'"
@@ -25,16 +24,13 @@
     <li ng-if="model.role === 'READER' && !show-articles"
         class="list-group-item btn-default"
         ng-click="getArticlesForUser(model.userId);
-                  show-edit = false;
-                  show-articles = true;
-                  show-publishers = false;
-                  show-welcome = false">
+                  model.display = 'articles'">
         My Saved Articles
     </li>
 
     <li ng-if="model.role === 'READER'"
         class="list-group-item btn-default"
-        ng-click="show-following = true">
+        ng-click="show-following = 'true'">
         Readers you follow
     </li>
 
@@ -42,33 +38,19 @@
 
     <li ng-if="model.role === 'PUBLISHER' && !show-subscribers"
         class="list-group-item btn-default"
-        ng-click="show-edit = false;
-                  show-articles = false;
-                  show-publishers = false;
-                  show-welcome = false;
-                  show-subscribers = true;
-                  show-new-post = false">
+        ng-click="model.display = 'subscribers'">
         My Subscribers
     </li>
 
     <li ng-if="model.role === 'PUBLISHER' && !show-articles"
         class="list-group-item btn-default"
-        ng-click="show-edit = false;
-                  show-articles = true;
-                  show-subscribers = false;
-                  show-welcome = false;
-                  show-new-post = false">
+        ng-click="model.display = 'articles'">
         My Posts
     </li>
 
     <li ng-if="model.role === 'PUBLISHER' && !show-new"
         class="btn-default list-group-item"
-        ng-click="show-edit = false;
-                  show-new-post = true;
-                  show-articles = false;
-                  show-edit = false;
-                  show-subscribers = false;
-                  show-welcome = false">
+        ng-click="model.display = 'new-post'">
         <a href="#!/post/new">
             <span class="glyphicon glyphicon-plus"></span>
             Create New Post
@@ -77,39 +59,27 @@
 
 
     <!--CRUD Operations ADMIN-->
-    <li class="btn btn-default list-group-item"
+    <li class=" btn-default list-group-item"
         ng-if=" !show-all-publishers && model.role === 'ADMIN'"
-        ng-click="show-all-publishers = true;
-                  show-all-posts = false;
-                  show-all-readers = false;
-                  show-new-user = false">
+        ng-click="model.display = 'publishers'">
         <span class="glyphicon glyphicon-search"></span>
         Monitor All Publishers
     </li>
-    <li class="btn btn-default list-group-item"
+    <li class= "btn-default list-group-item"
         ng-if=" !show-all-readers && model.role === 'ADMIN'"
-        ng-click="show-all-readers = true;
-                  show-all-publishers = false;
-                  show-all-posts = false;
-                  show-new-user = false">
+        ng-click="model.display = 'readers'">
         <span class="glyphicon glyphicon-search"></span>
         Monitor All Readers
     </li>
-    <li class="btn btn-default list-group-item"
+    <li class=" btn-default list-group-item"
         ng-if=" !show-all-posts && model.role === 'ADMIN'"
-        ng-click="show-all-posts = true;
-                  show-all-publishers = false;
-                  show-all-readers = false;
-                  show-new-user = false">
+        ng-click="model.display = 'articles'">
         <span class="glyphicon glyphicon-search"></span>
         Monitor All Posts
     </li>
-    <li class="btn btn-default list-group-item"
+    <li class=" btn-default list-group-item"
         ng-if="!show-new-user && model.role === 'ADMIN'"
-        ng-click="model.newUser = true;
-                  show-all-publishers = false;
-                  show-all-posts = false;
-                  show-all-readers = false">
+        ng-click = "model.display = 'new-user'">
         <span class="glyphicon glyphicon-plus"></span>
         Add New User
     </li>
@@ -133,24 +103,9 @@
 
     <li class="btn btn-default list-group-item"
         ng-if="!show-edit"
-        ng-click="show-edit = true;
-                  show-articles = false;
-                  show-all-publishers = false;
-                  show-subscribers = false;
-                  show-all-readers = false;
-                  show-all-posts = false;
-                  show-new-user = false;
-                  model.welcome = false">
+        ng-click="model.display = 'edit'">
         <span class="glyphicon glyphicon-pencil"></span>
         Edit Profile
-        </a>
-    </li>
-</ul>
-<ul class="list-group">
-    <li ng-click="model.searchNewsDetails(article)"
-        ng-repeat="article in model.news"
-        class="list-group-item">
-        {{article.title}}
     </li>
 </ul>
 

@@ -13,24 +13,36 @@
     </div>
 </nav>
 
-<div class="col-xs-12 col-sm-4"
+<!--Left Panel-->
+<div class="col-xs-12 col-sm-4 panel-list"
      ng-include="'views/user/templates/profile-left-panel.view.client.html'">
+
+
+
+
 </div>
 
-<!--Welocome Page-->
-<div class="col-xs-12 col-sm-8"
-     ng-if="model.welcome"
-     ng-include="'views/user/templates/profile-welcome.view.client.html'"></div>
+<!--right-display-->
+<div ng-switch="model.display"
+     class="col-xs-12 col-sm-8 panel-list">
+    <div ng-switch-when="welcome">
+        <!--Welcome Page-->
+        <div ng-include="'views/user/templates/profile-welcome.view.client.html'"></div>
+    </div>
 
-<!--Edit Profile Page-->
+    <div ng-switch-when="edit">
+        <!--Edit Profile Page-->
+        <div ng-include="'views/user/templates/profile-edit.view.client.html'"></div>
+    </div>
 
-<div class="col-xs-12 col-sm-8"
-     ng-if="show-edit"
-     ng-include="'views/user/templates/profile-edit.view.client.html'"></div>
+    <div ng-switch-when="publishers">
+        <div ng-include="'views/user/templates/profile-publisher.view.client.html'"></div>
+    </div>
 
-<div class="col-xs-12 col-sm-8"
-     ng-if="show-articles"
-     ng-include="'views/user/templates/profile-publisher.view.client.html'"></div>
+    <div ng-switch-when="articles">
+        <div ng-include="'views/user/templates/profile-articles.view.client.html'"></div>
+    </div>
+</div>
 
-
+<!--footer-->
 <div ng-include="'views/common/footer.view.client.html'"></div>

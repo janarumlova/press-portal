@@ -1,8 +1,8 @@
-<div class="card">
-    <ul ng-repeat="article in model.articles"
-        class="list-group list-group-flush">
-        <li class="list-group-item">
-            {{article.title}}
-        </li>
-    </ul>
+<div class="panel-group panel-list">
+    <div class="panel panel-default">
+        <div class="panel-body"
+             ng-repeat="publisher in model.publishers">
+            <b>{{publisher.firstName}} {{publisher.lastName}}</b>
+        </div>
+    </div>
 </div>
