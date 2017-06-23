@@ -37,7 +37,7 @@ var googleConfig = {
     callbackURL  : process.env.GOOGLE_CALLBACK_URL
 };
 passport.use(new GoogleStrategy(googleConfig, googleStrategy));
-passport.use(new FacebookStrategy(facebookConfig, facebookStrategy));
+passport.use('facebook', new FacebookStrategy(facebookConfig, facebookStrategy));
 
 app.get    ('/api/assignment/user', findAllUsers);
 app.get    ('/api/assignment/user/:userId', findUserById);
@@ -50,7 +50,7 @@ app.post  ('/api/assignment/login', passport.authenticate('local'), login);
 app.get   ('/api/assignment/loggedIn', loggedIn);
 app.get   ('/api/assignment/checkAdmin', checkAdmin);
 app.post  ('/api/assignment/logout', logout);
-app.post  ('/api/assignment/register', register);
+app.post  ('/api/register', register);
 app.post  ('/api/assignment/unregister', unregister);
 
 app.get('/auth/google',
@@ -75,6 +75,21 @@ app.get('/auth/facebook/callback',
         failureRedirect: '/index.html#!/login'
     }));
 
+function register(req, res) {
+    var userObj = req.body;
+    userObj.password = bcrypt.hashSync(userObj.password);
+    userModel
+        .createUser(userObj)
+        .then(function (user) {
+            req.login(user, function (err) {
+                if(err) {
+                    res.status(400).send(err);
+                } else {
+                    res.json(user);
+                }
+            });
+        });
+}
 
 function isAdmin(req, res, next) {
     if(req.isAuthenticated() && req.user.roles.indexOf('ADMIN') > -1) {
@@ -95,7 +110,7 @@ function unregister(req,res) {
 }
 
 function checkAdmin(req, res) {
-    if(req.isAuthenticated() && req.user.roles.indexOf('ADMIN') > -1) {
+    if(req.isAuthenticated() && req.user.role === 'ADMIN') {
         res.json(req.user);
     } else {
         res.send('0');
@@ -103,21 +118,6 @@ function checkAdmin(req, res) {
 }
 
 
-function register(req, res) {
-    var userObj = req.body;
-    userObj.password = bcrypt.hashSync(userObj.password);
-    userModel
-        .createUser(userObj)
-        .then(function (user) {
-            req.login(user, function (err) {
-                if(err) {
-                    res.status(400).send(err);
-                } else {
-                    res.json(user);
-                }
-            });
-        });
-}
 
 function logout(req, res) {
     req.logout();
@@ -289,11 +289,11 @@ function facebookStrategy(token, refreshToken, profile, done) {
                 if(user) {
                     return done(null, user);
                 } else {
+                    var displayName = profile.displayName.split(" ");
                     var newFacebookUser = {
-                        username:  profile.name,
-                        firstName: profile.name.firstName,
-                        lastName:  profile.name.lastName,
-                        email:     profile.name,
+                        username:  displayName[0],
+                        firstName: displayName[0],
+                        lastName:  displayName[0],
                         facebook: {
                             id:    profile.id,
                             token: token

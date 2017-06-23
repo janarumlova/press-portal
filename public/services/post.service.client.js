@@ -1,26 +1,48 @@
 (function(){
     angular
         .module('WAM')
-        .factory('userService', userService);
+        .service('postService', postService);
     
-    function userService($http) {
+    function postService($http) {
 
-        var api = {
-            createUser: createUser,
-            findUserById: findUserById,
-            findUserByUsername: findUserByUsername,
-            findUserByCredentials: findUserByCredentials,
-            updateUser: updateUser,
-            deleteUser: deleteUser,
-            login: login,
-            loggedIn: loggedIn,
-            logout: logout,
-            register: register,
-            unregister: unregister,
-            checkAdmin: checkAdmin,
-            findAllUsers: findAllUsers
-        };
-        return api;
+        this.createPost = createPost;
+        // this.findUserById = findUserById;
+        //     // findUserByUsername: findUserByUsername,
+            // findUserByCredentials: findUserByCredentials,
+            // updateUser: updateUser,
+            // deleteUser: deleteUser,
+            // login: login,
+            // loggedIn: loggedIn,
+            // logout: logout,
+            // register: register,
+            // unregister: unregister,
+            // checkAdmin: checkAdmin,
+        // this.findAllPosts = findAllPosts;
+
+
+        function createPost(post) {
+            var url = "/api/post/new";
+            return $http.post(url, post)
+                .then(function (response) {
+                    return response.data;
+                });
+        }
+
+        function updateUser(userId, user) {
+            var url = "/api/assignment/user/"+userId;
+            return $http.put(url, user)
+                .then(function (response) {
+                    return response.data;
+                });
+        }
+
+        function deleteUser(userId) {
+            var url = "/api/assignment/user/"+userId;
+            return $http.delete(url)
+                .then(function (response) {
+                    return response.data;
+                });
+        }
 
         function unregister() {
             var url = "/api/assignment/unregister";
@@ -72,29 +94,9 @@
                 });
         }
 
-        function updateUser(userId, user) {
-            var url = "/api/assignment/user/"+userId;
-            return $http.put(url, user)
-                .then(function (response) {
-                    return response.data;
-                });
-        }
 
-        function deleteUser(userId) {
-            var url = "/api/assignment/user/"+userId;
-            return $http.delete(url)
-                .then(function (response) {
-                    return response.data;
-                });
-        }
 
-        function createUser(user) {
-            var url = "/api/assignment/user";
-            return $http.post(url, user)
-                .then(function (response) {
-                    return response.data;
-                });
-        }
+
 
         function findUserByUsername(username) {
             var url = "/api/assignment/user?username="+username;

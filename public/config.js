@@ -5,9 +5,18 @@
 
     function configuration($routeProvider) {
         $routeProvider
+
             .when('/', {
                 templateUrl: 'views/home/templates/home.html',
                 controller: 'mainController',
+                controllerAs: 'model',
+                resolve: {
+                    currentUser: checkCurrentUser
+                }
+            })
+            .when('/post/new', {
+                templateUrl: 'views/post/templates/post-new.view.client.html',
+                controller: 'postNewController',
                 controllerAs: 'model',
                 resolve: {
                     currentUser: checkCurrentUser

@@ -9,7 +9,7 @@ var userSchema = mongoose.Schema({
     firstName: String,
     lastName: String,
     email: String,
-    roles:{type: String,
+    role:{type: String,
         enum: ['READER', 'ADMIN', 'PUBLISHER']},
     google: {
         id:    String,

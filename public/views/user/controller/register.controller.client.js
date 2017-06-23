@@ -8,25 +8,22 @@
         var model = this;
         model.register = register;
 
-        function register(isValid, username, password, password2) {
+        function register(isValid, newUser) {
             model.submitted = true;
             if (isValid) {
-                if(password !== password2) {
+                if(newUser.password !== newUser.password2) {
                     model.error = "passwords must match";
                     return;
                 }
 
                 userService
-                    .findUserByUsername(username)
+                    .findUserByUsername(newUser.username)
                     .then(
                         function (user) {
-                            model.error = "Sorry, "+username+" is taken";
+                            model.error = "Sorry, "+newUser.username+" is taken";
                         },
                         function (response) {
-                            var newUser = {
-                                username: username,
-                                password: password
-                            };
+                            delete newUser.password2;
                             return userService
                                 .register(newUser)
                                 .then(function () {

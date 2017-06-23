@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var connectionString = 'mongodb://localhost/webdev';
+var connectionString = 'mongodb://localhost/pressPortal';
 if(process.env.MLAB_PRESS_PORTAL_UNAME) { // check if running remotely
     var username = process.env.MLAB_PRESS_PORTAL_UNAME; // get from environment
     var password = process.env.MLAB_PRESS_PORTAL_PASS;
@@ -9,7 +9,7 @@ if(process.env.MLAB_PRESS_PORTAL_UNAME) { // check if running remotely
 mongoose.connect(connectionString);
 mongoose.Promise = require('q').Promise;
 
-require("./services/user.service.server");
+require("../project/services/user.service.server");
 require("./services/website.service.server");
 require("./services/page.service.server");
 require("./services/widget.service.server");

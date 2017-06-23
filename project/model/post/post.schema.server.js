@@ -1,14 +1,12 @@
-/**
- * Created by sidharththapar on 6/11/17.
- */
+
 var mongoose = require('mongoose');
 
 var postSchema = mongoose.Schema({
     title: String,
-    author: String,
+    publisher: {type:mongoose.Schema.Types.ObjectId, ref: "UserModel"},
     description: String,
-    url: String,
-    urlToImage: String,
+    sourceUrl: String,
+    imageUrl: String,
     comments: [{type:mongoose.Schema.Types.ObjectId, ref: "CommentModel"}],
     dateCreated: {type: Date, default: Date.now}
 }, {collection: "post"});

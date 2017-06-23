@@ -1,0 +1,87 @@
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-header col-xs-11">
+        <a class="navbar-brand pull-left"
+           href="#!/">
+            <span class="glyphicon glyphicon-home"></span>
+        </a>
+        <a class="navbar-brand pull-left" href="#">
+            Create Post
+        </a>
+    </div>
+    <div class="navbar-header col-xs-1">
+    </div>
+</nav>
+
+<div class="col-sm-12 col-sm-4">
+    <div class="container-fluid">
+        <ul class="list-group con">
+            <li class="list-group-item active">
+                Welcome {{model.username}}!
+            </li>
+            <li class="list-group-item btn-default">
+                My Subscribers
+            </li>
+            <li class="list-group-item btn-default">
+                My Posts
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="col-sm-12 col-sm-8">
+     <!--ng-show="!model.subscriptions || !model.followers || !model.articles || !model.following">-->
+    <form>
+        <div ng-show="model.error" class="container-fluid alert alert-danger">
+            {{model.error}}
+        </div>
+        <div ng-show="model.message" class="container-fluid alert alert-success">
+            {{model.message}}
+        </div>
+        <div class="form-group col-md-12">
+            <label for="title">
+                Title
+            </label>
+            <input ng-model="model.post.title"
+                   type="text"
+                   class="form-control"
+                   id="title"
+                   placeholder="Enter an catchy title">
+        </div>
+
+        <div class="form-group col-md-12">
+            <label for="description">
+                Description
+            </label>
+            <textarea ng-model="model.post.description"
+                      class="form-control"
+                      id="description"
+                      placeholder="Please enter a brief description"
+                      rows="3">
+            </textarea>
+        </div>
+
+        <div class="form-group col-md-12">
+            <label for="url">
+                URL
+            </label>
+            <input ng-model="model.post.url"
+                   class="form-control"
+                   placeholder="Enter the image URL"
+                   id="url"/>
+        </div>
+    </form>
+
+    <div class="col-md-12">
+        <a class="btn btn-primary btn-block"
+           ng-click="model.createPost(model.post)">
+            Publish
+        </a>
+        <a class="btn btn-danger btn-block "
+           href="#!/profile">
+            Cancel
+        </a>
+    </div>
+</div>
+
+<div ng-include="'views/common/footer.view.client.html'"></div>

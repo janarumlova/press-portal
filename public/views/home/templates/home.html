@@ -17,7 +17,7 @@
                         Home
                     </a>
                 </li>
-                <li ng-if="model.currentUser.roles.indexOf('ADMIN') > -1">
+                <li ng-if="model.currentUser.role === 'ADMIN'">
                     <a href="#!/admin">
                         Admin
                     </a>
@@ -35,6 +35,11 @@
                 <li ng-show="model.currentUser._id">
                     <a href="#!/profile">
                         Profile
+                    </a>
+                </li>
+                <li ng-if="model.currentUser.role === 'READER'">
+                    <a href="#!/publisher">
+                        Publishers
                     </a>
                 </li>
                 <li><a href="">Logout</a></li>
