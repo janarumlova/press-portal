@@ -12,89 +12,24 @@
     <div class="navbar-header col-xs-1">
     </div>
 </nav>
-<div class="col-sm-12 col-sm-4">
-    <div class="container-fluid">
-        <ul class="list-group con">
-            <li class="list-group-item active">
-                Welcome {{model.username}}!
-            </li>
 
-            <li ng-if="model.role === 'READER'"
-                class="list-group-item btn-default">
-                My Subscriptions
-            </li>
-            <li ng-if="model.role === 'READER'"
-                class="list-group-item btn-default">
-                My Followers
-            </li>
-            <li ng-if="model.role === 'READER'"
-                class="list-group-item btn-default"
-                ng-click="getArticlesForUser(model.userId)">
-                My Saved Articles
-            </li>
-            <li ng-if="model.role === 'READER'"
-                class="list-group-item btn-default">
-                Readers you follow
-            </li>
-            <li ng-if="model.role === 'PUBLISHER'"
-                class="list-group-item btn-default">
-                My Subscribers
-            </li>
-            <li ng-if="model.role === 'PUBLISHER'"
-                class="list-group-item btn-default">
-                My Posts
-            </li>
-            <li ng-if="model.role === 'PUBLISHER'"
-                class="btn-default list-group-item">
-                <a href="#!/post/new">
-                    <span class="glyphicon glyphicon-plus"></span>
-                    Create New Post
-                </a>
-            </li>
-            <li ng-if="model.role === 'PUBLISHER'"
-                class="btn-default list-group-item"
-                ng-click="model.edit = true; model.articles === {}">
-                    <span class="glyphicon glyphicon-pencil"></span>
-                    Edit Profile
-                </a>
-            </li>
-        </ul>
-        <ul class="login-ul">
-
-            <li class="btn btn-primary list-group-item"
-                ng-click="model.logout()">
-                <span class="glyphicon glyphicon-log-out"></span>
-                    Logout
-            </li>
-
-            <li class="btn btn-primary list-group-item"
-                ng-click="model.unregisterUser()">
-                <span class="glyphicon glyphicon-remove"></span>
-                    Unregister
-            </li>
-
-        </ul>
-        <ul class="list-group">
-            <li ng-click="model.searchNewsDetails(article)"
-                ng-repeat="article in model.news"
-                class="list-group-item">
-                {{article.title}}
-            </li>
-        </ul>
-
-    </div>
+<div class="col-xs-12 col-sm-4"
+     ng-include="'views/user/templates/profile-left-panel.view.client.html'">
 </div>
 
-<div class="col-sm-12 col-sm-8"
-     ng-show="!model.subscriptions || !model.followers || !model.articles || !model.following">
-</div>
+<!--Welocome Page-->
+<div class="col-xs-12 col-sm-8"
+     ng-if="model.welcome"
+     ng-include="'views/user/templates/profile-welcome.view.client.html'"></div>
 
-<div class="col-sm-12 col-sm-8"
-     ng-if="model.edit"
+<!--Edit Profile Page-->
+
+<div class="col-xs-12 col-sm-8"
+     ng-if="show-edit"
      ng-include="'views/user/templates/profile-edit.view.client.html'"></div>
 
-<div class="col-sm-12 col-sm-8"
-     ng-if="model.articles"
+<div class="col-xs-12 col-sm-8"
+     ng-if="show-articles"
      ng-include="'views/user/templates/profile-publisher.view.client.html'"></div>
 
 

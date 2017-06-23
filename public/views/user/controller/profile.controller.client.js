@@ -18,6 +18,7 @@
         // model.getArticlesForUser = getArticlesForUser;
 
         function init() {
+            // model.welcome = true;
             userService
             .findUserById(model.userId)
             .then(renderUser, userError);
