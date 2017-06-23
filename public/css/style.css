@@ -20,9 +20,9 @@ select.form-control {
     text-align: center;
 }
 
-.card-img-top{
-    height: 100%;
-}
+/*.card-img-top{*/
+    /*height: 100%;*/
+/*}*/
 
 .login-ul{
     padding: 0;
