@@ -9,16 +9,16 @@
         model.deleteUser = deleteUser;
         model.createUser = createUser;
         model.editUser = editUser;
-        model.updateUser = updateUser;
+        model.updateUserByAdmin = updateUserByAdmin;
 
         function init() {
             findAllUsers()
         }
         init();
 
-        function updateUser(user) {
+        function updateUserByAdmin(user) {
             userService
-                .updateUser(user._id, user)
+                .updateUserByAdmin(user._id, user)
                 .then(findAllUsers);
         }
 

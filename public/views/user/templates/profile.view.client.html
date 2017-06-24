@@ -1,46 +1,63 @@
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="navbar-header col-xs-11">
-        <a class="navbar-brand pull-left"
-           href="#!/">
-            <span class="glyphicon glyphicon-home"></span>
-        </a>
-        <a class="navbar-brand pull-left" href="#">
-            Profile
-        </a>
-    </div>
-    <div class="navbar-header col-xs-1">
-    </div>
-</nav>
+<!--<nav class="navbar navbar-inverse navbar-fixed-top">-->
+    <!--<div class="navbar-header col-xs-11">-->
+        <!--<a class="navbar-brand pull-left"-->
+           <!--href="#!/">-->
+            <!--<span class="glyphicon glyphicon-home"></span>-->
+        <!--</a>-->
+        <!--<a class="navbar-brand pull-left" href="#">-->
+            <!--Profile-->
+        <!--</a>-->
+    <!--</div>-->
+    <!--<div class="navbar-header col-xs-1">-->
+    <!--</div>-->
+<!--</nav>-->
+
+<!--header-->
+<div ng-include="'views/common/header.view.client.html'"></div>
+
 
 <!--Left Panel-->
 <div class="col-xs-12 col-sm-4 panel-list"
      ng-include="'views/user/templates/profile-left-panel.view.client.html'">
-
-
-
-
 </div>
 
-<!--right-display-->
+<!--Right-Panel-->
 <div ng-switch="model.display"
      class="col-xs-12 col-sm-8 panel-list">
+
+    <!--Message and Error-->
+    <div ng-show="model.message"
+         class="alert alert-success">
+        {{model.message}}
+    </div>
+    <div ng-show="model.error" class="alert alert-danger">
+        {{model.error}}
+    </div>
+
+    <!--Welcome Page-->
     <div ng-switch-when="welcome">
-        <!--Welcome Page-->
         <div ng-include="'views/user/templates/profile-welcome.view.client.html'"></div>
     </div>
 
+    <!--Edit Profile Page-->
     <div ng-switch-when="edit">
-        <!--Edit Profile Page-->
         <div ng-include="'views/user/templates/profile-edit.view.client.html'"></div>
     </div>
 
+    <!--My Publishers-->
     <div ng-switch-when="publishers">
         <div ng-include="'views/user/templates/profile-publisher.view.client.html'"></div>
     </div>
 
+    <!--My Articles/Saved Posts-->
     <div ng-switch-when="articles">
         <div ng-include="'views/user/templates/profile-articles.view.client.html'"></div>
+    </div>
+
+    <!--Add Post-->
+    <div ng-switch-when="new-post">
+        <div ng-include="'views/post/templates/post-new.view.client.html'"></div>
     </div>
 </div>
 

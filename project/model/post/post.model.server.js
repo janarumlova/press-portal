@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var postSchema = require('./post.schema.server');
 var postModel = mongoose.model('PostModel', postSchema);
+var userModel = require('../user/user.model.server');
 
 postModel.createPost = createPost;
 
@@ -15,8 +16,13 @@ postModel.deleteWebsite = deleteWebsite;
 
 module.exports = postModel;
 
-function createPost(post) {
-    return postModel.create(post);
+function createPost(usedId, post) {
+    return postModel
+        .create(post)
+        .then(function (post) {
+            return userModel
+                .addPost(usedId, post._id)
+        })
 }
 
 function findUserById(userId) {

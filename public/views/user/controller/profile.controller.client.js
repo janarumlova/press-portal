@@ -3,7 +3,7 @@
         .module('WAM')
         .controller('profileController', profileController);
 
-    function profileController($location, currentUser, userService) {
+    function profileController($location, currentUser, userService, postService) {
 
         var model = this;
 
@@ -15,6 +15,7 @@
         model.deleteUser = deleteUser;
         model.logout = logout;
         model.unregisterUser = unregisterUser;
+        model.createPost = createPost;
         // model.getArticlesForUser = getArticlesForUser;
 
         function init() {
@@ -24,19 +25,22 @@
             .then(renderUser, userError);
 
             renderUser(currentUser);
-            // model.articles = {a: "a",b: "c",c: "d"};
         }
         init();
 
-        // function getArticlesForUser(userId) {
-        //     userService
-        //         .getArticles(userId)
-        //         .then(renderArticles);
-        // }
-        //
-        // function renderArticles(articles) {
-        //     model.articles = articles;
-        // }
+        function createPost(isValid, newPost) {
+            if (isValid) {
+                return postService
+                    .createPost(newPost)
+                    .then(function () {
+                        model.message = "You just added a new post!";
+                        $location.url('/profile');
+                    });
+            }
+            else {
+                model.error = 'One or more fields are required';
+            }
+        }
 
         function unregisterUser() {
             userService
@@ -62,10 +66,11 @@
             model.error = "User not found";
         }
 
-        function updateUser(userId, user) {
+        function updateUser(user) {
             userService
-                .updateUser(userId, user)
+                .updateUserByUser(user)
                 .then(function () {
+                    $location.url('/profile');
                     model.message = 'User Updated Successfully!'
                 });
         }

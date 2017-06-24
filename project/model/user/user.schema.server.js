@@ -20,7 +20,7 @@ var userSchema = mongoose.Schema({
         id:    String,
         token: String
     },
-    articles: [{type:mongoose.Schema.Types.ObjectId, ref: "PostModel"}],
+    posts: [{type:mongoose.Schema.Types.ObjectId, ref: "PostModel"}],
     subscriptions: [{type:mongoose.Schema.Types.ObjectId, ref: "UserModel"}],
     followers: [{type:mongoose.Schema.Types.ObjectId, ref: "UserModel"}],
     followedBy: [{type:mongoose.Schema.Types.ObjectId, ref: "UserModel"}],

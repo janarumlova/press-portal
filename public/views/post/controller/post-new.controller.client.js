@@ -9,25 +9,18 @@
 
         model.username = currentUser.firstName;
         model.userId = currentUser._id;
-        model.createPost = createPost;
         // model.getArticlesForUser = getArticlesForUser;
 
         function init() {
             userService
-            .findPostsById(model.userId)
-            .then(renderUser, userError);
+                .findPostsById(model.userId)
+                .then(renderUser, userError);
 
             renderUser(currentUser);
         }
         init();
 
-        function createPost(newPost) {
-            return postService
-                .createPost(newPost)
-                .then(function () {
-                    $location.url('/myPosts');
-                });
-        }
+
 
         // function getArticlesForUser(userId) {
         //     userService

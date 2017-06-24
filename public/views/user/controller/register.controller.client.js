@@ -23,7 +23,6 @@
                             model.error = "Sorry, "+newUser.username+" is taken";
                         },
                         function (response) {
-                            delete newUser.password2;
                             return userService
                                 .register(newUser)
                                 .then(function () {

@@ -26,33 +26,5 @@
                 model.error = 'One or more fields are required';
             }
         }
-
-        // function submitForm(isValid) {
-        //     if (isValid) {
-        //         model.error = 'One or more fields are required';
-        //     }
-        //
-        // }
-        //
-        // function login(isValid, username, password) {
-        //     if (isValid) {
-        //         model.error = 'One or more fields are required';
-        //     }
-        //     else{
-        //         userService
-        //             .login(username, password)
-        //             .then(function (found) {
-        //                 if(found !== null) {
-        //                     $location.url('/profile');
-        //                 } else {
-        //                     model.message = "sorry, " + username + " not found. please try again!";
-        //                 }
-        //             },function(){
-        //                 model.message = "Wrong Credentials!";
-        //             });
-        //     }
-        //
-        // }
-
     }
 })();

@@ -34,7 +34,7 @@
                 }
             })
             .when('/admin/user', {
-                templateUrl: 'views/admin/templates/admin-users.view.client.html',
+                templateUrl: 'views/user/templates/admin-users.view.client.html',
                 controller: 'adminUsersController',
                 controllerAs: 'model',
                 resolve: {

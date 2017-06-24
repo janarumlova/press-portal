@@ -39,21 +39,23 @@ var facebookConfig = {
 passport.use(new GoogleStrategy(googleConfig, googleStrategy));
 passport.use('facebook', new FacebookStrategy(facebookConfig, facebookStrategy));
 
-
-app.put    ('/api/user/:userId', updateUser);
-
-app.get    ('/api/assignment/user', findAllUsers);
-app.get    ('/api/assignment/user/:userId', findUserById);
-app.post   ('/api/assignment/user', isAdmin, createUser);
-app.delete ('/api/assignment/user/:userId', isAdmin, deleteUser);
-
-
-app.post  ('/api/assignment/login', passport.authenticate('local'), login);
-app.get   ('/api/assignment/loggedIn', loggedIn);
-app.get   ('/api/assignment/checkAdmin', checkAdmin);
-app.post  ('/api/assignment/logout', logout);
+//User Services
+app.post  ('/api/login', passport.authenticate('local'), login);
+app.post  ('/api/logout', logout);
 app.post  ('/api/register', register);
-app.post  ('/api/assignment/unregister', unregister);
+app.delete  ('/api/unregister', unregister);
+app.put   ('/api/updateUser', updateUserByUser);
+
+//Find Functions
+app.get   ('/api/user', findAllUsers);
+app.get   ('/api/user/:userId', findUserById);
+app.get   ('/api/loggedIn', loggedIn);
+
+//Admin Services
+app.get   ('/api/checkAdmin', checkAdmin);
+app.post  ('/api/user', isAdmin, createUser);
+app.delete('/api/user/:userId', isAdmin, deleteUser);
+app.put   ('/api/user/:userId', isAdmin, updateUserByAdmin);
 
 app.get('/auth/google',
     passport.authenticate('google',
@@ -77,63 +79,7 @@ app.get('/auth/facebook/callback',
         failureRedirect: '/index.html#!/login'
     }));
 
-function register(req, res) {
-    var userObj = req.body;
-    userObj.password = bcrypt.hashSync(userObj.password);
-    userModel
-        .createUser(userObj)
-        .then(function (user) {
-            req.login(user, function (err) {
-                if(err) {
-                    res.status(400).send(err);
-                } else {
-                    res.json(user);
-                }
-            });
-        });
-}
 
-function isAdmin(req, res, next) {
-    if(req.isAuthenticated() && req.user.roles.indexOf('ADMIN') > -1) {
-        next();
-    }
-    else {
-            res.send('401');
-        }
-}
-
-function unregister(req,res) {
-    userModel
-        .deleteUser(req.user._id)
-        .then(function (user) {
-            req.logout();
-            res.sendStatus(200);
-        });
-}
-
-function checkAdmin(req, res) {
-    if(req.isAuthenticated() && req.user.role === 'ADMIN') {
-        res.json(req.user);
-    } else {
-        res.send('0');
-    }
-}
-
-
-
-function logout(req, res) {
-    req.logout();
-    res.sendStatus(200);
-}
-
-function loggedIn(req, res) {
-    console.log(req.user);
-    if(req.isAuthenticated()) {
-        res.json(req.user);
-    } else {
-        res.send('0');
-    }
-}
 
 function localStrategy(username, password, done) {
     userModel
@@ -157,8 +103,77 @@ function login(req, res) {
     res.json(req.user);
 }
 
+function register(req, res) {
+    var userObj = req.body;
+    userObj.password = bcrypt.hashSync(userObj.password);  //Password Encryption
+    userModel
+        .createUser(userObj)
+        .then(function (user) {
+            req.login(user, function (err) {
+                if(err) {
+                    res.status(400).send(err);
+                } else {
+                    res.json(user);
+                }
+            });
+        });
+}
+
+function isAdmin(req, res, next) {
+    if(req.isAuthenticated() && req.user.role === 'ADMIN') {
+        next();
+    }
+    else {
+            res.send('401');
+        }
+}
+
+function unregister(req,res) {
+    userModel
+        .deleteUser(req.user._id)
+        .then(function (user) {
+            req.logout();
+            res.sendStatus(200);
+        });
+}
+
+function deleteUser(req, res) {
+    var userId = req.params.userId;
+    userModel
+        .deleteUser(userId)
+        .then(function (status) {
+            res.send(status);
+        });
+}
+
+function checkAdmin(req, res) {
+    if(req.isAuthenticated() && req.user.role === 'ADMIN') {
+        res.json(req.user);
+    } else {
+        res.send('0');
+    }
+}
+
+
+
+function logout(req, res) {
+    req.logout();
+    res.sendStatus(200);
+}
+
+function loggedIn(req, res) {
+    if(req.isAuthenticated()) {
+        res.json(req.user);
+    } else {
+        res.send('0');
+    }
+}
+
+
+
 function createUser(req, res) {
     var user = req.body;
+    user.password = bcrypt.hashSync('abc123');    //Default Password with encryption
     userModel
         .createUser(user)
         .then(function (user) {
@@ -178,14 +193,7 @@ function findUserById(req, res) {
 }
 
 
-function deleteUser(req, res) {
-    var userId = req.params.userId;
-    userModel
-        .deleteUser(userId)
-        .then(function (status) {
-            res.send(status);
-        });
-}
+
 
 function findAllUsers(req, res) {
     var username = req.query.username;
@@ -219,9 +227,16 @@ function findAllUsers(req, res) {
     }
 }
 
-function updateUser(req, res) {
+function updateUserByAdmin(req, res) {
     userModel
         .updateUser(req.params.userId, req.body)
+        .then(function (status) {
+            res.send(status);
+        });
+}
+function updateUserByUser(req, res) {
+    userModel
+        .updateUser(req.user._id, req.body)
         .then(function (status) {
             res.send(status);
         });
@@ -258,6 +273,7 @@ function googleStrategy(token, refreshToken, profile, done) {
                         username:  emailParts[0],
                         firstName: profile.name.givenName,
                         lastName:  profile.name.familyName,
+                        password:  "abc123",
                         email:     email,
                         google: {
                             id:    profile.id,
@@ -295,6 +311,7 @@ function facebookStrategy(token, refreshToken, profile, done) {
                         username:  displayName[0],
                         firstName: displayName[0],
                         lastName:  displayName[0],
+                        password:  "abc123",
                         facebook: {
                             id:    profile.id,
                             token: token

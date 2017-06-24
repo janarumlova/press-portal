@@ -9,19 +9,53 @@ select.form-control {
     margin-bottom: 20px;
 }
 
+.form-head{
+    background-color: #3b140a;
+}
+.form-head h1{
+    color: #f5e8ac;
+}
+.login-btn{
+    background-color: #739749 ;
+}
+.cancel-btn{
+    background-color: #f0dc84;
+}
+
 .card{
     width: 20rem;
     border-color: black;
 }
 
-
-.card-title,
 .card-text{
+    padding-bottom: 10px;
     text-align: center;
 }
 
+.card-title{
+    padding-top: 10px;
+    text-align: center;
+}
+
+.card-block.subs{
+    background-color: #FFBEB3;
+}
+
+.card-block.followers{
+    background-color: lightblue;
+}
+
+.card-block.following{
+    background-color: #EFD329;
+}
+
+.panel-body{
+    background-color: white;
+    margin-bottom: 10px;
+}
+
 /*.card-img-top{*/
-    /*height: 100%;*/
+    /*max-height: 180;*/
 /*}*/
 
 .login-ul{
@@ -51,16 +85,18 @@ select.form-control {
     margin: 0;
     list-style-type: none;
 }
-.container-fluid{
-    padding-bottom: 60px; !important;
-}
 
 body {
     padding-top: 60px;
     padding-bottom: 60px;
 }
 
-a {
+.login-btn.btn.btn-block b,
+.cancel-btn.btn.btn-block b{
+    color: white !important;
+}
+
+a{
     text-decoration: none !important; ;
 }
 
@@ -68,6 +104,21 @@ a {
     color: black !important;
 }
 
-nav {
-    background-color: blue;
+.list-group-item.menu{
+    background-color: #FFBEB3;
+    border-color: #FFBEB3;
+}
+
+.list-group-item{
+    background-color: white;
+    border-color: #FFBEB3;
+}
+
+/*.list-group-item.menu{*/
+    /*background-color: #8ab933;*/
+    /*border-color: #8ab933;*/
+/*}*/
+
+.container-fluid{
+    padding-bottom: 60px; !important;
 }

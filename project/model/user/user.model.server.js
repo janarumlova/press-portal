@@ -9,8 +9,8 @@ userModel.findUserByUsername = findUserByUsername;
 userModel.findUserByCredentials = findUserByCredentials;
 userModel.updateUser = updateUser;
 userModel.deleteUser = deleteUser;
-userModel.addWebsite = addWebsite;
-userModel.deleteWebsite = deleteWebsite;
+userModel.addPost = addPost;
+userModel.deletePost = deletePost;
 userModel.findUserByGoogleId = findUserByGoogleId;
 userModel.findUserByFacebookId = findUserByFacebookId;
 
@@ -59,23 +59,23 @@ function deleteUser(userId) {
     return userModel.remove({_id: userId});
 }
 
-function deleteWebsite(userId, websiteId) {
+function deletePost(userId, postId) {
     return userModel
         .findById(userId)
         .then(function (user) {
-            var index = user.websites.indexOf(websiteId);
-            user.websites.splice(index, 1);
+            var index = user.posts.indexOf(postId);
+            user.posts.splice(index, 1);
             return user.save();
         });
 }
 
 // userId is the parent
-// websiteId is the child
-function addWebsite(userId, websiteId) {
+// postId is the child
+function addPost(userId, postId) {
     return userModel
         .findById(userId)
         .then(function (user) {
-            user.websites.push(websiteId);
+            user.posts.push(postId);
             return user.save();
         });
 }
