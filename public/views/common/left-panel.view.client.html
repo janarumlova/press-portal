@@ -2,56 +2,64 @@
 
 <!--Profile Features-->
 <ul class="list-group menu con">
-    <li class="list-group-item menu">
+    <li class="list-group-item form-head">
         <b>
+        <i class="fa fa-th-list -bold" aria-hidden="true"></i>
             MENU
         </b>
     </li>
 
     <!--READER OPERATIONS-->
 
-    <li ng-if="model.role === 'READER' && !show-publishers"
+    <li ng-if="model.role === 'READER'"
         class="list-group-item btn-default"
-        ng-click="model.display = 'publishers'">
+        ng-click="model.display = 'subscriptions'">
+        <i class="fa fa-handshake-o" aria-hidden="true"></i>
+
         My Subscriptions
     </li>
     <li ng-if="model.role === 'READER'"
         class="list-group-item btn-default"
-        ng-click="show-followers = true">
+        ng-click="">
+        <i class="fa fa-male" aria-hidden="true"></i>
         My Followers
-    </li>
-
-    <li ng-if="model.role === 'READER' && !show-articles"
-        class="list-group-item btn-default"
-        ng-click="getArticlesForUser(model.userId);
-                  model.display = 'articles'">
-        My Saved Articles
     </li>
 
     <li ng-if="model.role === 'READER'"
         class="list-group-item btn-default"
-        ng-click="show-following = 'true'">
+        ng-click="model.findPostsForReader();
+                  model.display = 'saved'">
+        <i class="fa fa-bookmark" aria-hidden="true"></i>
+        Saved Posts
+    </li>
+
+    <li ng-if="model.role === 'READER'"
+        class="list-group-item btn-default"
+        ng-click="">
+        <i class="fa fa-newspaper-o" aria-hidden="true"></i>
         Readers you follow
     </li>
 
     <!--PUBLISHER OPERATIONS-->
 
-    <li ng-if="model.role === 'PUBLISHER' && !show-subscribers"
+    <li
         class="list-group-item btn-default"
-        ng-click="model.display = 'subscribers'">
-        My Subscribers
+        ng-click="model.showPublishers()">
+        <i class="fa fa-book" aria-hidden="true"></i>
+        All Publishers
     </li>
 
-    <li ng-if="model.role === 'PUBLISHER' && !show-articles"
+    <li ng-if="model.user.role === 'PUBLISHER'"
         class="list-group-item btn-default"
-        ng-click="model.display = 'articles'">
+        ng-click="model.myPosts()">
+        <i class="fa fa-newspaper-o" aria-hidden="true"></i>
         My Posts
     </li>
 
-    <li ng-if="model.role === 'PUBLISHER' && !show-new"
+    <li ng-if="model.user.role === 'PUBLISHER'"
         class="btn-default list-group-item"
-        ng-click="model.display = 'new-post'">
-        <span class="glyphicon glyphicon-plus"></span>
+        ng-click="model.addPost()">
+        <i class="fa fa-plus-square" aria-hidden="true"></i>
         Add New Post
     </li>
 
@@ -61,6 +69,7 @@
         ng-if=" !show-all-publishers && model.role === 'ADMIN'"
         ng-click="model.display = 'publishers'">
         <span class="glyphicon glyphicon-search"></span>
+        <i class="fa fa-book" aria-hidden="true"></i>
         Monitor All Publishers
     </li>
     <li class= "btn-default list-group-item"
@@ -72,13 +81,13 @@
     <li class=" btn-default list-group-item"
         ng-if=" !show-all-posts && model.role === 'ADMIN'"
         ng-click="model.display = 'articles'">
-        <span class="glyphicon glyphicon-search"></span>
+        <i class="fa fa-bookmark" aria-hidden="true"></i>
         Monitor All Posts
     </li>
     <li class=" btn-default list-group-item"
         ng-if="!show-new-user && model.role === 'ADMIN'"
         ng-click = "model.display = 'new-user'">
-        <i class="fa fa-user-plus" aria-hidden="true"></i>
+        <i class="fa fa-plus-square" aria-hidden="true"></i>
         Add New User
     </li>
 </ul>
@@ -87,21 +96,21 @@
 
 <ul class="login-ul">
 
-    <li class="btn menu list-group-item"
+    <li class="btn list-group-item cancel-btn"
         ng-click="model.logout()">
         <span class="glyphicon glyphicon-log-out"></span>
         Logout
     </li>
 
-    <li class="btn menu list-group-item"
+    <li class="btn list-group-item cancel-btn"
         ng-click="model.unregisterUser()">
         <span class="glyphicon glyphicon-remove"></span>
         Unregister
     </li>
 
-    <li class="btn menu list-group-item"
-        ng-if="!show-edit"
-        ng-click="model.display = 'edit'">
+    <li class="btn list-group-item login-btn"
+        ng-if="!model.newUser"
+        ng-click="model.editProfile()">
         <span class="glyphicon glyphicon-pencil"></span>
         Edit Profile
     </li>

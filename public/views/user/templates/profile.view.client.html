@@ -19,10 +19,110 @@
 
 <!--Left Panel-->
 <div class="col-xs-12 col-sm-4 panel-list"
-     ng-include="'views/user/templates/profile-left-panel.view.client.html'">
+     ng-include="'views/common/left-panel.view.client.html'">
+
+    <!--Message and Error-->
+    <div ng-show="model.message"
+         class="alert alert-success">
+        {{model.message}}
+    </div>
+    <div ng-show="model.error"
+         class="alert alert-danger">
+        {{model.error}}
+    </div>
 </div>
 
 <!--Right-Panel-->
+<div class="col-xs-12 col-sm-8 panel-list">
+    <div class="panel">
+        <div class="panel-heading form-head">
+            <h1>
+                Welcome {{model.user.firstName}}!
+            </h1>
+        </div>
+        <div class="panel-body brown-text col-xs-12 ">
+            <div class="panel-body col-xs-12">
+                <div class="col-xs-2">
+                    User Name:
+                </div>
+                <div class="col-xs-10">
+                    <b>{{model.user.username}}</b>
+                    <span class="glyphicon glyphicon-pencil pull-right"
+                          ng-click="model.editProfile()"></span>
+                </div>
+            </div>
+            <div class="panel-body col-xs-12">
+                <div class="col-xs-2">
+                    Name:
+                </div>
+                <div class="col-xs-10">
+                    <b>{{model.user.firstName}} {{model.user.lastName}}</b>
+                </div>
+
+            </div>
+            <div class="panel-body col-xs-12">
+                <div class="col-xs-2">
+                    Email:
+                </div>
+                <div class="col-xs-10">
+                    <b>{{model.user.email}}</b>
+                </div>
+            </div>
+            <div class="panel-body col-xs-12">
+                <div class="col-xs-2">
+                    Role:
+                </div>
+                <div class="col-xs-10">
+                    <b>{{model.user.role}}</b>
+                </div>
+            </div>
+            <div class="panel-body col-xs-12">
+                <div class="col-xs-2">
+                    Date of Join:
+                </div>
+                <div class="col-xs-10">
+                    <b>{{model.user.dateCreated | date : 'short'}}</b>
+                </div>
+            </div>
+        </div>
+        <div class="card col-xs-12 col-sm-4 ">
+            <img class="card-img-top img-thumbnail img-responsive "
+                 src="https://wedevs-com-wedevs.netdna-ssl.com/wp-content/uploads/2014/03/Subscriptions.jpg"
+                 alt="Card image cap">
+            <div class="card-block subs">
+                <h4 class="card-title">
+                    Subscriptions
+                </h4>
+                <h4 class="card-text">{{model.user.subscriptions.length}}</h4>
+            </div>
+        </div>
+        <div class="card col-xs-12 col-sm-4 " >
+            <img class="card-img-top img-thumbnail img-responsive"
+                 src="http://www.preapps.com/blog/wp-content/uploads/2015/07/twitter-follower-socialmeda-1.jpg"
+                 alt="Card image cap">
+            <div class="card-block followers ">
+                <h4 class="card-title">
+                    Followers
+                </h4>
+                <h4 class="card-text">{{model.user.followers.length}}</h4>
+            </div>
+        </div>
+        <div class="card card col-xs-12 col-sm-4 image-card" >
+            <img class="card-img-top img-thumbnail img-responsive"
+                 src="https://d1e4pidl3fu268.cloudfront.net/4596a7fb-5716-4433-9189-37de2096cd0c/a.crop_500x375_0%2C20.preview.png"
+                 alt="Card image cap">
+            <div class="card-block following ">
+                <h4 class="card-title">
+                    I am following!</h4>
+                <h4 class="card-text">{{model.user.followedBy.length}}</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 <div ng-switch="model.display"
      class="col-xs-12 col-sm-8 panel-list">
 
@@ -31,13 +131,9 @@
          class="alert alert-success">
         {{model.message}}
     </div>
-    <div ng-show="model.error" class="alert alert-danger">
+    <div ng-show="model.error"
+         class="alert alert-danger">
         {{model.error}}
-    </div>
-
-    <!--Welcome Page-->
-    <div ng-switch-when="welcome">
-        <div ng-include="'views/user/templates/profile-welcome.view.client.html'"></div>
     </div>
 
     <!--Edit Profile Page-->
@@ -45,20 +141,25 @@
         <div ng-include="'views/user/templates/profile-edit.view.client.html'"></div>
     </div>
 
-    <!--My Publishers-->
+    <!--My Subscriptions-->
+    <div ng-switch-when="subscriptions">
+        <div ng-include="'views/user/templates/profile-subscriptions.view.client.html'"></div>
+    </div>
+
+    <!--All Publishers-->
     <div ng-switch-when="publishers">
-        <div ng-include="'views/user/templates/profile-publisher.view.client.html'"></div>
+        <div ng-include="'views/user/templates/profile-publishers.view.client.html'"></div>
     </div>
 
-    <!--My Articles/Saved Posts-->
-    <div ng-switch-when="articles">
-        <div ng-include="'views/user/templates/profile-articles.view.client.html'"></div>
+    <!--Saved Posts-->
+    <div ng-switch-when="saved">
+        <div ng-include="'views/user/templates/profile-saved.view.client.html'"></div>
     </div>
 
-    <!--Add Post-->
-    <div ng-switch-when="new-post">
-        <div ng-include="'views/post/templates/post-new.view.client.html'"></div>
-    </div>
+    <!--&lt;!&ndash;Add Post&ndash;&gt;-->
+    <!--<div ng-switch-when="new-post">-->
+        <!--<div ng-include="'views/post/templates/post-new.view.client.html'"></div>-->
+    <!--</div>-->
 </div>
 
 <!--footer-->

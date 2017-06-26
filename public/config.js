@@ -22,6 +22,46 @@
                     currentUser: checkCurrentUser
                 }
             })
+            .when('/post', {
+                templateUrl: 'views/post/templates/post-list.view.client.html',
+                controller: 'postListController',
+                controllerAs: 'model',
+                resolve: {
+                    currentUser: checkCurrentUser
+                }
+            })
+            .when('/post/:postId/edit', {
+                templateUrl: 'views/post/templates/post-edit.view.client.html',
+                controller: 'postEditController',
+                controllerAs: 'model',
+                resolve: {
+                    currentUser: checkCurrentUser
+                }
+            })
+            .when('/post/:postId/display', {
+                templateUrl: 'views/post/templates/post-display.view.client.html',
+                controller: 'postDisplayController',
+                controllerAs: 'model',
+                resolve: {
+                    currentUser: checkCurrentUser
+                }
+            })
+            .when('/publisher', {
+                templateUrl: 'views/user/templates/publisher-list.view.client.html',
+                controller: 'userListController',
+                controllerAs: 'model',
+                resolve: {
+                    currentUser: checkCurrentUser
+                }
+            })
+            .when('/publisher/:publisherId/display', {
+                templateUrl: 'views/post/templates/post-list-display.view.client.html',
+                controller: 'postListDisplayController',
+                controllerAs: 'model',
+                resolve: {
+                    currentUser: checkCurrentUser
+                }
+            })
             .when('/login', {
                 templateUrl: 'views/user/templates/login.view.client.html',
                 controller: 'loginController',
@@ -50,6 +90,14 @@
             .when('/profile', {
                 templateUrl: 'views/user/templates/profile.view.client.html',
                 controller: 'profileController',
+                controllerAs: 'model',
+                resolve: {
+                    currentUser: checkLoggedIn
+                }
+            })
+            .when('/profile/edit', {
+                templateUrl: 'views/user/templates/profile-edit.view.client.html',
+                controller: 'profileEditController',
                 controllerAs: 'model',
                 resolve: {
                     currentUser: checkLoggedIn

@@ -1,0 +1,40 @@
+<!--header-->
+<div ng-include="'views/common/header.view.client.html'"></div>
+
+
+<!--content-->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-xs-12">
+            <h2 class="homepage2">
+                {{model.publisher.firstName}}
+                {{model.publisher.lastName}}
+            </h2>
+            <div class="row category-cards">
+                <div ng-repeat="post in model.posts"
+                     class="card h-card">
+                    <div ng-click="model.displayPost(post._id)">
+                        <h4 class="card-title h-card-title">
+                            {{post.title}}
+                        </h4>
+                        <div class="card-author h-card-author ">
+                            {{post.publisher.firstName}}
+                        </div>
+                        <div class="card-img h-card-img">
+                            <img src="{{post.imageUrl}}" alt="card-img h-card-img">
+                        </div>
+                        <p class="card-desc h-card-desc">{{post.description}}</p>
+                        <div class="card-source">
+                            <a href="{{post.sourceUrl}}">Source</a>
+                        </div>
+                        <div class="card-date">{{post.dateCreated | date : 'short'}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--footer-->
+<div ng-include="'views/common/footer.view.client.html'"></div>
+

@@ -6,6 +6,11 @@
     function postService($http) {
 
         this.createPost = createPost;
+        this.findPostsByPublisher = findPostsByPublisher;
+        this.findPostsForReader = findPostsForReader;
+        this.findPostById = findPostById;
+        this.updatePostByPublisher = updatePostByPublisher;
+        this.displayPostsForPublisher = displayPostsForPublisher;
         // this.findUserById = findUserById;
         //     // findUserByUsername: findUserByUsername,
             // findUserByCredentials: findUserByCredentials,
@@ -20,12 +25,51 @@
         // this.findAllPosts = findAllPosts;
 
 
+        function findPostById(postId) {
+            var url = "/api/post/"+postId;
+            return $http.get(url)
+                .then(function (response) {
+                    return response.data;
+                });
+        }
+
+        function findPostsForReader() {
+            var url = "/api/readerPost";
+            return $http.get(url)
+                .then(function (response) {
+                    return response.data;
+                });
+        }
+
+        function findPostsByPublisher() {
+            var url = "/api/publisherPost";
+            return $http.get(url)
+                .then(function (response) {
+                    return response.data;
+                });
+        }
+        function displayPostsForPublisher(publisherId) {
+            var url = "/api/publisher/"+publisherId+"/post";
+            return $http.get(url)
+                .then(function (response) {
+                    return response.data;
+                });
+        }
+
         function createPost(newPost){
-            var url = "/api/post";
+            var url = "/api/createPost";
             return $http.post(url, newPost)
                 .then(function (response) {
                     return response.data;
                 });
+        }
+
+        function updatePostByPublisher(postId, updatedPost) {
+            var url = "/api/assignment/user/"+postId+"/edit";
+                return $http.put(url, updatedPost)
+                    .then(function (response) {
+                        return response.data;
+                    });
         }
         //
         // function updateUser(userId, user) {

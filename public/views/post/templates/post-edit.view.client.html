@@ -20,11 +20,11 @@
     </div>
     <div class="col-sm-12 panel">
         <div class="panel-heading form-head">
-            <h1>Add New Post</h1>
+            <h1>Edit Post</h1>
         </div>
         <div class="panel-body">
             <form name="userForm"
-                  ng-submit="model.createPost(userForm.$valid, model.post)"
+                  ng-submit="model.updatePostByPublisher(userForm.$valid, model.post)"
                   novalidate>
                 <div class="form-group col-md-12">
                     <label for="title">
@@ -51,7 +51,7 @@
 
                 <div class="form-group col-md-12">
                     <label for="url">
-                        Image URL
+                        URL
                     </label>
                     <input ng-model="model.post.imageUrl"
                            class="form-control"
@@ -68,20 +68,11 @@
                            placeholder="Enter the source URL"
                            id="source-url"/>
                 </div>
-
-                <div class="col-md-12">
-                    <button type="submit"
-                            class="btn login-btn btn-block">
-                        <i class="fa fa-cloud-upload" aria-hidden="true"></i>
-                        <b>Publish</b>
-                    </button>
-                    <button class="btn cancel-btn btn-block">
-                       <a href="#!/profile">
-                           <i class="fa fa-ban" aria-hidden="true"></i>
-                           <b>Cancel</b>
-                       </a>
-                    </button>
-                </div>
+                <button type="submit"
+                        class="btn login-btn btn-block">
+                    <i class="fa fa-wrench" aria-hidden="true"></i>
+                    <b>Update</b>
+                </button>
             </form>
         </div>
     </div>

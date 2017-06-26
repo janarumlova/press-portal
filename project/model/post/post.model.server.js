@@ -4,6 +4,10 @@ var postModel = mongoose.model('PostModel', postSchema);
 var userModel = require('../user/user.model.server');
 
 postModel.createPost = createPost;
+postModel.findPostsByPublisher = findPostsByPublisher;
+postModel.findPostById = findPostById;
+postModel.findAllPosts = findAllPosts;
+postModel.findPostsByIds = findPostsByIds;
 
 postModel.findUserById = findUserById;
 postModel.findAllUsers = findAllUsers;
@@ -13,8 +17,33 @@ postModel.updateUser = updateUser;
 postModel.deleteUser = deleteUser;
 postModel.addWebsite = addWebsite;
 postModel.deleteWebsite = deleteWebsite;
+postModel.updatePostByPublisher = updatePostByPublisher;
 
 module.exports = postModel;
+
+function findPostsByIds(posts) {
+    return postModel
+        .find({
+            '_id': {$in: posts}
+        }, function(err, docs) {
+            console.log(docs);
+        });
+}
+
+function findAllPosts() {
+    return postModel.find();
+}
+
+function findPostById(postId) {
+    return postModel
+        .findOne({_id: postId})
+        .populate('_publisher')
+        .exec();
+}
+
+function findPostsByPublisher(userId) {
+    return postModel.find({_publisher: userId});
+}
 
 function createPost(usedId, post) {
     return postModel
@@ -39,6 +68,10 @@ function findUserByUsername(username) {
 
 function findUserByCredentials(username, password) {
     return postModel.findOne({username: username, password: password});
+}
+
+function updatePostByPublisher(postId, updatedPost) {
+    return postModel.update({_id: postId}, {$set: updatedPost})
 }
 
 function updateUser(userId, newUser) {

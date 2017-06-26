@@ -19,9 +19,50 @@
             register: register,
             unregister: unregister,
             checkAdmin: checkAdmin,
-            findAllUsers: findAllUsers
+            findAllUsers: findAllUsers,
+            findAllPublishers: findAllPublishers,
+            findAllReaders: findAllReaders,
+            findSubscriptions: findSubscriptions,
+            findPublisherById: findPublisherById
         };
         return api;
+
+        function findPublisherById(userId) {
+            var url = "/api/publisher/"+userId;
+            return $http.get(url)
+                .then(function (response) {
+                    return response.data;
+                });
+        }
+
+
+        function findSubscriptions() {
+            var url = "/api/subscriptions";
+            return $http.get(url)
+                .then(function (response) {
+                    return response.data;
+                });
+        }
+
+        function findAllPublishers() {
+            console.log("here");
+            var url = "/api/publisher";
+            return $http.get(url)
+                .then(function (response) {
+                    console.log(response);
+                    return response.data;
+                },function (err) {
+                    console.log(err);
+                });
+        }
+
+        function findAllReaders() {
+            var url = "/api/reader";
+            return $http.get(url)
+                .then(function (response) {
+                    return response.data;
+                });
+        }
 
         function unregister() {
             var url = "/api/unregister";

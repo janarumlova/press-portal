@@ -1,27 +1,26 @@
+/**
+ * Created by sidharththapar on 6/25/17.
+ */
+
 (function () {
     angular
         .module('WAM')
-        .controller('profileController', profileController);
+        .controller('profileEditController', profileEditController);
 
-    function profileController($location, currentUser, userService, postService) {
+    function profileEditController($location, currentUser, userService) {
 
         var model = this;
 
-        model.role = currentUser.role;
-        model.username = currentUser.firstName;
         model.userId = currentUser._id;
 
-        model.updatePost = updatePost;
-        model.deletePost = deletePost;
         model.logout = logout;
         model.unregisterUser = unregisterUser;
-        model.createPost = createPost;
+        model.updateUserByUser = updateUserByUser;
         model.editProfile = editProfile;
         model.showPublishers = showPublishers;
         model.addPost = addPost;
         model.myPosts = myPosts;
 
-        model.findAllPublishers = findAllPublishers;
         model.findAllReaders = findAllReaders;
         model.findSubscriptions = findSubscriptions;
         model.findPostsByPublisher = findPostsByPublisher;
@@ -29,6 +28,12 @@
 
         function init() {
             renderUser(currentUser);
+
+            userService
+                .findAllPublishers()
+                .then(function (users) {
+                    model.publishers = users
+                });
         }
         init();
 
@@ -59,14 +64,6 @@
                     model.readers = users;
                 });
         }
-        function findAllPublishers(){
-            userService
-                .findAllPublishers()
-                .then(function (users) {
-                    model.publishers = users;
-                    $location.url("/publisher");
-                });
-        }
         function findSubscriptions(){
             userService
                 .findSubscriptions()
@@ -82,27 +79,11 @@
         function showPublishers() {
             $location.url("/publisher");
         }
-
         function addPost() {
             $location.url("/post/new");
         }
         function myPosts() {
             $location.url("/post");
-        }
-
-        function createPost(isValid, newPost) {
-            if (isValid) {
-                return postService
-                    .createPost(newPost)
-                    .then(function () {
-                        model.message = "You just added a new post!";
-                        $location.url('/profile');
-                        // model.display = "posts";
-                    });
-            }
-            else {
-                model.error = 'One or more fields are required';
-            }
         }
 
         function unregisterUser() {
@@ -120,29 +101,19 @@
                     $location.url('/login');
                 });
         }
-
-        function updatePost(isValid, post, postId) {
+        function updateUserByUser(isValid, user) {
             if (isValid) {
-                postService
-                    .updatePost(post, postId)
+                userService
+                    .updateUserByUser(user)
                     .then(function () {
-                        model.message = "You just updated the post successfully!";
-                        $location.url('/profile');
+                        model.message = 'User Updated Successfully!'
+                        $location.url("/profile");
                     });
-            }else {
+
+            }
+            else {
                 model.error = 'One or more fields are required';
             }
-        }
-
-        function deletePost(postId) {
-            postService
-                .deletePost(model.userId, postId)
-                .then(function () {
-                    $location.url('/post');
-                    model.message = "You just deleted the post successfully!";
-                }, function () {
-                    model.error = 'Post was not deleted!'
-                });
         }
     }
 })();

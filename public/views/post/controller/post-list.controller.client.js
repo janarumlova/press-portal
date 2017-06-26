@@ -1,27 +1,31 @@
 (function () {
     angular
         .module('WAM')
-        .controller('postNewController', postNewController);
+        .controller('postListController', postListController);
 
-    function postNewController($location, currentUser, postService, userService) {
-
+    function postListController($location, currentUser, postService, userService) {
         var model = this;
 
         model.userId = currentUser._id;
         model.editProfile = editProfile;
         model.showPublishers = showPublishers;
-        model.myPosts = myPosts;
-
         model.unregisterUser = unregisterUser;
-        model.logout = logout;
-
-        model.createPost = createPost;
+        model.addPost = addPost;
+        model.logout =logout;
+        model.deletePost = deletePost;
+        model.displayPost = displayPost;
 
         function init() {
-            if(currentUser.role === 'PUBLISHER') {
+            if(currentUser.role === 'PUBLISHER'){
                 postService
                     .findPostsByPublisher()
                     .then(renderPosts);
+            }
+
+            if(currentUser.role === 'READER'){
+                postService
+                    .findPostsForReader()
+                    .then(renderSavedPosts);
             }
             renderUser(currentUser);
         }
@@ -34,7 +38,9 @@
         function renderPosts (posts) {
             model.posts = posts;
         }
-
+        function renderSavedPosts(posts) {
+            model.savedPosts = posts;
+        }
         function editProfile() {
             $location.url("/profile/edit");
         }
@@ -42,8 +48,12 @@
         function showPublishers() {
             $location.url("/publisher");
         }
-        function myPosts() {
-            $location.url("/post");
+
+        function addPost() {
+            $location.url("/post/new");
+        }
+        function displayPost(postId) {
+            $location.url("/post/"+postId+"/display");
         }
 
         function unregisterUser() {
@@ -61,20 +71,15 @@
                     $location.url('/login');
                 });
         }
-
-        function createPost(isValid, newPost) {
-            if (isValid) {
-                return postService
-                    .createPost(newPost)
-                    .then(function () {
-                        model.message = "You just added a new post!";
-                        $location.url('/profile');
-                        // model.display = "posts";
-                    });
-            }
-            else {
-                model.error = 'One or more fields are required';
-            }
+        function deletePost(postId) {
+            postService
+                .deletePost(model.userId, postId)
+                .then(function () {
+                    $location.url('/post');
+                    model.message = "You just deleted the post successfully!";
+                }, function () {
+                    model.error = 'Post was not deleted!'
+                });
         }
     }
 })();

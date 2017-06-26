@@ -1,0 +1,28 @@
+
+<div class="panel">
+    <div class="panel-heading form-head">
+        <h1>My Subscribed Publishers:</h1>
+    </div>
+
+    <div class="list-group col-xs-12 ">
+        <div class="panel-body">
+            <p>
+                Read the latest posts by your subscribed publishers.<br>
+                Save them to read them in future.<br>
+                Comment on the posts.<br>
+                Unsubscribe the publisher if the posts are irrelavent to you.
+            </p>
+        </div>
+        <div class="list-group-item brown-text"
+             ng-repeat="subscription in model.subscriptions">
+            <b class="col-xs-10">{{subscription.firstName}} {{subscription.lastName}}</b>
+            <div class="col-xs-3">
+                <span class="fa fa-trash-o  delete-icon col-xs-1 pull-right" aria-hidden="true"
+                      ng-click="deletePost(article._id)">
+                </span>
+                <span class="fa fa-pencil-square-o edit-icon pull-right" aria-hidden="true"
+                      ng-click="model.display = 'post-edit'; model.message = ''">
+                </span>
+        </div>
+    </div>
+</div>

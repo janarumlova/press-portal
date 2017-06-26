@@ -1,17 +1,67 @@
 var app = require('../../express');
 var postModel = require('../model/post/post.model.server');
 
+app.put    ("/api/assignment/user/:postId/edit", updatePostByPublisher);
+app.post   ('/api/createPost', createPost);
+app.get    ('/api/publisherPost', findPostsByPublisher);
+app.get    ("/api/readerPost", findPostsForReader);
+app.get    ("/api/allPosts", findAllPosts);
+app.get    ("/api/post/:postId", findPostById);
+app.get    ("/api/publisher/:publisherId/post", displayPostsForPublisher);
 
-app.post   ('/api/post', createPost);
-
-app.get    ('/api/assignment/user', findAllUsers);
-app.get    ('/api/assignment/user/:userId', findUserById);
-app.put    ('/api/assignment/user/:userId', updateUser);
 app.delete ('/api/assignment/user/:userId', isAdmin, deleteUser);
 
 
-app.get   ('/api/assignment/loggedIn', loggedIn);
-app.get   ('/api/assignment/checkAdmin', checkAdmin);
+app.get   ('/api/loggedIn', loggedIn);
+app.get   ('/api/checkAdmin', checkAdmin);
+
+
+function findPostById(req, res) {
+    var postId = req.params.postId;
+    postModel
+        .findPostById(postId)
+        .then(function (post) {
+            res.json(post);
+        }, function (err) {
+            res.send(err);
+        });
+}
+
+function findPostsByPublisher(req, res) {
+    postModel
+        .findPostsByPublisher(req.user._id)
+        .then(function (posts) {
+            res.json(posts);
+        }, function (err) {
+            res.send(err);
+        });
+}
+
+function displayPostsForPublisher(req, res) {
+    postModel
+        .findPostsByPublisher(req.params.publisherId)
+        .then(function (posts) {
+            res.json(posts);
+        }, function (err) {
+            res.send(err);
+        });
+}
+
+function findAllPosts(req, res) {
+    postModel
+        .findAllPosts()
+        .then(function (posts) {
+            res.json(posts);
+        });
+}
+
+function findPostsForReader(req, res) {
+    postModel
+        .findPostsByIds(req.user.posts)
+        .then(function (posts) {
+            res.json(posts);
+        });
+}
 
 function createPost(req, res) {
     var post = req.body;
@@ -26,7 +76,7 @@ function createPost(req, res) {
 }
 
 function isAdmin(req, res, next) {
-    if(req.isAuthenticated() && req.user.roles.indexOf('ADMIN') > -1) {
+    if(req.isAuthenticated() && req.user.role === 'ADMIN') {
         next();
     }
     else {
@@ -43,21 +93,11 @@ function checkAdmin(req, res) {
 }
 
 function loggedIn(req, res) {
-    console.log(req.user);
     if(req.isAuthenticated()) {
         res.json(req.user);
     } else {
         res.send('0');
     }
-}
-
-function findUserById(req, res) {
-    var userId = req.params['userId'];
-    userModel
-        .findUserById(userId)
-        .then(function (user) {
-            res.json(user);
-        });
 }
 
 
@@ -70,41 +110,18 @@ function deleteUser(req, res) {
         });
 }
 
-function findAllUsers(req, res) {
-    var username = req.query.username;
-    var password = req.query.password;
-    if(username && password) {
-        userModel
-            .findUserByCredentials(username, password)
-            .then(function (user) {
-                if(user) {
-                    res.json(user);
-                } else {
-                    res.sendStatus(404);
-                }
-            });
-    } else if(username) {
-        userModel
-            .findUserByUsername(username)
-            .then(function (user) {
-                if(user) {
-                    res.json(user);
-                } else {
-                    res.sendStatus(404);
-                }
-            });
-    } else {
-        userModel
-            .findAllUsers()
-            .then(function (users) {
-                res.json(users);
-            });
-    }
-}
-
 function updateUser(req, res) {
     userModel
         .updateUser(req.params.userId, req.body)
+        .then(function (status) {
+            res.send(status);
+        });
+}
+
+function updatePostByPublisher(req, res) {
+    var updatedPost = req.body;
+    postModel
+        .updatePostByPublisher(req.params.postId, updatedPost)
         .then(function (status) {
             res.send(status);
         });

@@ -5,6 +5,8 @@ var userModel = mongoose.model('UserModel', userSchema);
 userModel.createUser = createUser;
 userModel.findUserById = findUserById;
 userModel.findAllUsers = findAllUsers;
+userModel.findAllPublishers = findAllPublishers;
+userModel.findAllReaders = findAllReaders;
 userModel.findUserByUsername = findUserByUsername;
 userModel.findUserByCredentials = findUserByCredentials;
 userModel.updateUser = updateUser;
@@ -17,8 +19,9 @@ userModel.findUserByFacebookId = findUserByFacebookId;
 
 
 
-
 module.exports = userModel;
+
+
 
 function findUserByFacebookId(facebookId) {
     return userModel.findOne({'facebook.id': facebookId});
@@ -29,18 +32,19 @@ function findUserByGoogleId(googleId) {
         .findOne({'google.id': googleId});
 }
 
-function createUser(user) {
-    return userModel.create(user);
-}
-
 function findUserById(userId) {
-    return userModel.findById(userId);
-}
+    return userModel.findOne({_id: userId})
+};
 
 function findAllUsers() {
     return userModel.find();
 }
-
+function findAllPublishers() {
+    return userModel.find({role: "PUBLISHER"});
+}
+function findAllReaders() {
+    return userModel.find({role: "READER"});
+}
 function findUserByUsername(username) {
     return userModel.findOne({username: username});
 }
@@ -49,9 +53,11 @@ function findUserByCredentials(username, password) {
     return userModel.findOne({username: username, password: password});
 }
 
+function createUser(user) {
+    return userModel.create(user);
+}
+
 function updateUser(userId, newUser) {
-    delete newUser.username;
-    delete newUser.password;
     return userModel.update({_id: userId}, {$set: newUser});
 }
 

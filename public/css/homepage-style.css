@@ -1,9 +1,20 @@
 body{
     font-family: 'Open sans', serif;
-    background-image: url('https://cdn.pixabay.com/photo/2015/03/08/19/24/newspaper-664590_1280.jpg');
+    background-image: url("https://buidln.clipdealer.com/003/157/003//previews/2--3157003-technology%20network%20loop%20background.jpg");
     background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
-h1{
+
+.slider-image{
+    background-image:url('/public/images/slider.jpg')
+}
+
+.home-body{
+    margin-top: 0px !important;
+    margin-bottom: 70px;
+}
+.homepage{
     text-align: center;
     font-size: 26px;
     color: #ffffff;
@@ -57,41 +68,41 @@ h1{
     text-rendering: auto;
     -webkit-font-smoothing: antialiased;
 }
-h2{
+.homepage2{
     margin-top: 40px;
     margin-bottom: 20px;
     border-bottom: 1px solid #ffffff;
     padding-bottom: 10px;
     color: #ffffff;
 }
-/*.card{*/
-    /*background: #ffffff;*/
-    /*padding: 5px 15px;*/
-    /*margin-left: 10px;*/
-    /*margin-right: 10px;*/
-/*}*/
-/*.card-title{*/
-    /*font-weight: 600;*/
-/*}*/
-/*.card-author{*/
-    /*margin-bottom: 5px;*/
-/*}*/
-/*p.card-desc{*/
-    /*font-size: 12px;*/
-    /*margin-top: 15px;*/
-/*}*/
-/*.card-img img{*/
-    /*width: 100%;*/
-    /*height: 100%;*/
-/*}*/
-h3{
+.h-card{
+    background: #ffffff;
+    padding: 5px 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.h-card-title{
+    font-weight: 600;
+}
+.h-card-author{
+    margin-bottom: 5px;
+}
+p.h-card-desc{
+    font-size: 12px;
+    margin-top: 15px;
+}
+.h-card-img img{
+    width: 100%;
+    height: 100%;
+}
+.homepage3{
     margin-top: 20px;
     font-size: 30px;
     color: #ffffff;
     text-align: center;
     font-weight: bold;
 }
-h3:after{
+homepage3:after{
     display: block;
     content: "";
     width: 125px;
@@ -104,17 +115,17 @@ h3:after{
     margin-top: 20px;
     text-align: center;
 }
-.trending-div a{
+.trending-div home{
     display: inline-block;
     font-size: 24px;
     color: #ffffff;
     margin:20px auto;
 }
-.trending-div a:hover{
+.trending-div home:hover{
     text-decoration: none;
     color: blue;
 }
-.trending-div div i{
+.trending-div div .i-home{
     margin-right: 10%;
 }
 .category-cards{
@@ -137,8 +148,4 @@ h3:after{
 /* main header css*/
 .navbar-form{
     margin-left: 120px;
-}
-/*footer css*/
-.footer{
-    margin-bottom: 0;
 }

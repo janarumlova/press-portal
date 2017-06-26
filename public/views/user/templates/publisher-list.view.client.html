@@ -1,0 +1,52 @@
+<!--Header-->
+<div ng-include="'views/common/header.view.client.html'"></div>
+
+<!--Left Panel-->
+<div class="col-xs-12 col-sm-4 panel-list"
+     ng-include="'views/common/left-panel.view.client.html'">
+
+    <!--Message and Error-->
+    <div ng-show="model.message"
+         class="alert alert-success">
+        {{model.message}}
+    </div>
+    <div ng-show="model.error"
+         class="alert alert-danger">
+        {{model.error}}
+    </div>
+</div>
+
+<!--Right-Panel-->
+<div class="col-xs-12 col-sm-8 panel-list">
+    <div class="panel">
+        <div class="panel-heading form-head">
+            <h1>All Publishers:</h1>
+        </div>
+
+        <div class="list-group col-xs-12 ">
+            <div class="panel-body">
+                <p>
+                    You can select any of the following publishers.<br>
+                    Read their posts.<br>
+                    Save their posts.<br>
+                    Comment on the posts.<br>
+                    Subscribe to them.<br>
+                </p>
+            </div>
+            <div class="list-group-item brown-text"
+                 ng-repeat="publisher in model.publishers">
+                <div ng-click="model.displayPosts(publisher._id)">
+                    <i class="fa fa-book" aria-hidden="true"></i>
+                    <b>
+                        {{publisher.firstName}}
+                        {{publisher.lastName}}
+                    </b>
+                </div>
+                <!--<i class="fa fa-rss col-xs-2" aria-hidden="true"></i>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Footer-->
+<div ng-include="'views/common/footer.view.client.html'"></div>

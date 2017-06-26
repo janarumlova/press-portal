@@ -1,0 +1,60 @@
+<!--header-->
+<div ng-include="'views/common/header.view.client.html'"></div>
+
+
+<!--Left Panel-->
+<div class="col-xs-12 col-sm-4 panel-list"
+     ng-include="'views/common/left-panel.view.client.html'">
+</div>
+
+<!--Right-Panel-->
+<div class="col-xs-12 col-sm-8 panel-list">
+    <!--Message and Error-->
+    <div ng-show="model.message"
+         class="alert alert-success">
+        {{model.message}}
+    </div>
+    <div ng-show="model.error"
+         class="alert alert-danger">
+        {{model.error}}
+    </div>
+    <div class="panel">
+        <div class="panel-heading form-head">
+            <h1>My Posts:</h1>
+        </div>
+
+        <div class="list-group col-xs-12 ">
+            <div class="panel-body">
+                <p>
+                    You can <br>
+                    View any of your posts.<br>
+                    Read them.<br>
+                    Edit them.<br>
+                    Delete them.
+                    Comment on the post.<br>
+                </p>
+            </div>
+            <div class="list-group-item  col-xs-12"
+                 ng-repeat="post in model.posts">
+                <div class="col-xs-9">
+                    <div ng-click="model.displayPost(post._id)">
+                        <b class="brown-text">{{post.title}}</b>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <span class="fa fa-trash-o  delete-icon col-xs-1 pull-right" aria-hidden="true"
+                          ng-click="model.deletePost(post._id)">
+                    </span>
+                    <a href="/post/{{post._id}}/edit">
+                        <span class="fa fa-pencil-square edit-icon pull-right" aria-hidden="true"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--footer-->
+<div ng-include="'views/common/footer.view.client.html'"></div>
+

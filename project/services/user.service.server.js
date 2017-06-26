@@ -13,29 +13,29 @@ var bcrypt = require("bcrypt-nodejs");
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 
-var googleConfig = {
-    clientID     : '222671963957-205m5fibvtpc223bpdsid045fd4vjg1u.apps.googleusercontent.com',
-    clientSecret : 'Gm8CnkQKjc4_SkE9-naJmnGa',
-    callbackURL  : '/auth/google/callback'
-};
-
-var facebookConfig = {
-    clientID     : '1093632250736728',
-    clientSecret : '34c72e7877802295b1a10682fdac6e85',
-    callbackURL  : '/auth/facebook/callback'
-};
-
-// var facebookConfig = {
-//     clientID     : process.env.FACEBOOK_CLIENT_ID,
-//     clientSecret : process.env.FACEBOOK_CLIENT_SECRET,
-//     callbackURL  : process.env.FACEBOOK_CALLBACK_URL
+// var googleConfig = {
+//     clientID     : '222671963957-205m5fibvtpc223bpdsid045fd4vjg1u.apps.googleusercontent.com',
+//     clientSecret : 'Gm8CnkQKjc4_SkE9-naJmnGa',
+//     callbackURL  : '/auth/google/callback'
 // };
 //
-// var googleConfig = {
-//     clientID     : process.env.GOOGLE_CLIENT_ID,
-//     clientSecret : process.env.GOOGLE_CLIENT_SECRET,
-//     callbackURL  : process.env.GOOGLE_CALLBACK_URL
+// var facebookConfig = {
+//     clientID     : '1093632250736728',
+//     clientSecret : '34c72e7877802295b1a10682fdac6e85',
+//     callbackURL  : '/auth/facebook/callback'
 // };
+
+var facebookConfig = {
+    clientID     : process.env.FACEBOOK_CLIENT_ID,
+    clientSecret : process.env.FACEBOOK_CLIENT_SECRET,
+    callbackURL  : process.env.FACEBOOK_CALLBACK_URL
+};
+
+var googleConfig = {
+    clientID     : process.env.GOOGLE_CLIENT_ID,
+    clientSecret : process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL  : process.env.GOOGLE_CALLBACK_URL
+};
 passport.use(new GoogleStrategy(googleConfig, googleStrategy));
 passport.use('facebook', new FacebookStrategy(facebookConfig, facebookStrategy));
 
@@ -43,13 +43,17 @@ passport.use('facebook', new FacebookStrategy(facebookConfig, facebookStrategy))
 app.post  ('/api/login', passport.authenticate('local'), login);
 app.post  ('/api/logout', logout);
 app.post  ('/api/register', register);
-app.delete  ('/api/unregister', unregister);
+app.delete ('/api/unregister', unregister);
 app.put   ('/api/updateUser', updateUserByUser);
 
 //Find Functions
+app.get   ("/api/reader", findAllReaders);
+app.get   ("/api/publisher", findAllPublishers);
+app.get   ("/api/subscriptions", findSubscriptions);
 app.get   ('/api/user', findAllUsers);
 app.get   ('/api/user/:userId', findUserById);
 app.get   ('/api/loggedIn', loggedIn);
+app.get   ('/api/publisher/:publisherId', findPublisherById);
 
 //Admin Services
 app.get   ('/api/checkAdmin', checkAdmin);
@@ -79,7 +83,38 @@ app.get('/auth/facebook/callback',
         failureRedirect: '/index.html#!/login'
     }));
 
+function updateUserByUser(req, res) {
+    userModel
+        .updateUser(req.user._id, req.body)
+        .then(function (status) {
+            res.send(status);
+        });
+}
 
+function findPublisherById(req, res) {
+    userModel
+        .findUserById(req.params.publisherId)
+        .then(function (publisher) {
+            res.json(publisher);
+        });
+}
+
+function findAllPublishers(req, res) {
+    userModel
+        .findAllPublishers()
+        .then(function (users) {
+            console.log(users);
+            res.json(users);
+        });
+}
+
+function findAllReaders() {
+    userModel
+        .findAllReaders()
+        .then(function (users) {
+            res.json(users);
+        });
+}
 
 function localStrategy(username, password, done) {
     userModel
@@ -192,7 +227,18 @@ function findUserById(req, res) {
         });
 }
 
-
+function findSubscriptions(req, res){
+    var userId = req.params.userId;
+    userModel
+        .findUserById(userId)
+        .then(function (user) {
+            for(index in user.subscriptions){
+                var subscriptions = [];
+                subscriptions.push(findUserById(user.subscriptions.index));
+            }
+            res.json(subscriptions);
+        });
+}
 
 
 function findAllUsers(req, res) {
@@ -234,13 +280,7 @@ function updateUserByAdmin(req, res) {
             res.send(status);
         });
 }
-function updateUserByUser(req, res) {
-    userModel
-        .updateUser(req.user._id, req.body)
-        .then(function (status) {
-            res.send(status);
-        });
-}
+
 
 function serializeUser(user, done) {
     done(null, user);
