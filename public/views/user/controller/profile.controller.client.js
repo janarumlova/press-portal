@@ -34,6 +34,7 @@
         model.monitorUsers = monitorUsers;
         model.monitorComments = monitorComments;
         model.monitorPosts = monitorPosts;
+        model.addUser = addUser;
 
         function init() {
             renderUser(currentUser);
@@ -45,6 +46,10 @@
 
         }
         init();
+
+        function addUser() {
+            $location.url("/admin/user/new");
+        }
 
         function monitorUsers() {
             $location.url("/admin/user");

@@ -16,8 +16,11 @@
             deletePost: deletePost,
             findAllPosts: findAllPosts,
             deletePostByAdmin: deletePostByAdmin
+
         };
         return api;
+
+
 
         function findAllPosts() {
             var url = "/api/post";

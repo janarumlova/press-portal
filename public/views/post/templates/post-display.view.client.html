@@ -2,6 +2,15 @@
 <div ng-include="'views/common/header.view.client.html'"></div>
 
 
+<!--Message and Error-->
+<div ng-show="model.message"
+     class="alert alert-success">
+    {{model.message}}
+</div>
+<div ng-show="model.error"
+     class="alert alert-danger">
+    {{model.error}}
+</div>
 
 <div class="container">
     <div class="row">
@@ -38,34 +47,40 @@
                     Source:
                         <a href="{{model.post.sourceUrl}}">Link</a>
                     Date:
-                        <span>
+                        <span >
                             {{model.post.dateCreated | date : 'short'}}
                         </span>
 			    </span>
             </div>
 
-            <h2>{{model.post.comments}}</h2>
-            <ul class="comments-div clearfix">
+            <h2><i class="fa fa-commenting" aria-hidden="true"></i>
+                Comments:</h2>
+            <ul ng-repeat="comment in model.comments" class="comments-div clearfix">
                 <li>
-                    <span>Sidharth Thapar</span>
+                    <span>{{comment.author.firstName}} {{comment.author.lastName}}</span>
                     <span></span>
-                    <span>This is some random crap from a random creep.</span>
+                    <span>{{comment.content}}</span>
+                    <span class="fa fa-trash-o  delete-icon col-xs-1 pull-right" aria-hidden="true"
+                          ng-click="model.deleteComment(commentId._id, model.postId)"
+                          ng-if="comment._author === model.user._id"></span>
                 </li>
             </ul>
-            <ul class="comments-div clearfix">
-                <li>
-                    <span>Swamy Muthuswamyiyer</span>
-                    <span></span>
-                    <span>This is some random crap from a random creep.This is some random crap from a random creep.This is some random crap from a random creep.</span>
-                </li>
-            </ul>
-            <ul class="comments-div clearfix">
-                <li>
-                    <span>Hardik Gogia</span>
-                    <span></span>
-                    <span>This is some random crap from a random creep.</span>
-                </li>
-            </ul>
+            <div class="col-xs-12">
+                <div class="widget-area no-padding blank">
+                    <div class="status-upload">
+                        <form ng-submit="model.addComment(model.comment); model.comment = {}">
+                            <textarea ng-model="model.comment.content"
+                                      placeholder="Leave a comment to this post..." ></textarea>
+                            <button type="submit" class="btn btn-success green comment-btn">
+                                <i class="fa fa-paper-plane"></i>
+                                Comment
+                            </button>
+                        </form>
+                    </div><!-- Status Upload  -->
+                </div><!-- Widget Area -->
+            </div>
+
+        </div>
         </div>
     </div>
 </div>

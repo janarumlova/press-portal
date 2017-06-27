@@ -15,13 +15,21 @@ postModel.findUserByUsername = findUserByUsername;
 postModel.findUserByCredentials = findUserByCredentials;
 postModel.updateUser = updateUser;
 postModel.deleteUser = deleteUser;
-postModel.addWebsite = addWebsite;
-postModel.deleteWebsite = deleteWebsite;
 postModel.updatePostByPublisher = updatePostByPublisher;
 postModel.deletePost = deletePost;
-
+postModel.deleteComment = deleteComment;
+postModel.addComment = addComment;
 
 module.exports = postModel;
+
+function addComment(postId, commentId) {
+    return postModel
+        .findById(postId)
+        .then(function (post) {
+            post.comments.push(commentId);
+            return post.save();
+        });
+}
 
 function deletePost(userId, postId) {
     return postModel
@@ -30,6 +38,16 @@ function deletePost(userId, postId) {
             return userModel
                 .deletePost(userId, postId);
         })
+}
+
+function deleteComment(postId, commentId) {
+    return postModel
+        .findById(postId)
+        .then(function (post) {
+            var index = user.posts.indexOf(postId);
+            post.comments.splice(index, 1);
+            return post.save();
+        });
 }
 
 
@@ -96,24 +114,4 @@ function deleteUser(userId) {
     return postModel.remove({_id: userId});
 }
 
-function deleteWebsite(userId, websiteId) {
-    return postModel
-        .findById(userId)
-        .then(function (user) {
-            var index = user.websites.indexOf(websiteId);
-            user.websites.splice(index, 1);
-            return user.save();
-        });
-}
-
-// userId is the parent
-// websiteId is the child
-function addWebsite(userId, websiteId) {
-    return postModel
-        .findById(userId)
-        .then(function (user) {
-            user.websites.push(websiteId);
-            return user.save();
-        });
-}
 

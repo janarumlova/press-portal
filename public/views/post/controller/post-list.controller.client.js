@@ -41,7 +41,7 @@
         }
 
         function addPost() {
-            $location.url("/post");
+            $location.url("/post/new");
         }
         function displayPost(postId) {
             $location.url("/post/"+postId+"/display");

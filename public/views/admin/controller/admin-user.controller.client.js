@@ -12,10 +12,14 @@
 
         model.monitorUsers = monitorUsers;
         model.monitorPosts = monitorPosts;
+        model.monitorComments = monitorComments;
         model.editProfile = editProfile;
         model.logout = logout;
         model.unregisterUser = unregisterUser;
         model.deletePost= deletePost;
+        model.addUser = addUser;
+        model.createUser = createUser;
+
 
         function init() {
             findAllUsers();
@@ -30,6 +34,13 @@
 
         function monitorUsers() {
             $location.url("/admin/user");
+        }
+        function addUser() {
+            $location.url("/admin/user/new");
+        }
+
+        function monitorComments() {
+            $location.url("/admin/comment");
         }
 
         function monitorPosts() {
@@ -107,6 +118,35 @@
                 .then(function (posts) {
                     model.posts = posts;
                 });
+        }
+
+        function createUser(isValid, newUser) {
+            model.submitted = true;
+            if (isValid) {
+                if(newUser.password !== newUser.password2) {
+                    model.error = "passwords must match";
+                    return;
+                }
+
+                userService
+                    .findUserByUsername(newUser.username)
+                    .then(
+                        function (user) {
+                            model.error = "Sorry, "+newUser.username+" is taken";
+                        },
+                        function (response) {
+                            return userService
+                                .createUser(newUser)
+                                .then(function () {
+                                    $location.url('/profile');
+                                    model.message= "User: "+newUser.username+ ", was created successfully!";
+                                });
+                        }
+                    )
+            }
+            else {
+                model.error = 'One or more fields are required';
+            }
         }
     }
 })();

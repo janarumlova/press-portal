@@ -6,18 +6,18 @@
 <div class="col-xs-12 col-sm-4 panel-list"
      ng-include="'views/common/left-panel.view.client.html'">
 </div>
-<!--Message and Error-->
-<div ng-show="model.message"
-     class="alert alert-success">
-    {{model.message}}
-</div>
-<div ng-show="model.error"
-     class="alert alert-danger">
-    {{model.error}}
-</div>
+
 <!--Right-Panel-->
 <div class="col-xs-12 col-sm-8 panel-list">
-
+    <!--Message and Error-->
+    <div ng-show="model.message"
+         class="alert alert-success">
+        {{model.message}}
+    </div>
+    <div ng-show="model.error"
+         class="alert alert-danger">
+        {{model.error}}
+    </div>
     <div class="col-sm-12 panel">
         <div class="panel-heading form-head">
             <h1>Edit Post</h1>

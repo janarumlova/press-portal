@@ -9,11 +9,9 @@ app.get    ("/api/post", findAllPosts);
 app.get    ("/api/post/:postId", findPostById);
 app.get    ("/api/publisher/:publisherId/display", displayPostsForPublisher);
 
-
 app.delete ('/api/assignment/user/:userId', isAdmin, deleteUser);
 app.delete ("/api/deletePost/:postId", deletePost);
-app.delete ("/api/user/:userId/post/:postId", deletePostByAdmin);
-
+app.delete ("/api/user/:userId/post/:postId", isAdmin, deletePostByAdmin);
 
 app.get   ('/api/loggedIn', loggedIn);
 app.get   ('/api/checkAdmin', checkAdmin);
@@ -53,6 +51,10 @@ function findPostsByPublisher(req, res) {
             res.send(err);
         });
 }
+
+
+
+
 
 function displayPostsForPublisher(req, res) {
     postModel

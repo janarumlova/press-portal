@@ -1,25 +1,59 @@
 var app = require('../../express');
 var commentModel = require('../model/comment/comment.model.server');
+app.get    ("/api/post/:postId/comment", findAllCommentsForPost);
+app.get    ('/api/comment', findAllComments);
 
-
-app.post   ('/api/post', createPost);
-
-app.get    ('/api/assignment/user', findAllUsers);
 app.get    ('/api/assignment/user/:userId', findUserById);
-app.put    ('/api/assignment/user/:userId', updateUser);
-app.delete ('/api/assignment/user/:userId', isAdmin, deleteUser);
+app.post   ('/api/post/:postId/comment', createComment);
 
+app.delete ("/api/post/:postId/comment/:commentId", deleteComment);
+app.delete ("/api/admin/post/:postId/comment/:commentId", isAdmin, deleteCommentByAdmin);
 
 app.get   ('/api/assignment/loggedIn', loggedIn);
 app.get   ('/api/assignment/checkAdmin', checkAdmin);
 
-function createPost(req, res) {
-    var post = req.body;
-    post._publisher = req.user._id;
-    postModel
-        .createPost(post)
-        .then(function (post) {
-            res.json(post);
+function findAllComments(req, res) {
+    commentModel
+        .findAllComments()
+        .then(function (users) {
+            res.json(users);
+        });
+}
+
+function findAllCommentsForPost(req, res) {
+    commentModel
+        .findAllCommentsForPost(req.params.postId)
+        .then(function (comments) {
+            res.json(comments);
+        }, function (err) {
+            res.send(err);
+        });
+}
+
+function deleteComment(req, res) {
+    commentModel
+        .deleteComment(req.params.postId, req.params.commentId)
+        .then(function (status) {
+            res.send(status);
+        });
+}
+function deleteCommentByAdmin(req, res) {
+    commentModel
+        .deleteCommentByAdmin(req.params.postId, req.params.commentId)
+        .then(function (status) {
+            res.send(status);
+        });
+}
+
+
+function createComment(req, res) {
+    var comment = req.body;
+    comment.author = req.user._id;
+    var postId = req.params.postId;
+    commentModel
+        .createComment(postId, comment)
+        .then(function (comment) {
+            res.json(comment);
         }, function (err) {
             res.send(err);
         });
@@ -70,42 +104,4 @@ function deleteUser(req, res) {
         });
 }
 
-function findAllUsers(req, res) {
-    var username = req.query.username;
-    var password = req.query.password;
-    if(username && password) {
-        userModel
-            .findUserByCredentials(username, password)
-            .then(function (user) {
-                if(user) {
-                    res.json(user);
-                } else {
-                    res.sendStatus(404);
-                }
-            });
-    } else if(username) {
-        userModel
-            .findUserByUsername(username)
-            .then(function (user) {
-                if(user) {
-                    res.json(user);
-                } else {
-                    res.sendStatus(404);
-                }
-            });
-    } else {
-        userModel
-            .findAllUsers()
-            .then(function (users) {
-                res.json(users);
-            });
-    }
-}
 
-function updateUser(req, res) {
-    userModel
-        .updateUser(req.params.userId, req.body)
-        .then(function (status) {
-            res.send(status);
-        });
-}

@@ -3,7 +3,7 @@
         .module('WAM')
         .controller('postDisplayController', postDisplayController);
 
-    function postDisplayController($routeParams,  $location, currentUser, postService, userService) {
+    function postDisplayController($routeParams,  $location, currentUser, postService, userService, commentService) {
         var model = this;
 
         model.userId = currentUser._id;
@@ -11,19 +11,44 @@
 
         model.editPost = editPost;
         model.savePost = savePost;
+        model.addComment = addComment;
 
         function init() {
-            model.user = currentUser;
+            renderUser(currentUser);
+            renderPost();
+            renderComment()
+        }
+        init();
+
+        function addComment(comment) {
+            comment.post = model.postId;
+            commentService
+                .createComment(model.postId, comment)
+                .then(function (response) {
+                    model.messgage = "Comment was added successfully!";
+                    $location.url('/post/'+model.postId+'/display');
+                    init()
+                });
+        }
+        function renderComment() {
+            commentService
+                .findAllCommentsForPost(model.postId)
+                .then(function (comments) {
+                    model.comments = comments
+                });
+        }
+
+        function renderUser(user) {
+            model.user = user;
+        }
+
+        function renderPost() {
             postService
                 .findPostById(model.postId)
                 .then(function (post) {
                     model.post = post
                 });
-
         }
-
-        init();
-
         function editPost(postId) {
             $location.url("/post/"+postId+"/edit");
         }

@@ -1,0 +1,150 @@
+<!--header-->
+<div ng-include="'views/common/header.view.client.html'"></div>
+
+
+<!--Left Panel-->
+<div class="col-xs-12 col-sm-4 panel-list"
+     ng-include="'views/common/left-panel.view.client.html'">
+</div>
+
+<!--Right-Panel-->
+<div class="col-xs-12 col-sm-8 panel-list">
+    <!--Message and Error-->
+    <div ng-show="model.message"
+         class="alert alert-success">
+        {{model.message}}
+    </div>
+    <div ng-show="model.error"
+         class="alert alert-danger">
+        {{model.error}}
+    </div>
+    <div class="col-sm-12 panel">
+        <div class="panel-heading form-head">
+            <h1>Add New User</h1>
+        </div>
+        <div class="panel-body">
+            <form name="registerForm"
+                  ng-submit="model.createUser(registerForm.$valid, model.newuser)"
+                  novalidate>
+
+                <div class="form-group"
+                     ng-class="{ 'has-error' : registerForm.uname.$invalid && !registerForm.uname.$pristine && model.submitted}">
+                    <label for="username">
+                        Username
+                    </label>
+                    <input type="text"
+                           name="uname"
+                           autofocus="autofocus"
+                           ng-model="model.newuser.username"
+                           id="username"
+                           class="form-control form-group"
+                           placeholder="username"
+                           required>
+                    <p ng-show="registerForm.uname.$invalid && !registerForm.uname.$pristine && model.submitted"
+                       class="help-block">
+                        Username is required.
+                    </p>
+                </div>
+
+                <div class="form-group"
+                     ng-class="{ 'has-error' : registerForm.pass.$invalid && !registerForm.pass.$pristine && model.submitted}">
+                    <label for="password">
+                        Password
+                    </label>
+                    <input type="password"
+                           name="pass"
+                           ng-model="model.newuser.password"
+                           id="password"
+                           class="form-control form-group"
+                           placeholder="password"
+                           ng-required="true"
+                    >
+                    <p ng-show="registerForm.pass.$invalid && !registerForm.pass.$pristine && model.submitted"
+                       class="help-block">
+                        Password is required.
+                    </p>
+                </div>
+
+                <div class="form-group"
+                     ng-class="{ 'has-error' : registerForm.verify.$invalid && !registerForm.verify.$pristine && model.submitted}">
+                    <label for="password2">
+                        Re-enter Password
+                    </label>
+                    <input type="password"
+                           name="verify"
+                           ng-model="model.newuser.password2"
+                           id="password2"
+                           class="form-control form-group"
+                           placeholder="re-enter and verify password"
+                           required>
+                    <p ng-show="registerForm.verify.$invalid && !registerForm.verify.$pristine && model.submitted"
+                       class="help-block">
+                        Re-enter Password.
+                    </p>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">
+                        E-mail
+                    </label>
+                    <input type="email"
+                           name="email"
+                           ng-model="model.newuser.email"
+                           id="email"
+                           class="form-control form-group"
+                           placeholder="abc@xyz.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="firstName">
+                        First Name
+                    </label>
+                    <input type="text"
+                           name="firstName"
+                           ng-model="model.newuser.firstName"
+                           id="firstName"
+                           class="form-control form-group"
+                           placeholder="firstName">
+                </div>
+
+                <div class="form-group">
+                    <label for="lastName">
+                        Last Name
+                    </label>
+                    <input type="text"
+                           name="lastName"
+                           ng-model="model.newuser.lastName"
+                           id="lastName"
+                           class="form-control form-group"
+                           placeholder="abc@xyz.com">
+                </div>
+
+                <label for="role">Role</label>
+                <select id="role"
+                        class="form-control "
+                        title="Choose your Role"
+                        ng-model="model.newuser.role"
+                        required>
+                    <option value="READER">Reader</option>
+                    <option value="PUBLISHER">Publisher</option>
+                    <option value="ADMIN">Admin</option>
+                </select>
+
+
+                <button type="submit"
+                        class="btn login-btn btn-block">
+                    <b>Add User</b>
+                </button>
+                <a class="btn cancel-btn btn-block"
+                   href="#!/profile">
+                    <b>Cancel</b>
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!--footer-->
+<div ng-include="'views/common/footer.view.client.html'"></div>
+

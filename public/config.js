@@ -93,7 +93,7 @@
             })
             .when('/admin/user/new', {
                 templateUrl: 'views/admin/templates/admin-user-new.view.client.html',
-                controller: 'adminUserNewController',
+                controller: 'adminUserController',
                 controllerAs: 'model',
                 resolve: {
                     currentUser: checkAdmin
@@ -109,7 +109,7 @@
             })
             .when('/admin/comment', {
                 templateUrl: 'views/admin/admin-comment.view.client.html',
-                controller: 'adminCommentController',
+                controller: 'adminUserController',
                 controllerAs: 'model',
                 resolve: {
                     currentUser: checkAdmin
