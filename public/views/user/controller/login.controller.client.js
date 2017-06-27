@@ -9,8 +9,6 @@
 
         model.login = login;
 
-        //model.submitForm = submitForm;
-
         function login(isValid) {
             model.submitted = true;
             if (isValid) {

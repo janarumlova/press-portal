@@ -5,25 +5,42 @@
     
     function postService($http) {
 
-        this.createPost = createPost;
-        this.findPostsByPublisher = findPostsByPublisher;
-        this.findPostsForReader = findPostsForReader;
-        this.findPostById = findPostById;
-        this.updatePostByPublisher = updatePostByPublisher;
-        this.displayPostsForPublisher = displayPostsForPublisher;
-        // this.findUserById = findUserById;
-        //     // findUserByUsername: findUserByUsername,
-            // findUserByCredentials: findUserByCredentials,
-            // updateUser: updateUser,
-            // deleteUser: deleteUser,
-            // login: login,
-            // loggedIn: loggedIn,
-            // logout: logout,
-            // register: register,
-            // unregister: unregister,
-            // checkAdmin: checkAdmin,
-        // this.findAllPosts = findAllPosts;
+        var api = {
+            createPost: createPost,
+            findPostsByPublisher: findPostsByPublisher,
+            findPostsForReader: findPostsForReader,
+            findPostById: findPostById,
+            updatePostByPublisher: updatePostByPublisher,
+            displayPostsForPublisher: displayPostsForPublisher,
+            subscribe: subscribe,
+            deletePost: deletePost,
+            findAllUsers: findAllUsers
+        };
+        return api;
 
+        function findAllUsers() {
+            var url = "/api/post";
+            return $http.get(url)
+                .then(function (response) {
+                    return response.data;
+                });
+        }
+
+        function deletePost(postId) {
+            var url = "/api/deletePost/"+postId;
+            return $http.delete(url)
+                .then(function (response) {
+                    return response.data;
+                });
+        }
+
+        function subscribe(publisherId) {
+            var url = "/api/subscribe/"+publisherId;
+            return $http.post(url)
+                .then(function (response) {
+                    return response.data;
+                });
+        }
 
         function findPostById(postId) {
             var url = "/api/post/"+postId;
@@ -49,7 +66,7 @@
                 });
         }
         function displayPostsForPublisher(publisherId) {
-            var url = "/api/publisher/"+publisherId+"/post";
+            var url = "/api/publisher/"+publisherId+"/display";
             return $http.get(url)
                 .then(function (response) {
                     return response.data;

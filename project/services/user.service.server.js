@@ -13,29 +13,29 @@ var bcrypt = require("bcrypt-nodejs");
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 
-// var googleConfig = {
-//     clientID     : '222671963957-205m5fibvtpc223bpdsid045fd4vjg1u.apps.googleusercontent.com',
-//     clientSecret : 'Gm8CnkQKjc4_SkE9-naJmnGa',
-//     callbackURL  : '/auth/google/callback'
-// };
-//
-// var facebookConfig = {
-//     clientID     : '1093632250736728',
-//     clientSecret : '34c72e7877802295b1a10682fdac6e85',
-//     callbackURL  : '/auth/facebook/callback'
-// };
+var googleConfig = {
+    clientID     : '222671963957-205m5fibvtpc223bpdsid045fd4vjg1u.apps.googleusercontent.com',
+    clientSecret : 'Gm8CnkQKjc4_SkE9-naJmnGa',
+    callbackURL  : '/auth/google/callback'
+};
 
 var facebookConfig = {
-    clientID     : process.env.FACEBOOK_CLIENT_ID,
-    clientSecret : process.env.FACEBOOK_CLIENT_SECRET,
-    callbackURL  : process.env.FACEBOOK_CALLBACK_URL
+    clientID     : '1093632250736728',
+    clientSecret : '34c72e7877802295b1a10682fdac6e85',
+    callbackURL  : '/auth/facebook/callback'
 };
-
-var googleConfig = {
-    clientID     : process.env.GOOGLE_CLIENT_ID,
-    clientSecret : process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL  : process.env.GOOGLE_CALLBACK_URL
-};
+//
+// var facebookConfig = {
+//     clientID     : process.env.FACEBOOK_CLIENT_ID,
+//     clientSecret : process.env.FACEBOOK_CLIENT_SECRET,
+//     callbackURL  : process.env.FACEBOOK_CALLBACK_URL
+// };
+//
+// var googleConfig = {
+//     clientID     : process.env.GOOGLE_CLIENT_ID,
+//     clientSecret : process.env.GOOGLE_CLIENT_SECRET,
+//     callbackURL  : process.env.GOOGLE_CALLBACK_URL
+// };
 passport.use(new GoogleStrategy(googleConfig, googleStrategy));
 passport.use('facebook', new FacebookStrategy(facebookConfig, facebookStrategy));
 
@@ -45,15 +45,20 @@ app.post  ('/api/logout', logout);
 app.post  ('/api/register', register);
 app.delete ('/api/unregister', unregister);
 app.put   ('/api/updateUser', updateUserByUser);
-
+app.post   ("/api/subscribe/:publisherId", subscribe);
+app.post  ("/api/savePost", savePost);
+app.post  ("/api/follow/:readerId", follow);
+app.delete  ("/api/unFollow/:readerId", unFollow);
 //Find Functions
 app.get   ("/api/reader", findAllReaders);
 app.get   ("/api/publisher", findAllPublishers);
-app.get   ("/api/subscriptions", findSubscriptions);
+app.get   ("/api/subscriptions/:readerId", findSubscriptionsForReader);
 app.get   ('/api/user', findAllUsers);
 app.get   ('/api/user/:userId', findUserById);
 app.get   ('/api/loggedIn', loggedIn);
 app.get   ('/api/publisher/:publisherId', findPublisherById);
+app.get   ('/api/followers', findFollowers);
+app.get   ("/api/follows", findFollows);
 
 //Admin Services
 app.get   ('/api/checkAdmin', checkAdmin);
@@ -83,6 +88,59 @@ app.get('/auth/facebook/callback',
         failureRedirect: '/index.html#!/login'
     }));
 
+function findFollowers(req, res) {
+    userModel
+        .findFollowers(req.user._id)
+        .then(function (followers) {
+            res.json(followers);
+        });
+}
+
+function findFollows(req, res) {
+    userModel
+        .findFollows(req.user._id)
+        .then(function (following) {
+            res.json(following);
+        });
+}
+function savePost(req, res) {
+    userModel
+        .savePost(req.user._id, req.body)
+        .then(function (status) {
+            res.send(status)
+        });
+}
+
+function follow(req, res) {
+    userModel
+        .follow(req.user._id, req.params.readerId)
+        .then(function (status) {
+            res.send(200)
+        }, function (err) {
+            res.send(err)
+        });
+}
+
+function unFollow(req, res) {
+    var userId = req.user._id;
+    var readerId = req.params.readerId;
+    userModel
+        .unFollow(userId, readerId)
+        .then(function (status) {
+            res.json(status);
+        });
+}
+
+function subscribe(req, res) {
+    userModel
+        .subscribe(req.user._id, req.params.publisherId)
+        .then(function (response) {
+            res.send(200)
+        }, function (err) {
+            res.send(err)
+        });
+}
+
 function updateUserByUser(req, res) {
     userModel
         .updateUser(req.user._id, req.body)
@@ -108,7 +166,7 @@ function findAllPublishers(req, res) {
         });
 }
 
-function findAllReaders() {
+function findAllReaders(req, res) {
     userModel
         .findAllReaders()
         .then(function (users) {
@@ -227,16 +285,15 @@ function findUserById(req, res) {
         });
 }
 
-function findSubscriptions(req, res){
-    var userId = req.params.userId;
+function findSubscriptionsForReader(req, res){
     userModel
-        .findUserById(userId)
-        .then(function (user) {
-            for(index in user.subscriptions){
-                var subscriptions = [];
-                subscriptions.push(findUserById(user.subscriptions.index));
+        .findSubscriptionsForReader(req.params.readerId)
+        .then(function (subs) {
+            if(subs) {
+                res.json(subs);
+            } else {
+                res.sendStatus(404);
             }
-            res.json(subscriptions);
         });
 }
 

@@ -1,9 +1,9 @@
 (function () {
     angular
         .module('WAM')
-        .controller('postListController', postListController);
+        .controller('postListSavedController', postListSavedController);
 
-    function postListController($location, currentUser, postService, userService) {
+    function postListSavedController($location, currentUser, postService, userService) {
         var model = this;
 
         model.userId = currentUser._id;
@@ -15,14 +15,41 @@
         model.deletePost = deletePost;
         model.displayPost = displayPost;
         model.editPost = editPost;
+        model.showReaders = showReaders;
 
         function init() {
             renderUser(currentUser);
+            renderFollowers();
+            renderFollowing();
+            renderSubscriptions();
             postService
-                    .findPostsByPublisher()
-                    .then(renderPosts);
-        }
+                .findPostsForReader()
+                .then(renderPosts)
+        };
         init();
+
+        function renderFollowers() {
+            userService
+                .findFollowers()
+                .then(function (followers) {
+                    model.followers = followers;
+                });
+        }
+        function renderFollowing() {
+            userService
+                .findFollows()
+                .then(function (follows) {
+                    model.iFollow = follows;
+                });
+        }
+
+        function renderSubscriptions() {
+            userService
+                .findSubscriptionsForReader(currentUser._id)
+                .then(function(subscriptions) {
+                    model.subscriptions = subscriptions
+                });
+        }
 
         function renderUser (user) {
             model.user = user;
@@ -41,7 +68,7 @@
         }
 
         function addPost() {
-            $location.url("/post");
+            $location.url("/post/new");
         }
         function displayPost(postId) {
             $location.url("/post/"+postId+"/display");
@@ -66,6 +93,9 @@
         function editPost(postId) {
             $location.url("/post/"+postId+"/edit");
         }
+        function showReaders() {
+            $location.url("/reader");
+        }
 
         function deletePost(postId) {
             postService
@@ -73,10 +103,11 @@
                 .then(function () {
                     init();
                     model.message = "You just deleted the post successfully!";
-                }, function (err) {
-                    model.error = err
+                }, function () {
+                    model.error = 'Post was not deleted!'
                 });
         }
+
     }
 })();
 

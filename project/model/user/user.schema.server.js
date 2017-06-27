@@ -22,8 +22,9 @@ var userSchema = mongoose.Schema({
     },
     posts: [{type:mongoose.Schema.Types.ObjectId, ref: "PostModel"}],
     subscriptions: [{type:mongoose.Schema.Types.ObjectId, ref: "UserModel"}],
+    subscribers: [{type:mongoose.Schema.Types.ObjectId, ref: "UserModel"}],
     followers: [{type:mongoose.Schema.Types.ObjectId, ref: "UserModel"}],
-    followedBy: [{type:mongoose.Schema.Types.ObjectId, ref: "UserModel"}],
+    iFollow: [{type:mongoose.Schema.Types.ObjectId, ref: "UserModel"}],
     //comments: [{type:mongoose.Schema.Types.ObjectId, ref: "CommentModel"}],
     dateCreated: {type: Date, default: Date.now}
 }, {collection: "user"});

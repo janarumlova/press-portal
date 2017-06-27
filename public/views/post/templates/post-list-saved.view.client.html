@@ -20,17 +20,16 @@
     </div>
     <div class="panel">
         <div class="panel-heading form-head">
-            <h1>My Posts:</h1>
+            <h1>My Saved Posts:</h1>
         </div>
 
         <div class="list-group col-xs-12 ">
             <div class="panel-body">
                 <p>
                     You can <br>
-                    View any of your posts.<br>
+                    View any of your saved posts.<br>
                     Read them.<br>
-                    Edit them.<br>
-                    Delete them.<br>
+                    Comment on the post.<br>
                 </p>
             </div>
             <div class="list-group-item  col-xs-12"
@@ -45,7 +44,9 @@
                           ng-click="model.deletePost(post._id)">
                     </span>
                     <span ng-click="model.editPost(post._id)"
-                          class="fa fa-pencil-square edit-icon pull-right" aria-hidden="true"></span>
+                          class="fa fa-pencil-square edit-icon pull-right" aria-hidden="true">
+
+                    </span>
                 </div>
             </div>
         </div>

@@ -5,16 +5,25 @@ app.put    ("/api/assignment/user/:postId/edit", updatePostByPublisher);
 app.post   ('/api/createPost', createPost);
 app.get    ('/api/publisherPost', findPostsByPublisher);
 app.get    ("/api/readerPost", findPostsForReader);
-app.get    ("/api/allPosts", findAllPosts);
+app.get    ("/api/post", findAllPosts);
 app.get    ("/api/post/:postId", findPostById);
-app.get    ("/api/publisher/:publisherId/post", displayPostsForPublisher);
+app.get    ("/api/publisher/:publisherId/display", displayPostsForPublisher);
+
 
 app.delete ('/api/assignment/user/:userId', isAdmin, deleteUser);
+app.delete ("/api/deletePost/:postId", deletePost);
 
 
 app.get   ('/api/loggedIn', loggedIn);
 app.get   ('/api/checkAdmin', checkAdmin);
 
+function deletePost(req, res) {
+    postModel
+        .deletePost(req.user._id, req.params.postId)
+        .then(function (status) {
+            res.send(status);
+        });
+}
 
 function findPostById(req, res) {
     var postId = req.params.postId;
@@ -110,13 +119,6 @@ function deleteUser(req, res) {
         });
 }
 
-function updateUser(req, res) {
-    userModel
-        .updateUser(req.params.userId, req.body)
-        .then(function (status) {
-            res.send(status);
-        });
-}
 
 function updatePostByPublisher(req, res) {
     var updatedPost = req.body;

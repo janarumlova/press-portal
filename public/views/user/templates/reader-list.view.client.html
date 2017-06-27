@@ -17,31 +17,30 @@
          class="alert alert-danger">
         {{model.error}}
     </div>
+
     <div class="panel">
         <div class="panel-heading form-head">
-            <h1>All Publishers:</h1>
+            <h1>All Readers:</h1>
         </div>
 
         <div class="list-group col-xs-12 ">
             <div class="panel-body">
                 <p>
-                    You can select any of the following publishers.<br>
-                    Read their posts.<br>
-                    Save their posts.<br>
-                    Comment on the posts.<br>
-                    Subscribe to them.<br>
+                    Follow other Readers.<br>
                 </p>
             </div>
             <div class="list-group-item brown-text"
-                 ng-repeat="publisher in model.publishers">
-                <div ng-click="model.displayPosts(publisher._id)">
+                 ng-repeat="reader in model.readers">
+                <div>
                     <i class="fa fa-book" aria-hidden="true"></i>
                     <b>
-                        {{publisher.firstName}}
-                        {{publisher.lastName}}
+                        {{reader.firstName}}
+                        {{reader.lastName}}
                     </b>
+                    <span class="fa fa-rss  edit-icon col-xs-1 pull-right" aria-hidden="true"
+                          ng-click="model.follow(reader)">
+                    </span>
                 </div>
-                <!--<i class="fa fa-rss col-xs-2" aria-hidden="true"></i>-->
             </div>
         </div>
     </div>

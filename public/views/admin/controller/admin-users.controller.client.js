@@ -1,41 +1,81 @@
 (function () {
     angular
         .module('WAM')
-        .controller('adminUsersController', adminUsersController);
+        .controller('adminUserController', adminUserController);
 
-    function adminUsersController(userService){
+    function adminUserController(userService, currentUser, $location){
         var model = this;
 
         model.deleteUser = deleteUser;
-        model.createUser = createUser;
         model.editUser = editUser;
-        model.updateUserByAdmin = updateUserByAdmin;
+        model.updateUser = updateUser;
+
+        model.monitorUsers = monitorUsers;
+        model.editProfile = editProfile;
+        model.logout = logout;
+        model.unregisterUser = unregisterUser;
 
         function init() {
-            findAllUsers()
+            findAllUsers();
+            renderUser(currentUser);
         }
         init();
 
-        function updateUserByAdmin(user) {
+        function renderUser(user) {
+            model.user = user;
+        }
+
+        function monitorUsers() {
+            $location.url("/admin/user");
+        }
+
+        function editProfile() {
+            $location.url("/profile/edit");
+        }
+
+        function unregisterUser() {
+            userService
+                .unregister()
+                .then(function () {
+                    $location.url('#!/');
+                });
+        }
+
+        function logout() {
+            userService
+                .logout()
+                .then(function () {
+                    $location.url('/login');
+                });
+        }
+
+        function updateUser(user) {
             userService
                 .updateUserByAdmin(user._id, user)
-                .then(findAllUsers);
+                .then(function(){
+                    findAllUsers();
+                    model.message = user.firstName+" updated successfully!";
+                    model.curuser={}
+                });
         }
 
         function editUser(user) {
-            model.user = angular.copy(user);
+            model.curuser = angular.copy(user);
         }
-
-        function createUser(user) {
-            userService
-                .createUser(user)
-                .then(findAllUsers);
-        }
+        //
+        // function createUser(user) {
+        //     userService
+        //         .createUser(user)
+        //         .then(findAllUsers);
+        // }
 
         function deleteUser(user) {
             userService
-                .deleteUser(user._id)
-                .then(findAllUsers);
+                .deleteUserByAdmin(user._id)
+                .then(function(){
+                    model.message = user.firstName+" "+user.lastName+" deleted successfully!";
+                    init();
+                });
         }
 
         function findAllUsers() {

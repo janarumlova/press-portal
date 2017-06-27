@@ -15,13 +15,115 @@ userModel.addPost = addPost;
 userModel.deletePost = deletePost;
 userModel.findUserByGoogleId = findUserByGoogleId;
 userModel.findUserByFacebookId = findUserByFacebookId;
-
-
-
+userModel.findSubscriptionsForReader =findSubscriptionsForReader;
+userModel.subscribe = subscribe;
+userModel.follow = follow;
+userModel.addFollower = addFollower;
+userModel.addsubscriber = addsubscriber;
+userModel.savePost = savePost;
+userModel.findFollows = findFollows;
+userModel.findFollowers = findFollowers;
+userModel.unFollow = unFollow;
+userModel.removeFollower = removeFollower;
 
 module.exports = userModel;
 
 
+
+function findFollows(userId) {
+    return userModel.find({'followers': userId});
+}
+function findFollowers(userId) {
+    return userModel.find({'iFollow': userId});
+}
+
+function savePost(userId, post) {
+    return userModel
+        .findById(userId)
+        .then(function (user) {
+            user.posts.push(post);
+            return user.save();
+        })
+}
+
+function deletePost(userId, postId) {
+    return userModel
+        .findById(userId)
+        .then(function (user) {
+            var index = user.posts.indexOf(postId);
+            user.posts.splice(index, 1);
+            return user.save();
+        });
+}
+
+function unFollow(userId, readerId) {
+    return userModel
+        .findById(userId)
+        .then(function (user) {
+            user.iFollow.pull(readerId);
+            return user.save();
+        })
+        .then(function (response) {
+            return userModel
+                .removeFollower(userId, readerId)
+        });
+}
+
+
+function subscribe(subscriberId, publisherId) {
+    return userModel
+        .findById(subscriberId)
+        .then(function (subscriber) {
+            subscriber.subscriptions.push(publisherId);
+            return subscriber.save();
+            })
+        .then(function (response) {
+            return userModel
+                .addsubscriber(subscriberId, publisherId)
+        });
+}
+
+function follow(userId, readerId) {
+    return userModel
+        .findById(userId)
+        .then(function (user) {
+            user.iFollow.push(readerId);
+            return user.save();
+            })
+        .then(function (response) {
+            return userModel
+                .addFollower(userId, readerId)
+        });
+}
+
+function addsubscriber(subscriberId, publisherId) {
+    return userModel
+        .findById(publisherId)
+        .then(function (publisher) {
+            publisher.subscribers.push(subscriberId);
+            return publisher.save();
+        })
+}
+function addFollower(userId, readerId) {
+    return userModel
+        .findById(readerId)
+        .then(function (reader) {
+            reader.followers.push(userId);
+            return reader.save();
+        })
+}
+function removeFollower(userId, readerId) {
+    return userModel
+        .findById(readerId)
+        .then(function (reader) {
+            reader.followers.pull(userId);
+            return reader.save();
+        })
+}
+
+function findSubscriptionsForReader(readerId) {
+    return userModel.find({'subscribers': readerId});
+}
 
 function findUserByFacebookId(facebookId) {
     return userModel.findOne({'facebook.id': facebookId});
@@ -34,7 +136,7 @@ function findUserByGoogleId(googleId) {
 
 function findUserById(userId) {
     return userModel.findOne({_id: userId})
-};
+}
 
 function findAllUsers() {
     return userModel.find();
@@ -63,16 +165,6 @@ function updateUser(userId, newUser) {
 
 function deleteUser(userId) {
     return userModel.remove({_id: userId});
-}
-
-function deletePost(userId, postId) {
-    return userModel
-        .findById(userId)
-        .then(function (user) {
-            var index = user.posts.indexOf(postId);
-            user.posts.splice(index, 1);
-            return user.save();
-        });
 }
 
 // userId is the parent

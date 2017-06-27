@@ -18,6 +18,7 @@
         model.createPost = createPost;
         model.editProfile = editProfile;
         model.showPublishers = showPublishers;
+        model.showReaders = showReaders;
         model.addPost = addPost;
         model.myPosts = myPosts;
 
@@ -26,14 +27,79 @@
         model.findSubscriptions = findSubscriptions;
         model.findPostsByPublisher = findPostsByPublisher;
         model.findPostsForReader = findPostsForReader;
+        model.findSubscriptions = findSubscriptions;
+        model.savedPosts = savedPosts;
+        model.unFollow = unFollow;
+
+        model.monitorUsers = monitorUsers;
+        model.monitorComments = monitorComments;
+        model.monitorPosts = monitorPosts;
 
         function init() {
             renderUser(currentUser);
+            if (currentUser.role === "READER"){
+                renderFollowing();
+                renderFollowers();
+                renderSubscriptions();
+            }
+
         }
         init();
 
+        function monitorUsers() {
+            $location.url("/admin/user");
+        }
+        function monitorPosts() {
+            $location.url("/admin/post");
+        }
+        function monitorComments() {
+            $location.url("/admin/comment");
+        }
+
+        function unFollow(follows) {
+            userService
+                .unFollow(follows._id)
+                .then(function(response) {
+                    init();
+                    $location.url("/profile");
+                    model.message = "You unfollowed "
+                        +follows.firstName+" "+follows.lastName;
+                })
+        }
+
+        function renderSubscriptions() {
+            userService
+                .findSubscriptionsForReader(currentUser._id)
+                .then(function(subscriptions) {
+                    model.subscriptions = subscriptions
+                });
+        }
+
+        function renderFollowers() {
+            userService
+                .findFollowers()
+                .then(function (followers) {
+                    model.followers = followers;
+                });
+        }
+        function renderFollowing() {
+            userService
+                .findFollows()
+                .then(function (follows) {
+                    model.iFollow = follows;
+                });
+        }
+
         function renderUser (user) {
             model.user = user;
+        }
+
+        function findSubscriptions() {
+            userService
+                .findSubscriptions()
+                .then(function (subscriptions) {
+                    model.subscriptions = subscriptions;
+                });
         }
 
         function findPostsForReader() {
@@ -67,13 +133,6 @@
                     $location.url("/publisher");
                 });
         }
-        function findSubscriptions(){
-            userService
-                .findSubscriptions()
-                .then(function (users) {
-                    model.publishers = users;
-                });
-        }
 
         function editProfile() {
             $location.url("/profile/edit");
@@ -82,12 +141,18 @@
         function showPublishers() {
             $location.url("/publisher");
         }
+        function showReaders() {
+            $location.url("/reader");
+        }
 
         function addPost() {
             $location.url("/post/new");
         }
         function myPosts() {
             $location.url("/post");
+        }
+        function savedPosts() {
+            $location.url("/savedPost");
         }
 
         function createPost(isValid, newPost) {
@@ -109,7 +174,7 @@
             userService
                 .unregister()
                 .then(function () {
-                    $location.url('#!/');
+                    $location.url('/');
                 });
         }
 
@@ -117,7 +182,7 @@
             userService
                 .logout()
                 .then(function () {
-                    $location.url('/login');
+                    $location.url('/');
                 });
         }
 

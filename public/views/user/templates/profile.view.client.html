@@ -20,7 +20,10 @@
 <!--Left Panel-->
 <div class="col-xs-12 col-sm-4 panel-list"
      ng-include="'views/common/left-panel.view.client.html'">
+</div>
 
+<!--Right-Panel-->
+<div class="col-xs-12 col-sm-8 panel-list">
     <!--Message and Error-->
     <div ng-show="model.message"
          class="alert alert-success">
@@ -30,10 +33,7 @@
          class="alert alert-danger">
         {{model.error}}
     </div>
-</div>
 
-<!--Right-Panel-->
-<div class="col-xs-12 col-sm-8 panel-list">
     <div class="panel">
         <div class="panel-heading form-head">
             <h1>
@@ -84,39 +84,64 @@
                     <b>{{model.user.dateCreated | date : 'short'}}</b>
                 </div>
             </div>
-        </div>
-        <div class="card col-xs-12 col-sm-4 ">
-            <img class="card-img-top img-thumbnail img-responsive "
-                 src="https://wedevs-com-wedevs.netdna-ssl.com/wp-content/uploads/2014/03/Subscriptions.jpg"
-                 alt="Card image cap">
-            <div class="card-block subs">
-                <h4 class="card-title">
-                    Subscriptions
-                </h4>
-                <h4 class="card-text">{{model.user.subscriptions.length}}</h4>
+
+            <div ng-if= "model.user.role==='READER' || model.user.role==='PUBLISHER'"
+                 class="panel-body brown-text col-xs-12 ">
+
+                <div class="card col-xs-3 col-xs-offset-1">
+                    <div class="card-block">
+                        <h4 class="card-title">My Subscriptions!</h4>
+                        <p class="card-text brown-text">{{model.user.subscriptions.length}}</p>
+                    </div>
+                </div>
+                <div class="card col-xs-3 col-xs-offset-1">
+                    <div class="card-block">
+                        <h4 class="card-title">I'm Following!</h4>
+                        <p class="card-text brown-text">{{model.user.iFollow.length}}</p>
+                    </div>
+                </div>
+                <div class="card col-xs-3 col-xs-offset-1">
+                    <div class="card-block">
+                        <h4 class="card-title">My Followers!</h4>
+                        <p class="card-text brown-text">{{model.user.followers.length}}</p>
+                    </div>
+                </div>
+                <!--<div class=" following col-xs-3 col-xs-offset-1">-->
+                    <!--<h4 class="">-->
+                        <!--I am following!</h4>-->
+                    <!--<h4 class="card-text">{{model.user.iFollow.length}}</h4>-->
+                <!--</div>-->
+                <!--<div class=" followers col-xs-3 col-xs-offset-1">-->
+                    <!--<h4 class="">-->
+                        <!--Followers-->
+                    <!--</h4>-->
+                    <!--<h4 class="card-text">{{model.user.followers.length}}</h4>-->
+                <!--</div>-->
+                <!--<div class=" subs col-xs-3 col-xs-offset-1">-->
+                    <!--<h4 class="">-->
+                        <!--Subscriptions-->
+                    <!--</h4>-->
+                    <!--<h4 class="card-text">{{model.user.subscriptions.length}}</h4>-->
+                <!--</div>-->
             </div>
-        </div>
-        <div class="card col-xs-12 col-sm-4 " >
-            <img class="card-img-top img-thumbnail img-responsive"
-                 src="http://www.preapps.com/blog/wp-content/uploads/2015/07/twitter-follower-socialmeda-1.jpg"
-                 alt="Card image cap">
-            <div class="card-block followers ">
-                <h4 class="card-title">
-                    Followers
-                </h4>
-                <h4 class="card-text">{{model.user.followers.length}}</h4>
-            </div>
-        </div>
-        <div class="card card col-xs-12 col-sm-4 image-card" >
-            <img class="card-img-top img-thumbnail img-responsive"
-                 src="https://d1e4pidl3fu268.cloudfront.net/4596a7fb-5716-4433-9189-37de2096cd0c/a.crop_500x375_0%2C20.preview.png"
-                 alt="Card image cap">
-            <div class="card-block following ">
-                <h4 class="card-title">
-                    I am following!</h4>
-                <h4 class="card-text">{{model.user.followedBy.length}}</h4>
-            </div>
-        </div>
+        <!--<div class="card col-xs-12 col-sm-4 ">-->
+            <!--<img class="card-img-top img-thumbnail img-responsive "-->
+                 <!--src="https://wedevs-com-wedevs.netdna-ssl.com/wp-content/uploads/2014/03/Subscriptions.jpg"-->
+                 <!--alt="Card image cap">-->
+            <!---->
+        <!--</div>-->
+        <!--<div class="card col-xs-12 col-sm-4 " >-->
+            <!--<img class="card-img-top img-thumbnail img-responsive"-->
+                 <!--src="http://www.preapps.com/blog/wp-content/uploads/2015/07/twitter-follower-socialmeda-1.jpg"-->
+                 <!--alt="Card image cap">-->
+            <!---->
+        <!--</div>-->
+        <!--<div class="card card col-xs-12 col-sm-4 image-card" >-->
+            <!--<img class="card-img-top img-thumbnail img-responsive"-->
+                 <!--src="https://d1e4pidl3fu268.cloudfront.net/4596a7fb-5716-4433-9189-37de2096cd0c/a.crop_500x375_0%2C20.preview.png"-->
+                 <!--alt="Card image cap">-->
+            <!---->
+        <!--</div>-->
     </div>
 </div>
 

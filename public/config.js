@@ -30,6 +30,14 @@
                     currentUser: checkCurrentUser
                 }
             })
+            .when('/savedPost', {
+                templateUrl: 'views/post/templates/post-list-saved.view.client.html',
+                controller: 'postListSavedController',
+                controllerAs: 'model',
+                resolve: {
+                    currentUser: checkCurrentUser
+                }
+            })
             .when('/post/:postId/edit', {
                 templateUrl: 'views/post/templates/post-edit.view.client.html',
                 controller: 'postEditController',
@@ -48,7 +56,15 @@
             })
             .when('/publisher', {
                 templateUrl: 'views/user/templates/publisher-list.view.client.html',
-                controller: 'userListController',
+                controller: 'publisherListController',
+                controllerAs: 'model',
+                resolve: {
+                    currentUser: checkCurrentUser
+                }
+            })
+            .when('/reader', {
+                templateUrl: 'views/user/templates/reader-list.view.client.html',
+                controller: 'readerListController',
                 controllerAs: 'model',
                 resolve: {
                     currentUser: checkCurrentUser
@@ -74,8 +90,24 @@
                 }
             })
             .when('/admin/user', {
-                templateUrl: 'views/user/templates/admin-users.view.client.html',
-                controller: 'adminUsersController',
+                templateUrl: 'views/admin/templates/admin-users.view.client.html',
+                controller: 'adminUserController',
+                controllerAs: 'model',
+                resolve: {
+                    currentUser: checkAdmin
+                }
+            })
+            .when('/admin/post', {
+                templateUrl: 'views/admin/admin-posts.view.client.html',
+                controller: 'adminPostController',
+                controllerAs: 'model',
+                resolve: {
+                    currentUser: checkAdmin
+                }
+            })
+            .when('/admin/comment', {
+                templateUrl: 'views/admin/admin-comments.view.client.html',
+                controller: 'adminCommentController',
                 controllerAs: 'model',
                 resolve: {
                     currentUser: checkAdmin

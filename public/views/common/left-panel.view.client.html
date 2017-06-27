@@ -11,53 +11,103 @@
 
     <!--READER OPERATIONS-->
 
-    <li ng-if="model.role === 'READER'"
-        class="list-group-item btn-default"
-        ng-click="model.display = 'subscriptions'">
-        <i class="fa fa-handshake-o" aria-hidden="true"></i>
+    <li ng-if="model.role === 'READER' || model.user.role === 'READER'"
+        class="list-group-item menu">
+        <button class="accordion"
+                data-toggle="collapse"
+                data-target="#subs">
+            <i class="fa fa-handshake-o" aria-hidden="true"></i>
+            My Subscriptions
+            <i class="fa fa-info pull-right" aria-hidden="true"></i>
+        </button>
 
-        My Subscriptions
-    </li>
-    <li ng-if="model.role === 'READER'"
-        class="list-group-item btn-default"
-        ng-click="">
-        <i class="fa fa-male" aria-hidden="true"></i>
-        My Followers
+        <div id="subs"
+             class="collapse">
+                <ul class="accordion-list">
+                    <li class="list-group-item"
+                        ng-repeat="sub in model.subscriptions">
+                        {{sub.firstName}} {{sub.lastName}}
+                    </li>
+                </ul>
+        </div>
     </li>
 
-    <li ng-if="model.role === 'READER'"
-        class="list-group-item btn-default"
-        ng-click="model.findPostsForReader();
-                  model.display = 'saved'">
+
+    <li ng-if="model.role === 'READER' || model.user.role === 'READER'"
+        class="list-group-item menu">
+        <button class="accordion"
+                data-toggle="collapse"
+                data-target="#followers">
+            <i class="fa fa-male" aria-hidden="true"></i>
+            My Followers
+            <i class="fa fa-info pull-right" aria-hidden="true"></i>
+        </button>
+        <div id="followers"
+             class="collapse">
+            <ul class="accordion-list">
+                <li class="list-group-item"
+                    ng-repeat="follower in model.followers">
+                    {{follower.firstName}} {{follower.lastName}}
+                </li>
+            </ul>
+        </div>
+    </li>
+
+    <li ng-if="model.role === 'READER' || model.user.role === 'READER'"
+        class="list-group-item menu">
+        <button class="accordion"
+                data-toggle="collapse"
+                data-target="#following">
+            <i class="fa fa-newspaper-o" aria-hidden="true"></i>
+            Readers you follow
+            <i class="fa fa-info pull-right" aria-hidden="true"></i>
+        </button>
+        <div id="following"
+             class="collapse">
+            <ul class="accordion-list">
+                <li class="list-group-item"
+                    ng-repeat="follows in model.iFollow">
+                    {{follows.firstName}} {{follows.lastName}}
+                    <span ng-click="model.unFollow(follows); init()"
+                          class="glyphicon glyphicon-remove pull-right"></span>
+                </li>
+            </ul>
+        </div>
+    </li>
+
+    <li ng-if="model.role === 'READER' || model.user.role === 'READER'"
+        class="list-group-item "
+        ng-click="model.savedPosts()">
         <i class="fa fa-bookmark" aria-hidden="true"></i>
         Saved Posts
     </li>
 
-    <li ng-if="model.role === 'READER'"
-        class="list-group-item btn-default"
-        ng-click="">
-        <i class="fa fa-newspaper-o" aria-hidden="true"></i>
-        Readers you follow
+    <li ng-if="model.role === 'READER' || model.user.role === 'READER'"
+        class="list-group-item "
+        ng-click="model.showReaders()">
+        <i class="fa fa-book" aria-hidden="true"></i>
+        All Readers
     </li>
 
     <!--PUBLISHER OPERATIONS-->
 
-    <li
-        class="list-group-item btn-default"
+    <li ng-if="model.role === 'READER' || model.user.role === 'READER'
+        || model.role === 'PUBLISHER' || model.user.role === 'PUBLISHER'"
+        class="list-group-item "
         ng-click="model.showPublishers()">
         <i class="fa fa-book" aria-hidden="true"></i>
         All Publishers
     </li>
 
     <li ng-if="model.user.role === 'PUBLISHER'"
-        class="list-group-item btn-default"
+        class="list-group-item "
         ng-click="model.myPosts()">
         <i class="fa fa-newspaper-o" aria-hidden="true"></i>
         My Posts
     </li>
 
     <li ng-if="model.user.role === 'PUBLISHER'"
-        class="btn-default list-group-item"
+        class=" list-group-item"
         ng-click="model.addPost()">
         <i class="fa fa-plus-square" aria-hidden="true"></i>
         Add New Post
@@ -66,27 +116,32 @@
 
     <!--CRUD Operations ADMIN-->
     <li class=" btn-default list-group-item"
-        ng-if=" !show-all-publishers && model.role === 'ADMIN'"
-        ng-click="model.display = 'publishers'">
+        ng-if=" model.user.role === 'ADMIN'"
+        ng-click="model.monitorUsers()">
         <span class="glyphicon glyphicon-search"></span>
         <i class="fa fa-book" aria-hidden="true"></i>
-        Monitor All Publishers
-    </li>
-    <li class= "btn-default list-group-item"
-        ng-if=" !show-all-readers && model.role === 'ADMIN'"
-        ng-click="model.display = 'readers'">
-        <span class="glyphicon glyphicon-search"></span>
-        Monitor All Readers
+        Monitor All Users
     </li>
     <li class=" btn-default list-group-item"
-        ng-if=" !show-all-posts && model.role === 'ADMIN'"
-        ng-click="model.display = 'articles'">
-        <i class="fa fa-bookmark" aria-hidden="true"></i>
+        ng-if=" model.user.role === 'ADMIN'"
+        ng-click="model.monitorPosts">
+        <span class="glyphicon glyphicon-search"></span>
+        <i class="fa fa-newspaper-o" aria-hidden="true"></i>
         Monitor All Posts
     </li>
+
     <li class=" btn-default list-group-item"
-        ng-if="!show-new-user && model.role === 'ADMIN'"
+        ng-if=" model.user.role === 'ADMIN'"
+        ng-click="model.monitorComments()">
+        <span class="glyphicon glyphicon-search"></span>
+        <i class="fa fa-commenting" aria-hidden="true"></i>
+        Monitor All Comments
+    </li>
+
+    <li class=" btn-default list-group-item"
+        ng-if="model.user.role === 'ADMIN'"
         ng-click = "model.display = 'new-user'">
+
         <i class="fa fa-plus-square" aria-hidden="true"></i>
         Add New User
     </li>
@@ -108,7 +163,7 @@
         Unregister
     </li>
 
-    <li class="btn list-group-item login-btn"
+    <li class="btn btn-block list-group-item login-btn"
         ng-if="!model.newUser"
         ng-click="model.editProfile()">
         <span class="glyphicon glyphicon-pencil"></span>

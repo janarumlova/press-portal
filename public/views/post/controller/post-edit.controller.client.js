@@ -11,8 +11,10 @@
         model.postId = $routeParams.postId;
         model.editProfile = editProfile;
         model.showPublishers = showPublishers;
+        model.showReaders = showReaders;
         model.myPosts = myPosts;
         model.addPost = addPost;
+        model.mySavedPosts = mySavedPosts;
 
         model.unregisterUser = unregisterUser;
         model.logout = logout;
@@ -26,6 +28,12 @@
                 .then(function (post) {
                     model.post = post
                 });
+
+            if(currentUser.role === "READER"){
+                renderSubscriptions();
+                renderFollowers();
+                renderFollowing();
+            }
         }
         init();
 
@@ -40,11 +48,40 @@
             $location.url("/profile/edit");
         }
 
+        function renderSubscriptions() {
+            userService
+                .findSubscriptionsForReader(currentUser._id)
+                .then(function(subscriptions) {
+                    model.subscriptions = subscriptions
+                });
+        }
+
+        function renderFollowers() {
+            userService
+                .findFollowers()
+                .then(function (followers) {
+                    model.followers = followers;
+                });
+        }
+        function renderFollowing() {
+            userService
+                .findFollows()
+                .then(function (follows) {
+                    model.iFollow = follows;
+                });
+        }
+
         function showPublishers() {
             $location.url("/publisher");
         }
+        function showReaders() {
+            $location.url("/reader");
+        }
         function myPosts() {
             $location.url("/post");
+        }
+        function mySavedPosts() {
+            $location.url("/savedPost");
         }
 
         function unregisterUser() {

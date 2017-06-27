@@ -20,22 +20,70 @@
         model.showPublishers = showPublishers;
         model.addPost = addPost;
         model.myPosts = myPosts;
+        model.savedPosts = savedPosts;
+        model.showReaders = showReaders;
 
         model.findAllReaders = findAllReaders;
         model.findSubscriptions = findSubscriptions;
         model.findPostsByPublisher = findPostsByPublisher;
         model.findPostsForReader = findPostsForReader;
 
+        model.monitorUsers = monitorUsers;
+        model.monitorComments = monitorComments;
+        model.monitorPosts = monitorPosts;
+
         function init() {
             renderUser(currentUser);
+            renderPublishers();
 
+            if(currentUser.role === 'READER'){
+                renderFollowing();
+                renderFollowers();
+                renderSubscriptions();
+            }
+        }
+        init();
+
+        function monitorUsers() {
+            $location.url("/admin/user");
+        }
+        function monitorPosts() {
+            $location.url("/admin/post");
+        }
+        function monitorComments() {
+            $location.url("/admin/comment");
+        }
+
+        function renderPublishers() {
             userService
                 .findAllPublishers()
                 .then(function (users) {
                     model.publishers = users
                 });
         }
-        init();
+
+        function renderSubscriptions() {
+            userService
+                .findSubscriptionsForReader(currentUser._id)
+                .then(function(subscriptions) {
+                    model.subscriptions = subscriptions
+                });
+        }
+
+        function renderFollowers() {
+            userService
+                .findFollowers()
+                .then(function (followers) {
+                    model.followers = followers;
+                });
+        }
+        function renderFollowing() {
+            userService
+                .findFollows()
+                .then(function (follows) {
+                    model.iFollow = follows;
+                });
+        }
 
         function renderUser (user) {
             model.user = user;
@@ -75,15 +123,21 @@
         function editProfile() {
             $location.url("/profile/edit");
         }
-
         function showPublishers() {
             $location.url("/publisher");
         }
+        function showReaders() {
+            $location.url("/reader");
+        }
+
         function addPost() {
             $location.url("/post/new");
         }
         function myPosts() {
             $location.url("/post");
+        }
+        function savedPosts() {
+            $location.url("/savedPost");
         }
 
         function unregisterUser() {
@@ -106,7 +160,6 @@
                 userService
                     .updateUserByUser(user)
                     .then(function () {
-                        model.message = 'User Updated Successfully!'
                         $location.url("/profile");
                     });
 

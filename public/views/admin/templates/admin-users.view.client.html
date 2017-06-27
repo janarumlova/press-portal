@@ -1,81 +1,144 @@
-<div class="container-fluid">
-    <h1>Users</h1>
-    <div class="col-sm-1"></div>
-    <ul class="list-group col-xs-10">
-        <li class="list-group-item active">
-            <div class="row">
-                <div class="col-xs-6 col-lg-2 ">
-                    Username
-                </div>
-                <div class="col-lg-2 hidden-sm hidden-xs hidden-md">
-                    First Name
-                </div>
-                <div class="col-lg-2 hidden-sm hidden-xs hidden-md">
-                    Last Name
-                </div>
-                <div class="col-lg-2 hidden-sm hidden-xs hidden-md">
-                    Roles
-                </div>
-                <div class="col-xs-6 col-lg-4"></div>
-            </div>
-        </li>
+<!--Header-->
+<div ng-include="'views/common/header.view.client.html'"></div>
 
-        <li class="list-group-item ">
-            <div class="row">
-                <div class="col-xs-6 col-lg-2 ">
-                    <input ng-model="model.user.username"
-                           class="form-control" />
-                </div>
-                <div class="col-lg-2 hidden-sm hidden-xs hidden-md">
-                    <input ng-model="model.user.firstName"
-                           class="form-control" />
-                </div>
-                <div class="col-lg-2 hidden-sm hidden-xs hidden-md">
-                    <input ng-model="model.user.lastName"
-                           class="form-control" />
-                </div>
-                <div class="col-lg-2 hidden-sm hidden-xs hidden-md">
-                    <div class="checkbox form-control">
-                        <label><input type="checkbox" value="">USER</label>
-                    </div>
-                    <div class="checkbox disabled form-control">
-                        <label><input type="checkbox" value="">ADMIN</label>
-                    </div>
-                </div>
-                <div class="col-xs-6 col-lg-4">
-                    <span ng-click="model.createUser(model.user); model.user={}"
-                          class="glyphicon glyphicon-plus"></span>
-                    <span ng-click="model.updateUserByAdmin(model.user); model.user={}"
-                          class="glyphicon glyphicon-ok pull-right"></span>
-                </div>
-            </div>
-        </li>
-
-        <li ng-repeat="user in model.users" class="list-group-item">
-            <div class="row">
-                <div class="col-xs-6 col-lg-2">
-                    {{user.username}}
-                </div>
-                <div class="col-lg-2 hidden-sm hidden-xs hidden-md">
-                    {{user.firstName}}
-                </div>
-                <div class="col-lg-2 hidden-sm hidden-xs hidden-md">
-                    {{user.lastName}}
-                </div>
-                <div class="col-lg-2 hidden-sm hidden-xs hidden-md">
-                    {{user.roles}}
-                </div>
-
-                <div class="col-xs-6 col-lg-4">
-                    <a href="">
-                        <span ng-click="model.editUser(user)"
-                              class="glyphicon glyphicon-pencil"></span>
-                        <span ng-click="model.deleteUser(user)"
-                              class="glyphicon glyphicon-remove pull-right"></span>
-                    </a>
-                </div>
-
-            </div>
-        </li>
-    </ul>
+<!--Left Panel-->
+<div class="col-xs-12 col-sm-4 panel-list"
+     ng-include="'views/common/left-panel.view.client.html'">
 </div>
+
+<!--Right-Panel-->
+<div class="col-xs-12 col-sm-8 panel-list">
+    <!--Message and Error-->
+    <div ng-show="model.message"
+         class="alert alert-success">
+        {{model.message}}
+    </div>
+    <div ng-show="model.error"
+         class="alert alert-danger">
+        {{model.error}}
+    </div>
+    <div class="panel">
+        <div class="panel-heading form-head">
+            <h1>Welcome {{model.user.firstName}} {{model.user.lastName}}!</h1>
+        </div>
+
+        <div class=" accordion-list list-group col-xs-12 ">
+            <div class="panel-body">
+                <p>
+                    You can-<br>
+                    view, edit and delete all registered users (Publishers and Reader)<br>
+                    <!--view and delete all posts by publishers.-->
+                    <!--view and delete all comments by readers on saved posts<br>-->
+                </p>
+            </div>
+            <ul class="accordion-list list-group col-xs-12">
+                <li class="list-group-item ">
+                    <div class="row text-center login-btn">
+                        Edit User Here
+                    </div>
+                </li>
+
+                <li class="list-group-item ">
+
+                    <div class="row">
+                        <div class="col-sm-3 col-xs-12">
+                            <input ng-model="model.curuser.username"
+                                   placeholder="username"
+                                   class="form-control"
+                                    id="username"/>
+                        </div>
+
+                        <div class="col-sm-3 col-xs-12">
+                            <input ng-model="model.curuser.firstName"
+                                   class="form-control"
+                                   placeholder="first name"
+                                   id="fname"/>
+                        </div>
+
+                        <div class="col-sm-3 col-xs-12">
+                            <input ng-model="model.curuser.lastName"
+                                   class="form-control"
+                                   placeholder="last name"
+                                   id="lname"/>
+                        </div>
+
+                        <div class="hidden-sm col-md-2 col-xs-12">
+                            <select id="role"
+                                    class="form-control "
+                                    title="Choose your Role"
+                                    ng-model="model.curuser.role"
+                                    selected="READER"
+                                    required>
+                                <option value="READER">Reader</option>
+                                <option value="PUBLISHER">Publisher</option>
+                                <option value="ADMIN">Admin</option>
+                            </select>
+
+                            <!--<div class="checkbox form-control">-->
+                                <!--<label><input type="checkbox" value="">USER</label>-->
+                            <!--</div>-->
+                            <!--<div class="checkbox disabled form-control">-->
+                                <!--<label><input type="checkbox" value="">ADMIN</label>-->
+                            <!--</div>-->
+                        </div>
+
+                        <div class="col-sm-3 col-md-1 col-xs-12">
+                    <!--<span ng-click="model.createUser(model.user); model.user={}"-->
+                          <!--class="glyphicon glyphicon-plus"></span>-->
+                            <span ng-click="model.updateUser(model.curuser)"
+                                  class="login-btn brown-text glyphicon glyphicon-ok pull-right"></span>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item active">
+                    <div class="row">
+                        <div class="col-sm-3 col-xs-12 ">
+                            Username
+                        </div>
+                        <div class="col-sm-3  hidden-xs ">
+                            First Name
+                        </div>
+                        <div class="col-sm-3  hidden-xs ">
+                            Last Name
+                        </div>
+                        <div class="hidden-sm col-md-2  hidden-xs ">
+                            Role
+                        </div>
+                        <div class="col-md-1 col-sm-3 col-xs-12 "></div>
+                    </div>
+                </li>
+
+                <li ng-repeat="user in model.users" class="list-group-item brown-text">
+                    <div class="row">
+                        <div class="col-sm-3 col-xs-9">
+                            {{user.username}}
+                        </div>
+                        <div class="col-sm-3 hidden-xs">
+                            {{user.firstName}}
+                        </div>
+                        <div class="col-sm-3 hidden-xs">
+                            {{user.lastName}}
+                        </div>
+                        <div class="hidden-sm col-md-2 hidden-xs">
+                            {{user.role}}
+                        </div>
+
+                        <div class="col-xs-3 col-sm-3 col-md-1">
+                            <span class="fa fa-trash-o  delete-icon " aria-hidden="true"
+                                  ng-click="model.deleteUser(user)">
+                            </span>
+                            <span ng-click="model.editUser(user)"
+                                  class="fa fa-pencil-square edit-icon pull-right" aria-hidden="true">
+                            </span>
+                        </div>
+
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!--Footer-->
+<div ng-include="'views/common/footer.view.client.html'"></div>

@@ -21,12 +21,17 @@
 
             <div class="mt20 mb20">
 
-                <button ng-click="model.editPost(model.post._id)"
+                <button ng-if="model.role === 'PUBLISHER' || model.user.role === 'PUBLISHER'"
+                        ng-click="model.editPost(model.post._id)"
                         class="btn login-btn">
-                    <a href="/post/{{post._id}}/edit">
-                        <i class="fa fa-pencil-square edit-icon brown-text " aria-hidden="true"></i>
-                    </a>
+                    <i class="fa fa-pencil-square edit-icon brown-text " aria-hidden="true"></i>
                     Edit Post
+                </button>
+                <button ng-show="model.role === 'READER' || model.user.role === 'READER'"
+                        ng-click="model.savePost()"
+                        class="btn login-btn">
+                    <i class="fa fa-bookmark edit-icon brown-text" aria-hidden="true"></i>
+                    Save Post
                 </button>
 
                 <span class="posts-sourceNdate">

@@ -18,8 +18,20 @@ postModel.deleteUser = deleteUser;
 postModel.addWebsite = addWebsite;
 postModel.deleteWebsite = deleteWebsite;
 postModel.updatePostByPublisher = updatePostByPublisher;
+postModel.deletePost = deletePost;
+
 
 module.exports = postModel;
+
+function deletePost(userId, postId) {
+    return postModel
+        .remove({_id: postId})
+        .then(function (status) {
+            return userModel
+                .deletePost(userId, postId);
+        })
+}
+
 
 function findPostsByIds(posts) {
     return postModel

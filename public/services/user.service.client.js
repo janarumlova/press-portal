@@ -22,10 +22,64 @@
             findAllUsers: findAllUsers,
             findAllPublishers: findAllPublishers,
             findAllReaders: findAllReaders,
-            findSubscriptions: findSubscriptions,
-            findPublisherById: findPublisherById
+            findSubscriptionsForReader: findSubscriptionsForReader,
+            findPublisherById: findPublisherById,
+            subscribe: subscribe,
+            savePost: savePost,
+            findFollowers: findFollowers,
+            findFollows: findFollows,
+            follow: follow,
+            unFollow: unFollow,
+            deleteUserByAdmin: deleteUserByAdmin
         };
         return api;
+
+        function findFollows() {
+            var url = "/api/follows";
+            return $http.get(url)
+                .then(function (response) {
+                    return response.data;
+                });
+        }
+
+        function findFollowers() {
+            var url = "/api/followers";
+            return $http.get(url)
+                .then(function (response) {
+                    return response.data;
+                });
+        }
+
+        function follow(readerId) {
+            var url = "/api/follow/"+readerId;
+            return $http.post(url)
+                .then(function (response) {
+                    return response.data;
+                });
+        }
+        function unFollow(readerId) {
+            var url = "/api/unFollow/"+readerId;
+            return $http.delete(url)
+                .then(function (response) {
+                    return response.data;
+                });
+        }
+
+        function savePost(post) {
+            var url = "/api/savePost";
+            return $http.post(url, post)
+                .then(function (response) {
+                    return response.data;
+                });
+        }
+
+        function subscribe(publisherId) {
+            var url = "/api/subscribe/"+publisherId;
+            return $http.post(url)
+                .then(function (response) {
+                    return response.data;
+                });
+        }
 
         function findPublisherById(userId) {
             var url = "/api/publisher/"+userId;
@@ -36,8 +90,8 @@
         }
 
 
-        function findSubscriptions() {
-            var url = "/api/subscriptions";
+        function findSubscriptionsForReader(readerId) {
+            var url = "/api/subscriptions/"+readerId;
             return $http.get(url)
                 .then(function (response) {
                     return response.data;
@@ -45,14 +99,10 @@
         }
 
         function findAllPublishers() {
-            console.log("here");
             var url = "/api/publisher";
             return $http.get(url)
                 .then(function (response) {
-                    console.log(response);
                     return response.data;
-                },function (err) {
-                    console.log(err);
                 });
         }
 
@@ -66,6 +116,13 @@
 
         function unregister() {
             var url = "/api/unregister";
+            return $http.delete(url)
+                .then(function (response) {
+                    return response.data;
+                });
+        }
+        function deleteUserByAdmin(userId) {
+            var url = "/api/user/"+userId;
             return $http.delete(url)
                 .then(function (response) {
                     return response.data;

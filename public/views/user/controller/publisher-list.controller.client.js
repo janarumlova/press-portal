@@ -1,9 +1,9 @@
 (function () {
     angular
         .module('WAM')
-        .controller('userListController', userListController);
+        .controller('publisherListController', publisherListController);
 
-    function userListController($location, $routeParams, currentUser, userService, postService) {
+    function publisherListController($location, $routeParams, currentUser, userService, postService) {
 
         var model = this;
 
@@ -16,7 +16,8 @@
         model.addPost = addPost;
         model.myPosts = myPosts;
         model.displayPosts = displayPosts;
-
+        model.savedPosts = savedPosts;
+        model.showReaders = showReaders;
 
         function init() {
             renderUser(currentUser);
@@ -25,9 +26,37 @@
                 .then(function (users) {
                     model.publishers = users
                 });
+            if (currentUser.role === "READER"){
+                renderFollowing();
+                renderFollowers();
+                renderSubscriptions();
+            }
         }
 
         init();
+
+        function renderSubscriptions() {
+            userService
+                .findSubscriptionsForReader(currentUser._id)
+                .then(function(subscriptions) {
+                    model.subscriptions = subscriptions
+                });
+        }
+        function renderFollowers() {
+            userService
+                .findFollowers()
+                .then(function (followers) {
+                    model.followers = followers;
+                });
+        }
+
+        function renderFollowing() {
+            userService
+                .findFollows()
+                .then(function (following) {
+                    model.iFollow = following;
+                });
+        }
 
         function renderUser(user) {
             model.user = user;
@@ -46,6 +75,13 @@
         }
         function myPosts() {
             $location.url("/post");
+        }
+
+        function savedPosts() {
+            $location.url("/savedPost");
+        }
+        function showReaders() {
+            $location.url("/reader");
         }
 
 
