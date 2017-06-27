@@ -12,6 +12,8 @@
         model.editPost = editPost;
         model.savePost = savePost;
         model.addComment = addComment;
+        model.checkAuthor = checkAuthor;
+        model.deleteComment = deleteComment;
 
         function init() {
             renderUser(currentUser);
@@ -20,6 +22,13 @@
         }
         init();
 
+        function checkAuthor(authorName) {
+            var firstName = model.user.firstName;
+            var lastName = model.user.lastName;
+            var name = firstName + " " + lastName;
+            return name === authorName;
+        }
+
         function addComment(comment) {
             comment.post = model.postId;
             commentService
@@ -27,7 +36,6 @@
                 .then(function (response) {
                     model.messgage = "Comment was added successfully!";
                     $location.url('/post/'+model.postId+'/display');
-                    init()
                 });
         }
         function renderComment() {
@@ -57,6 +65,16 @@
                 .then(function (response) {
                     model.message = "Post saved to My Posts!"
                     $location.url("/profile");
+                });
+        }
+
+        function deleteComment(commentId) {
+            commentService
+                .deleteComment(model.postId, commentId)
+                .then(function (response) {
+                    model.message = "Comment was deleted!";
+                    renderComment();
+                    $location.url('/post/'+model.postId+'/display');
                 });
         }
     }

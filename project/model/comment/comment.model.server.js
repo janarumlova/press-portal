@@ -10,7 +10,7 @@ commentModel.deleteComment = deleteComment;
 module.exports = commentModel;
 
 function findAllCommentsForPost(postId) {
-    return commentModel.find({_post: postId});
+    return commentModel.find({post: postId});
 }
 
 function deleteComment(postId, commentId) {

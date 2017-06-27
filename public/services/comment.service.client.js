@@ -30,7 +30,7 @@
         }
 
         function deleteComment(postId, commentId) {
-            var url = "/api/post/"+postId+"/comment/+"+commentId;
+            var url = "/api/post/"+postId+"/comment/"+commentId;
             return $http.delete(url)
                 .then(function (response) {
                     return response.data;

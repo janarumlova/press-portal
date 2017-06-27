@@ -48,7 +48,7 @@ function deleteCommentByAdmin(req, res) {
 
 function createComment(req, res) {
     var comment = req.body;
-    comment.author = req.user._id;
+    comment.author = req.user.firstName+" "+ req.user.lastName;
     var postId = req.params.postId;
     commentModel
         .createComment(postId, comment)

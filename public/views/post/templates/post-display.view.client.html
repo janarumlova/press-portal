@@ -2,17 +2,11 @@
 <div ng-include="'views/common/header.view.client.html'"></div>
 
 
-<!--Message and Error-->
-<div ng-show="model.message"
-     class="alert alert-success">
-    {{model.message}}
-</div>
-<div ng-show="model.error"
-     class="alert alert-danger">
-    {{model.error}}
-</div>
+
 
 <div class="container">
+    <!--Message and Error-->
+
     <div class="row">
         <div class="col-sm-8 col-sm-offset-2 posts-div">
             <h1>{{model.post.title}}</h1>
@@ -53,16 +47,28 @@
 			    </span>
             </div>
 
+            <div ng-show="model.message"
+                 class="alert alert-success">
+                {{model.message}}
+            </div>
+            <div ng-show="model.error"
+                 class="alert alert-danger">
+                {{model.error}}
+            </div>
+
             <h2><i class="fa fa-commenting" aria-hidden="true"></i>
                 Comments:</h2>
             <ul ng-repeat="comment in model.comments" class="comments-div clearfix">
                 <li>
-                    <span>{{comment.author.firstName}} {{comment.author.lastName}}</span>
+                    <span>{{comment.author}}</span>
                     <span></span>
-                    <span>{{comment.content}}</span>
-                    <span class="fa fa-trash-o  delete-icon col-xs-1 pull-right" aria-hidden="true"
-                          ng-click="model.deleteComment(commentId._id, model.postId)"
-                          ng-if="comment._author === model.user._id"></span>
+                    <span>{{comment.content}}
+                        <span class="fa fa-trash-o delete-icon pull-right"
+                              aria-hidden="true"
+                              ng-if="model.checkAuthor(comment.author)"
+                              ng-click="model.deleteComment(comment._id)">
+                        </span>
+                    </span>
                 </li>
             </ul>
             <div class="col-xs-12">
@@ -81,9 +87,10 @@
             </div>
 
         </div>
-        </div>
     </div>
 </div>
+
+
 
 
 <!--footer-->
