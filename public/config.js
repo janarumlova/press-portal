@@ -83,30 +83,32 @@
                 controller: 'loginController',
                 controllerAs: 'model'
             })
-            .when('/admin', {
-                templateUrl: 'views/admin/templates/admin.view.client.html',
-                resolve: {
-                    currentUser: checkAdmin
-                }
-            })
             .when('/admin/user', {
-                templateUrl: 'views/admin/templates/admin-users.view.client.html',
+                templateUrl: 'views/admin/templates/admin-user.view.client.html',
                 controller: 'adminUserController',
                 controllerAs: 'model',
                 resolve: {
                     currentUser: checkAdmin
                 }
             })
+            .when('/admin/user/new', {
+                templateUrl: 'views/admin/templates/admin-user-new.view.client.html',
+                controller: 'adminUserNewController',
+                controllerAs: 'model',
+                resolve: {
+                    currentUser: checkAdmin
+                }
+            })
             .when('/admin/post', {
-                templateUrl: 'views/admin/admin-posts.view.client.html',
-                controller: 'adminPostController',
+                templateUrl: 'views/admin/templates/admin-post.view.client.html',
+                controller: 'adminUserController',
                 controllerAs: 'model',
                 resolve: {
                     currentUser: checkAdmin
                 }
             })
             .when('/admin/comment', {
-                templateUrl: 'views/admin/admin-comments.view.client.html',
+                templateUrl: 'views/admin/admin-comment.view.client.html',
                 controller: 'adminCommentController',
                 controllerAs: 'model',
                 resolve: {

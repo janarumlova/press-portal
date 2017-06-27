@@ -1,9 +1,9 @@
 (function(){
     angular
         .module('WAM')
-        .service('postService', postService);
+        .service('commentService', commentService);
     
-    function postService($http) {
+    function commentService($http) {
 
         var api = {
             createPost: createPost,

@@ -1,0 +1,82 @@
+<!--Header-->
+<div ng-include="'views/common/header.view.client.html'"></div>
+
+<!--Left Panel-->
+<div class="col-xs-12 col-sm-4 panel-list"
+     ng-include="'views/common/left-panel.view.client.html'">
+</div>
+
+<!--Right-Panel-->
+<div class="col-xs-12 col-sm-8 panel-list">
+    <!--Message and Error-->
+    <div ng-show="model.message"
+         class="alert alert-success">
+        {{model.message}}
+    </div>
+    <div ng-show="model.error"
+         class="alert alert-danger">
+        {{model.error}}
+    </div>
+    <div class="panel">
+        <div class="panel-heading form-head">
+            <h1>Welcome {{model.user.firstName}} {{model.user.lastName}}!</h1>
+        </div>
+
+        <div class=" accordion-list list-group col-xs-12 ">
+            <div class="panel-body">
+                <p>
+                    You can-<br>
+                    view, and delete all Published Posts<br>
+                    <!--view and delete all posts by publishers.-->
+                    <!--view and delete all comments by readers on saved posts<br>-->
+                </p>
+            </div>
+            <ul class="accordion-list list-group col-xs-12">
+
+                <li class="list-group-item active">
+                    <div class="row">
+                        <div class="col-md-3 col-xs-10 col-sm-5 col-lg-2">
+                            Title
+                        </div>
+                        <div class="col-md-3  hidden-xs col-sm-5 col-lg-2">
+                            Description
+                        </div>
+                        <div class="col-md-4  hidden-xs hidden-sm col-lg-3">
+                            Image URL
+                        </div>
+                        <div class="hidden-sm hidden-xs hidden-md col-lg-3">
+                            Source URL
+                        </div>
+                        <div class="col-xs-2 "></div>
+                    </div>
+                </li>
+
+                <li ng-repeat="post in model.posts" class="list-group-item brown-text">
+                    <div class="row">
+                        <div class="col-md-3 col-xs-10 col-sm-5 col-lg-2">
+                            {{post.title}}
+                        </div>
+                        <div class="col-md-3  hidden-xs col-sm-5 col-lg-2">
+                            {{post.description}}
+                        </div>
+                        <div class="ellipses col-md-4  hidden-xs hidden-sm col-lg-3">
+                            {{post.imageUrl}}
+                        </div>
+                        <div class="ellipses  hidden-sm hidden-xs hidden-md col-lg-3">
+                            {{post.sourceUrl}}
+                        </div>
+                        <div class="col-xs-2 ">
+                            <span class="fa fa-trash-o  delete-icon pull-right" aria-hidden="true"
+                                  ng-click="model.deletePost(post)">
+                            </span>
+                        </div>
+
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!--Footer-->
+<div ng-include="'views/common/footer.view.client.html'"></div>

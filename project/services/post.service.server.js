@@ -12,6 +12,7 @@ app.get    ("/api/publisher/:publisherId/display", displayPostsForPublisher);
 
 app.delete ('/api/assignment/user/:userId', isAdmin, deleteUser);
 app.delete ("/api/deletePost/:postId", deletePost);
+app.delete ("/api/user/:userId/post/:postId", deletePostByAdmin);
 
 
 app.get   ('/api/loggedIn', loggedIn);
@@ -20,6 +21,13 @@ app.get   ('/api/checkAdmin', checkAdmin);
 function deletePost(req, res) {
     postModel
         .deletePost(req.user._id, req.params.postId)
+        .then(function (status) {
+            res.send(status);
+        });
+}
+function deletePostByAdmin(req, res) {
+    postModel
+        .deletePost(req.params.userId, req.params.postId)
         .then(function (status) {
             res.send(status);
         });

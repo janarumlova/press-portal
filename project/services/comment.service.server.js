@@ -1,5 +1,5 @@
 var app = require('../../express');
-var postModel = require('../model/post/post.model.server');
+var commentModel = require('../model/comment/comment.model.server');
 
 
 app.post   ('/api/post', createPost);

@@ -3,7 +3,7 @@
         .module('WAM')
         .controller('adminUserController', adminUserController);
 
-    function adminUserController(userService, currentUser, $location){
+    function adminUserController(userService, currentUser, $location, postService){
         var model = this;
 
         model.deleteUser = deleteUser;
@@ -11,12 +11,15 @@
         model.updateUser = updateUser;
 
         model.monitorUsers = monitorUsers;
+        model.monitorPosts = monitorPosts;
         model.editProfile = editProfile;
         model.logout = logout;
         model.unregisterUser = unregisterUser;
+        model.deletePost= deletePost;
 
         function init() {
             findAllUsers();
+            findAllPosts();
             renderUser(currentUser);
         }
         init();
@@ -27,6 +30,10 @@
 
         function monitorUsers() {
             $location.url("/admin/user");
+        }
+
+        function monitorPosts() {
+            $location.url("/admin/post");
         }
 
         function editProfile() {
@@ -78,11 +85,27 @@
                 });
         }
 
+        function deletePost(post) {
+            postService
+                .deletePostByAdmin(post._publisher, post._id)
+                .then(function(){
+                    model.message = post.title+" deleted successfully!";
+                    init();
+                });
+        }
+
         function findAllUsers() {
             userService
                 .findAllUsers()
                 .then(function (users) {
                     model.users = users;
+                });
+        }
+        function findAllPosts() {
+            postService
+                .findAllPosts()
+                .then(function (posts) {
+                    model.posts = posts;
                 });
         }
     }
