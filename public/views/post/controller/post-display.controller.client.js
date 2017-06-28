@@ -63,7 +63,7 @@
         function savePost() {
             userService.savePost(model.post)
                 .then(function (response) {
-                    model.message = "Post saved to My Posts!"
+                    model.message = "Post saved to My Posts!";
                     $location.url("/profile");
                 });
         }
@@ -73,8 +73,8 @@
                 .deleteComment(model.postId, commentId)
                 .then(function (response) {
                     model.message = "Comment was deleted!";
-                    renderComment();
-                    $location.url('/post/'+model.postId+'/display');
+                    init();
+                    // $location.url('/post/'+model.postId+'/display');
                 });
         }
     }

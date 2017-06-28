@@ -62,6 +62,14 @@
                     currentUser: checkCurrentUser
                 }
             })
+            .when('/search', {
+                templateUrl: 'views/search/templates/search.view.client.html',
+                controller: 'searchController',
+                controllerAs: 'model',
+                // resolve: {
+                //     currentUser: checkCurrentUser
+                // }
+            })
             .when('/reader', {
                 templateUrl: 'views/user/templates/reader-list.view.client.html',
                 controller: 'readerListController',

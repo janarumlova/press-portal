@@ -1,20 +1,51 @@
 var app = require('../../express');
 var postModel = require('../model/post/post.model.server');
 
-app.put    ("/api/assignment/user/:postId/edit", updatePostByPublisher);
-app.post   ('/api/createPost', createPost);
-app.get    ('/api/publisherPost', findPostsByPublisher);
-app.get    ("/api/readerPost", findPostsForReader);
-app.get    ("/api/post", findAllPosts);
-app.get    ("/api/post/:postId", findPostById);
-app.get    ("/api/publisher/:publisherId/display", displayPostsForPublisher);
+app.put("/api/assignment/user/:postId/edit", updatePostByPublisher);
+app.post('/api/createPost', createPost);
+app.get('/api/publisherPost', findPostsByPublisher);
+app.get("/api/readerPost", findPostsForReader);
+app.get("/api/post", findAllPosts);
+app.get("/api/post/:postId", findPostById);
+app.get("/api/publisher/:publisherId/display", displayPostsForPublisher);
 
-app.delete ('/api/assignment/user/:userId', isAdmin, deleteUser);
-app.delete ("/api/deletePost/:postId", deletePost);
-app.delete ("/api/user/:userId/post/:postId", isAdmin, deletePostByAdmin);
+app.delete('/api/assignment/user/:userId', isAdmin, deleteUser);
+app.delete("/api/deletePost/:postId", deletePost);
+app.delete("/api/user/:userId/post/:postId", isAdmin, deletePostByAdmin);
+app.get("/newsApi/:category", searchNewsByCategory);
 
-app.get   ('/api/loggedIn', loggedIn);
-app.get   ('/api/checkAdmin', checkAdmin);
+
+app.get('/api/loggedIn', loggedIn);
+app.get('/api/checkAdmin', checkAdmin);
+
+function searchNewsByCategory(req, res) {
+
+    console.log("here");
+    var category = req.params.category;
+    var sortBy = 'top';
+    var key = '32fabf41cbef4019b7e8c4b278ca168d';
+    if (process.env.MLAB_NEWS_API_KEY) {           // check if running remotely
+        key = process.env.MLAB_NEWS_API_KEY;  // get from env variable
+    }
+
+    // key = process.env.MLAB_NEWS_API_KEY;  // get from env variable
+
+    var url = ''
+        + 'https://newsapi.org/v1/articles?source='
+        + category
+        + '&sortBy='
+        + sortBy
+        + '&apiKey='
+        + key;
+    $https
+        .get(url)
+        .then(function (response) {
+            res.json(response);
+        }, function (err) {
+            res.send(err);
+        });
+}
+
 
 function deletePost(req, res) {
     postModel
@@ -51,9 +82,6 @@ function findPostsByPublisher(req, res) {
             res.send(err);
         });
 }
-
-
-
 
 
 function displayPostsForPublisher(req, res) {
@@ -95,16 +123,16 @@ function createPost(req, res) {
 }
 
 function isAdmin(req, res, next) {
-    if(req.isAuthenticated() && req.user.role === 'ADMIN') {
+    if (req.isAuthenticated() && req.user.role === 'ADMIN') {
         next();
     }
     else {
-            res.send('401');
-        }
+        res.send('401');
+    }
 }
 
 function checkAdmin(req, res) {
-    if(req.isAuthenticated() && req.user.role === 'ADMIN') {
+    if (req.isAuthenticated() && req.user.role === 'ADMIN') {
         res.json(req.user);
     } else {
         res.send('0');
@@ -112,7 +140,7 @@ function checkAdmin(req, res) {
 }
 
 function loggedIn(req, res) {
-    if(req.isAuthenticated()) {
+    if (req.isAuthenticated()) {
         res.json(req.user);
     } else {
         res.send('0');

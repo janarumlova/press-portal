@@ -1,0 +1,76 @@
+<!--Search-Left Panel-->
+
+<!--Search Features-->
+<ul class="list-group menu con">
+    <li class="list-group-item form-head">
+        <b>
+        <i class="fa fa-th-list -bold" aria-hidden="true"></i>
+            Choose your broadcaster!
+        </b>
+    </li>
+
+    <!--Search Dropdown-->
+    <li class="list-group-item menu">
+        <select ng-model="model.category"
+                id="category"
+                class="form-control">
+            <option value="financial-times">Business</option>
+            <option value="polygon">Gaming</option>
+            <option value="bbc-sport">Sports</option>
+            <option value="techradar">Technology</option>
+        </select>
+        <button ng-click="model.searchNewsByCategory(model.category)"
+                class="btn btn-primary btn-block">
+            Search
+        </button>
+    </li>
+
+    <!--Search Results-->
+    <li class="list-group-item menu">
+
+        <button class="accordion"
+                ng-click="model.searchNewsDetails(article)"
+                data-toggle="collapse"
+                data-target="#subs">
+            <i class="fa fa-search-plus" aria-hidden="true"></i>
+            Search Results:
+            <i class="fa fa-info pull-right" aria-hidden="true"></i>
+        </button>
+
+        <div id="subs"
+             class="collapse">
+            <ul class="accordion-list">
+                <li class="list-group-item"
+                    ng-click="model.searchNewsDetails(article); model.message = ''"
+                    ng-repeat="article in model.news">
+                    {{article.title}}
+                </li>
+            </ul>
+        </div>
+    </li>
+</ul>
+
+<!--&lt;!&ndash;CRUD Operations Common&ndash;&gt;-->
+
+<!--<ul class="login-ul">-->
+
+    <!--<li class="btn list-group-item cancel-btn"-->
+        <!--ng-click="model.logout()">-->
+        <!--<span class="glyphicon glyphicon-log-out"></span>-->
+        <!--Logout-->
+    <!--</li>-->
+
+    <!--<li class="btn list-group-item cancel-btn"-->
+        <!--ng-click="model.unregisterUser()">-->
+        <!--<span class="glyphicon glyphicon-remove"></span>-->
+        <!--Unregister-->
+    <!--</li>-->
+
+    <!--<li class="btn btn-block list-group-item login-btn"-->
+        <!--ng-if="!model.newUser"-->
+        <!--ng-click="model.editProfile()">-->
+        <!--<span class="glyphicon glyphicon-pencil"></span>-->
+        <!--Edit Profile-->
+    <!--</li>-->
+<!--</ul>-->
+

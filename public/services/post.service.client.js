@@ -21,6 +21,14 @@
         return api;
 
 
+        // function searchNewsByCategory(category) {
+        //     var url = "/api/newsApi/"+category;
+        //     console.log("HERE");
+        //     return $http.get(url)
+        //         .then(function (response) {
+        //             return response.data.articles;
+        //         });
+        // }
 
         function findAllPosts() {
             var url = "/api/post";

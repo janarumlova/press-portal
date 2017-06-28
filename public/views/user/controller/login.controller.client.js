@@ -3,7 +3,7 @@
         .module('WAM')
         .controller('loginController', loginController);
 
-    function loginController($location, userService, $scope) {
+    function loginController($location, userService) {
 
         var model = this;
 

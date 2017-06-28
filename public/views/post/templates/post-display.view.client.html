@@ -9,6 +9,14 @@
 
     <div class="row">
         <div class="col-sm-8 col-sm-offset-2 posts-div">
+            <div ng-if="model.message"
+                 class="alert alert-success">
+                {{model.message}}
+            </div>
+            <div ng-if="model.error"
+                 class="alert alert-danger">
+                {{model.error}}
+            </div>
             <h1>{{model.post.title}}</h1>
             <h5>
                 By:
@@ -22,8 +30,8 @@
 
             <h4>{{model.post.description}}</h4>
 
+            <!--Buttons section-->
             <div class="mt20 mb20">
-
                 <button ng-if="model.role === 'PUBLISHER' || model.user.role === 'PUBLISHER'"
                         ng-click="model.editPost(model.post._id)"
                         class="btn login-btn">
@@ -47,15 +55,7 @@
 			    </span>
             </div>
 
-            <div ng-show="model.message"
-                 class="alert alert-success">
-                {{model.message}}
-            </div>
-            <div ng-show="model.error"
-                 class="alert alert-danger">
-                {{model.error}}
-            </div>
-
+            <!--Comment Section-->
             <h2><i class="fa fa-commenting" aria-hidden="true"></i>
                 Comments:</h2>
             <ul ng-repeat="comment in model.comments" class="comments-div clearfix">

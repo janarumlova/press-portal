@@ -1,0 +1,73 @@
+<!--header-->
+<div ng-include="'views/common/header.view.client.html'"></div>
+
+
+<!--Left Panel-->
+<div class="col-xs-12 col-sm-4 panel-list"
+     ng-include="'views/common/search-left-panel.view.client.html'">
+</div>
+
+<!--Right-Panel-->
+<div class="col-xs-12 col-sm-8 panel-list">
+    <!--Message and Error-->
+    <div ng-show="model.message"
+         class="alert alert-success">
+        {{model.message}}
+    </div>
+    <div ng-show="model.error"
+         class="alert alert-danger">
+        {{model.error}}
+    </div>
+
+    <div class="panel">
+        <div class="panel-heading form-head">
+            <h1>
+                Welcome {{model.user.firstName}}!
+            </h1>
+        </div>
+        <div ng-if="!model.articles && !model.article"
+             class="panel-body col-xs-12 ">
+            <div ng-if="!model.articles && !model.article">
+                <h3 class="brown-text">
+                    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                    Select the broadcaster from the Dropdown.
+                </h3>
+            </div>
+            <div ng-if="model.articles && !model.article">
+                <h3>
+                    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                    Select the broadcaster from the Dropdown.
+                </h3>
+            </div>
+        </div>
+
+        <div ng-if="model.article"
+             ng-click = "model.goToUrl(model.article.url)"
+             class="panel-body brown-text col-xs-12">
+            <h2 class=" search-head list-group-item-heading">
+                {{model.article.title}}
+            </h2>
+
+            <img class="list-group-item"
+                 ng-src="{{model.article.urlToImage}}"
+                 width="100%"/>
+
+            <blockquote class="list-group-item">
+                <p>
+                    {{model.article.description}}
+                </p>
+
+                <footer class=" dont-break-out">
+                    <button ng-click="model.savePost(model.article)"
+                            class="" btn login-btn">
+                        <i class="fa fa-bookmark edit-icon brown-text" aria-hidden="true"></i>
+                        Save Post
+                    </button>
+                </footer>
+            </blockquote>
+        </div>
+    </div>
+</div>
+
+<!--footer-->
+<div ng-include="'views/common/footer.view.client.html'"></div>
