@@ -6,11 +6,16 @@ var postModel = require('../post/post.model.server');
 commentModel.createComment = createComment;
 commentModel.findAllCommentsForPost = findAllCommentsForPost;
 commentModel.deleteComment = deleteComment;
+commentModel.findAllComments = findAllComments;
 
 module.exports = commentModel;
 
 function findAllCommentsForPost(postId) {
     return commentModel.find({post: postId});
+}
+
+function findAllComments() {
+    return commentModel.find();
 }
 
 function deleteComment(postId, commentId) {

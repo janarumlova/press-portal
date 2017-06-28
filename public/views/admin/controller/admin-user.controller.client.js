@@ -3,7 +3,7 @@
         .module('WAM')
         .controller('adminUserController', adminUserController);
 
-    function adminUserController(userService, currentUser, $location, postService){
+    function adminUserController(userService, currentUser, $location, postService, commentService){
         var model = this;
 
         model.deleteUser = deleteUser;
@@ -19,11 +19,13 @@
         model.deletePost= deletePost;
         model.addUser = addUser;
         model.createUser = createUser;
+        model.deleteComment = deleteComment;
 
 
         function init() {
             findAllUsers();
             findAllPosts();
+            findAllComments();
             renderUser(currentUser);
         }
         init();
@@ -80,18 +82,21 @@
         function editUser(user) {
             model.curuser = angular.copy(user);
         }
-        //
-        // function createUser(user) {
-        //     userService
-        //         .createUser(user)
-        //         .then(findAllUsers);
-        // }
 
         function deleteUser(user) {
             userService
                 .deleteUserByAdmin(user._id)
-                .then(function(){
+                .then(function(response){
                     model.message = user.firstName+" "+user.lastName+" deleted successfully!";
+                    init();
+                });
+        }
+
+        function deleteComment(comment) {
+            commentService
+                .deleteCommentByAdmin(comment.post, comment._id)
+                .then(function(response){
+                    model.message = "Comment deleted successfully!";
                     init();
                 });
         }
@@ -99,7 +104,7 @@
         function deletePost(post) {
             postService
                 .deletePostByAdmin(post._publisher, post._id)
-                .then(function(){
+                .then(function(response){
                     model.message = post.title+" deleted successfully!";
                     init();
                 });
@@ -117,6 +122,13 @@
                 .findAllPosts()
                 .then(function (posts) {
                     model.posts = posts;
+                });
+        }
+        function findAllComments() {
+            commentService
+                .findAllComments()
+                .then(function (comments) {
+                    model.comments = comments;
                 });
         }
 

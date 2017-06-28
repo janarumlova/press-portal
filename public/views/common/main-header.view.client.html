@@ -30,7 +30,17 @@
                 </li>
                 <li ng-show="model.currentUser._id">
                     <a href="#!/profile">
-                        <b>Profile</b>
+                        <b>PROFILE</b>
+                    </a>
+                </li>
+                <li ng-show="!model.currentUser._id">
+                    <a href="#!/login">
+                        <b>LOGIN</b>
+                    </a>
+                </li>
+                <li ng-show="!model.currentUser._id">
+                    <a href="#!/register">
+                        <b>REGISTER</b>
                     </a>
                 </li>
             </ul>

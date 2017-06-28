@@ -9,7 +9,8 @@
             findAllCommentsForPost: findAllCommentsForPost,
             deleteCommentByAdmin: deleteCommentByAdmin,
             deleteComment: deleteComment,
-            createComment: createComment
+            createComment: createComment,
+            findAllComments:findAllComments
         };
         return api;
 
@@ -23,6 +24,14 @@
 
         function findAllCommentsForPost(postId) {
             var url = "/api/post/"+postId+"/comment";
+            return $http.get(url)
+                .then(function (response) {
+                    return response.data;
+                });
+        }
+
+        function findAllComments() {
+            var url = "/api/comment";
             return $http.get(url)
                 .then(function (response) {
                     return response.data;

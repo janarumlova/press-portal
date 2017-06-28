@@ -44,12 +44,11 @@ function deleteComment(postId, commentId) {
     return postModel
         .findById(postId)
         .then(function (post) {
-            var index = user.posts.indexOf(postId);
+            var index = post.comments.indexOf(commentId);
             post.comments.splice(index, 1);
             return post.save();
         });
 }
-
 
 function findPostsByIds(posts) {
     return postModel

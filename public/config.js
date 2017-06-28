@@ -116,7 +116,7 @@
                 }
             })
             .when('/admin/comment', {
-                templateUrl: 'views/admin/admin-comment.view.client.html',
+                templateUrl: 'views/admin/templates/admin-comment.view.client.html',
                 controller: 'adminUserController',
                 controllerAs: 'model',
                 resolve: {
