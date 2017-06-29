@@ -1,14 +1,12 @@
 var app = require('../../express');
 var commentModel = require('../model/comment/comment.model.server');
+
 app.get    ("/api/post/:postId/comment", findAllCommentsForPost);
 app.get    ('/api/comment', findAllComments);
-
 app.get    ('/api/assignment/user/:userId', findUserById);
 app.post   ('/api/post/:postId/comment', createComment);
-
 app.delete ("/api/post/:postId/comment/:commentId", deleteComment);
 app.delete ("/api/admin/post/:postId/comment/:commentId", isAdmin, deleteComment);
-
 app.get   ('/api/assignment/loggedIn', loggedIn);
 app.get   ('/api/assignment/checkAdmin', checkAdmin);
 

@@ -29,8 +29,6 @@ function searchNewsByCategory(req, res) {
         key = process.env.MLAB_NEWS_API_KEY;  // get from env variable
     }
 
-    // key = process.env.MLAB_NEWS_API_KEY;  // get from env variable
-
     var url = ''
         + 'https://newsapi.org/v1/articles?source='
         + category

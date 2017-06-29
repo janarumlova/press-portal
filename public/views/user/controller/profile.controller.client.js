@@ -83,11 +83,7 @@
         }
 
         function renderSubscribers() {
-            userService
-                .findSubscribers()
-                .then(function(subscribers) {
-                    model.subscribers = subscribers
-                });
+           model.subscribers = model.user.subscribers;
         }
 
         function renderFollowers() {
