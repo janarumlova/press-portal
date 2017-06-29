@@ -42,8 +42,10 @@
                 renderFollowing();
                 renderFollowers();
                 renderSubscriptions();
-                renderSubscribers();
+            }
 
+            if(currentUser.role === 'PUBLISHER'){
+                renderSubscribers();
             }
 
         }
@@ -83,7 +85,11 @@
         }
 
         function renderSubscribers() {
-           model.subscribers = model.user.subscribers;
+            userService
+                .findSubscribers()
+                .then(function(subscribers) {
+                    model.subscribers = subscribers
+                });
         }
 
         function renderFollowers() {
@@ -107,7 +113,7 @@
 
         function findSubscriptions() {
             userService
-                .findSubscriptions()
+                .findSubscriptionsForReader()
                 .then(function (subscriptions) {
                     model.subscriptions = subscriptions;
                 });
