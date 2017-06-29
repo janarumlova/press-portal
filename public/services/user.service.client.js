@@ -23,6 +23,7 @@
             findAllPublishers: findAllPublishers,
             findAllReaders: findAllReaders,
             findSubscriptionsForReader: findSubscriptionsForReader,
+            findSubscribers: findSubscribers,
             findPublisherById: findPublisherById,
             subscribe: subscribe,
             savePost: savePost,
@@ -90,8 +91,16 @@
         }
 
 
-        function findSubscriptionsForReader(readerId) {
-            var url = "/api/subscriptions/"+readerId;
+        function findSubscriptionsForReader() {
+            var url = "/api/subscriptions";
+            return $http.get(url)
+                .then(function (response) {
+                    return response.data;
+                });
+        }
+
+        function findSubscribers() {
+            var url = "/api/subscribers";
             return $http.get(url)
                 .then(function (response) {
                     return response.data;

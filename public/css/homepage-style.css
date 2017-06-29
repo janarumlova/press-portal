@@ -187,8 +187,8 @@ button.accordion.active, button.accordion:hover {
     font-size: larger;
 }
 .panel-list{
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 10px;
+    margin-bottom: 60px;
 }
 .form-head,
 .list-group-item.form-head{

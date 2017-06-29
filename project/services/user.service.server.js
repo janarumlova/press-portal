@@ -13,7 +13,17 @@ var bcrypt = require("bcrypt-nodejs");
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 
-
+// var googleConfig = {
+//     clientID     : '222671963957-205m5fibvtpc223bpdsid045fd4vjg1u.apps.googleusercontent.com',
+//     clientSecret : 'Gm8CnkQKjc4_SkE9-naJmnGa',
+//     callbackURL  : '/auth/google/callback'
+// };
+//
+// var facebookConfig = {
+//     clientID     : '1093632250736728',
+//     clientSecret : '34c72e7877802295b1a10682fdac6e85',
+//     callbackURL  : '/auth/facebook/callback'
+// };
 
 var facebookConfig = {
     clientID     : process.env.FACEBOOK_CLIENT_ID,
@@ -42,7 +52,8 @@ app.delete  ("/api/unFollow/:readerId", unFollow);
 //Find Functions
 app.get   ("/api/reader", findAllReaders);
 app.get   ("/api/publisher", findAllPublishers);
-app.get   ("/api/subscriptions/:readerId", findSubscriptionsForReader);
+app.get   ("/api/subscriptions", findSubscriptionsForReader);
+app.get   ("/api/subscribers", findSubscribers);
 app.get   ('/api/user', findAllUsers);
 app.get   ('/api/user/:userId', findUserById);
 app.get   ('/api/loggedIn', loggedIn);
@@ -277,7 +288,19 @@ function findUserById(req, res) {
 
 function findSubscriptionsForReader(req, res){
     userModel
-        .findSubscriptionsForReader(req.params.readerId)
+        .findSubscriptionsForReader(req.user._id)
+        .then(function (subs) {
+            if(subs) {
+                res.json(subs);
+            } else {
+                res.sendStatus(404);
+            }
+        });
+}
+
+function findSubscribers(req, res) {
+    userModel
+        .findSubscribers(req.user._id)
         .then(function (subs) {
             if(subs) {
                 res.json(subs);

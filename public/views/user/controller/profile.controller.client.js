@@ -42,6 +42,7 @@
                 renderFollowing();
                 renderFollowers();
                 renderSubscriptions();
+                renderSubscribers();
 
             }
 
@@ -75,9 +76,17 @@
 
         function renderSubscriptions() {
             userService
-                .findSubscriptionsForReader(currentUser._id)
+                .findSubscriptionsForReader()
                 .then(function(subscriptions) {
                     model.subscriptions = subscriptions
+                });
+        }
+
+        function renderSubscribers() {
+            userService
+                .findSubscribers()
+                .then(function(subscribers) {
+                    model.subscribers = subscribers
                 });
         }
 
@@ -105,6 +114,14 @@
                 .findSubscriptions()
                 .then(function (subscriptions) {
                     model.subscriptions = subscriptions;
+                });
+        }
+
+        function findSubscribers() {
+            userService
+                .findSubscribers()
+                .then(function (subscribers) {
+                    model.subscribers = subscribers;
                 });
         }
 

@@ -91,6 +91,27 @@
 
     <!--PUBLISHER OPERATIONS-->
 
+    <li ng-if="model.user.role === 'PUBLISHER'"
+        class="list-group-item menu">
+        <button class="accordion"
+                data-toggle="collapse"
+                data-target="#subscribers">
+            <i class="fa fa-handshake-o" aria-hidden="true"></i>
+            My Subscribers
+            <i class="fa fa-info pull-right" aria-hidden="true"></i>
+        </button>
+
+        <div id="subscribers"
+             class="collapse">
+            <ul class="accordion-list">
+                <li class="list-group-item"
+                    ng-repeat="sub in model.subscribers">
+                    {{sub.firstName}} {{sub.lastName}}
+                </li>
+            </ul>
+        </div>
+    </li>
+
     <li ng-if="model.role === 'READER' || model.user.role === 'READER'
         || model.role === 'PUBLISHER' || model.user.role === 'PUBLISHER'"
         class=" brown-text list-group-item "

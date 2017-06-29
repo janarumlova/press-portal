@@ -16,6 +16,7 @@ userModel.deletePost = deletePost;
 userModel.findUserByGoogleId = findUserByGoogleId;
 userModel.findUserByFacebookId = findUserByFacebookId;
 userModel.findSubscriptionsForReader =findSubscriptionsForReader;
+userModel.findSubscribers = findSubscribers;
 userModel.subscribe = subscribe;
 userModel.follow = follow;
 userModel.addFollower = addFollower;
@@ -61,9 +62,7 @@ function unFollow(userId, readerId) {
         .findById(userId)
         .then(function (user) {
             user.iFollow.pull(readerId);
-            return user.save();
-        })
-        .then(function (response) {
+            user.save();
             return userModel
                 .removeFollower(userId, readerId)
         });
@@ -75,9 +74,7 @@ function subscribe(subscriberId, publisherId) {
         .findById(subscriberId)
         .then(function (subscriber) {
             subscriber.subscriptions.push(publisherId);
-            return subscriber.save();
-            })
-        .then(function (response) {
+            subscriber.save();
             return userModel
                 .addsubscriber(subscriberId, publisherId)
         });
@@ -88,9 +85,7 @@ function follow(userId, readerId) {
         .findById(userId)
         .then(function (user) {
             user.iFollow.push(readerId);
-            return user.save();
-            })
-        .then(function (response) {
+            user.save();
             return userModel
                 .addFollower(userId, readerId)
         });
@@ -123,6 +118,10 @@ function removeFollower(userId, readerId) {
 
 function findSubscriptionsForReader(readerId) {
     return userModel.find({'subscribers': readerId});
+}
+
+function findSubscribers(publisherId) {
+    return userModel.find({'subscriptions': publisherId});
 }
 
 function findUserByFacebookId(facebookId) {
