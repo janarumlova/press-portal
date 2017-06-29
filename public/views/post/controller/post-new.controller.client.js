@@ -68,8 +68,7 @@
                     .createPost(newPost)
                     .then(function () {
                         model.message = "You just added a new post!";
-                        $location.url('/profile');
-                        // model.display = "posts";
+                        $location.url('/post');
                     });
             }
             else {

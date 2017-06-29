@@ -1,56 +1,6 @@
 <!--header-->
 <div ng-include="'views/common/header.view.client.html'"></div>
 
-
-<!--&lt;!&ndash;content&ndash;&gt;-->
-<!--<div class="container">-->
-    <!--<div class="row">-->
-        <!--<div class="col-xs-12">-->
-            <!--<div>-->
-                <!--<h2 class="homepage2">-->
-                <!--{{model.publisher.firstName}}-->
-                <!--{{model.publisher.lastName}}-->
-                <!--</h2>-->
-                <!--<i ng-if="model.user.role === 'READER'"-->
-                   <!--ng-click="model.subscribe()"-->
-                   <!--class="fa fa-handshake-o pull-right" aria-hidden="true"></i>-->
-            <!--</div>-->
-            <!--<div ng-show="model.message"-->
-                 <!--class="alert alert-success">-->
-                <!--{{model.message}}-->
-            <!--</div>-->
-            <!--<div ng-show="model.error" class="alert alert-danger">-->
-                <!--{{model.error}}-->
-            <!--</div>-->
-            <!--<div class="row category-cards">-->
-                <!--<div class="card h-card ">-->
-                    <!--<div ng-repeat="post in model.posts"-->
-                         <!--class="card-author h-card-author"-->
-                         <!--ng-click="model.displayPost(post._id)">-->
-                            <!--<h4 class="card-title h-card-title">-->
-                                <!--{{post.title}}-->
-                            <!--</h4>-->
-                            <!--<div class="card-author h-card-author ">-->
-                                <!--{{post.publisher.firstName}}-->
-                            <!--</div>-->
-                            <!--<div class="card-img h-card-img">-->
-                                <!--<img src="{{post.imageUrl}}" alt="card-img h-card-img">-->
-                            <!--</div>-->
-                            <!--<p class="card-desc h-card-desc">{{post.description}}</p>-->
-                            <!--<div class="card-source">-->
-                                <!--<a href="{{post.sourceUrl}}">Source</a>-->
-                            <!--</div>-->
-
-                            <!--<div class="card-date">{{post.dateCreated | date : 'short'}}</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
-
-
 <div class="row">
     <div class="col-sm-10 col-sm-offset-1 col-xs-12">
         <h2 class="homepage2">
@@ -72,10 +22,9 @@
             {{model.error}}
         </div>
 
-        <div class="row category-cards"  init-onload=true data="model.posts">
-
+        <div class="category-cards">
             <div ng-click="model.displayPost(post._id)"
-                 class="card h-card"
+                 class="tik-ja card h-card"
                  ng-repeat="post in model.posts">
                 <h4 class="card-title h-card-title">
                     {{post.title}}
@@ -93,87 +42,6 @@
                 </div>
                 <div class="card-date">{{post.dateCreated | date : 'short'}}</div>
             </div>
-            <!--<div class="card h-card">-->
-                <!--<h4 class="card-title h-card-title">-->
-                    <!--This is the title of your post Sidharth ok-->
-                <!--</h4>-->
-                <!--<div class="card-author h-card-author">-->
-                    <!--Hardik Gogia-->
-                <!--</div>-->
-                <!--<div class="card-img h-card-img">-->
-                    <!--<img src="../../../images/wexor-tmg-26886.jpg" alt="card-img h-card-img">-->
-                <!--</div>-->
-                <!--<p class="card-desc h-card-desc">Lorem Ipsum is simply dummy text of the unknown printer took a galley of type and scrambled it to make a type specimen book.</p>-->
-                <!--<div class="card-source">-->
-                    <!--<a href="#">Source</a>-->
-                <!--</div>-->
-                <!--<div class="card-date">23-06-2017</div>-->
-            <!--</div>-->
-            <!--<div class="card h-card">-->
-                <!--<h4 class="card-title h-card-title">-->
-                    <!--This is the title of your post Sidharth ok-->
-                <!--</h4>-->
-                <!--<div class="card-author h-card-author">-->
-                    <!--Hardik Gogia-->
-                <!--</div>-->
-                <!--<div class="card-img h-card-img">-->
-                    <!--<img src="../../../images/wexor-tmg-26886.jpg" alt="card-img h-card-img">-->
-                <!--</div>-->
-                <!--<p class="card-desc h-card-desc">Lorem Ipsum is simply dummy text of the unknown printer took a galley of type and scrambled it to make a type specimen book.</p>-->
-                <!--<div class="card-source">-->
-                    <!--<a href="#">Source</a>-->
-                <!--</div>-->
-                <!--<div class="card-date">23-06-2017</div>-->
-            <!--</div>-->
-            <!--<div class="card h-card ">-->
-                <!--<h4 class="card-title h-card-title">-->
-                    <!--This is the title of your post Sidharth ok-->
-                <!--</h4>-->
-                <!--<div class="card-author h-card-author">-->
-                    <!--Hardik Gogia-->
-                <!--</div>-->
-                <!--<div class="card-img h-card-img">-->
-                    <!--<img src="../../../images/wexor-tmg-26886.jpg" alt="card-img h-card-img">-->
-                <!--</div>-->
-                <!--<p class="card-desc h-card-desc">Lorem Ipsum is simply dummy text of the unknown printer took a galley of type and scrambled it to make a type specimen book.</p>-->
-                <!--<div class="card-source">-->
-                    <!--<a href="#">Source</a>-->
-                <!--</div>-->
-                <!--<div class="card-date">23-06-2017</div>-->
-            <!--</div>-->
-            <!--<div class="card h-card">-->
-                <!--<h4 class="card-title h-card-title">-->
-                    <!--This is the title of your post Sidharth ok-->
-                <!--</h4>-->
-                <!--<div class="card-author h-card-author">-->
-                    <!--Hardik Gogia-->
-                <!--</div>-->
-                <!--<div class="card-img h-card-img">-->
-                    <!--<img src="../../../images/wexor-tmg-26886.jpg" alt="card-img h-card-img">-->
-                <!--</div>-->
-                <!--<p class="card-desc h-card-desc">Lorem Ipsum is simply dummy text of the unknown printer took a galley of type and scrambled it to make a type specimen book.</p>-->
-                <!--<div class="card-source">-->
-                    <!--<a href="#">Source</a>-->
-                <!--</div>-->
-                <!--<div class="card-date">23-06-2017</div>-->
-            <!--</div>-->
-            <!--<div class="card h-card">-->
-                <!--<h4 class="card-title h-card-title">-->
-                    <!--This is the title of your post Sidharth ok-->
-                <!--</h4>-->
-                <!--<div class="card-author h-card-author">-->
-                    <!--Hardik Gogia-->
-                <!--</div>-->
-                <!--<div class="card-img h-card-img">-->
-                    <!--<img src="../../../images/wexor-tmg-26886.jpg" alt="card-img h-card-img">-->
-                <!--</div>-->
-                <!--<p class="card-desc h-card-desc">Lorem Ipsum is simply dummy text of the unknown printer took a galley of type and scrambled it to make a type specimen book.</p>-->
-                <!--<div class="card-source">-->
-                    <!--<a href="#">Source</a>-->
-                <!--</div>-->
-                <!--<div class="card-date">23-06-2017</div>-->
-            <!--</div>-->
-
         </div>
     </div>
 </div>

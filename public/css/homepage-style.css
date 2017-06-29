@@ -38,6 +38,8 @@ h1{
     font-size:0;
 }
 .slick-prev:after{
+    font-weight: 800;
+    color: black;
     content: "\f104";
     display: block;
     font-size: 22px;
@@ -51,6 +53,8 @@ h1{
     font-size:0;
 }
 .slick-next:after{
+    font-weight: 800;
+    color: black;
     content: "\f105";
     display: block;
     font-size: 22px;
@@ -297,7 +301,9 @@ a{
     color: #f0dc84 !important;
 }
 .slider-text{
-    background: rgba(0 , 0, 0, 0.2);
+    background: rgba(0 , 0, 0, 0.4);
+    padding: 7px;
+    margin-top: 20%;
 }
 /*@media only screen and (max-width: 367px) {*/
     /*!* For mobile phones: *!*/
@@ -354,3 +360,30 @@ a{
     margin-bottom: 2px;
     margin-top: 2px;
 }
+.slider1{
+    background-image:url('http://www.intekras.com/wp-content/uploads/2016/01/News-slider.jpeg');
+}
+
+
+.slider2{
+    background-image:url('http://www.induchem.com/wp-content/uploads/2013/10/SLIDER_NEWS.jpg');
+}
+
+.slider3{
+    background-image:url('https://ak5.picdn.net/shutterstock/videos/8634352/thumb/1.jpg');
+}
+
+
+
+.card.h-card.tik-ja{
+    height: 400px;
+}
+
+@media screen and (min-width: 480px) {
+    /* For desktop: */
+    .card.h-card.tik-ja{
+        height: 550px;
+    }
+}
+
+

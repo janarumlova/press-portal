@@ -3,7 +3,7 @@
         .module('WAM')
         .controller('publisherListController', publisherListController);
 
-    function publisherListController($location, $routeParams, currentUser, userService, postService) {
+    function publisherListController($location, $routeParams, currentUser, userService, postService, $timeout) {
 
         var model = this;
 
@@ -24,16 +24,21 @@
             userService
                 .findAllPublishers()
                 .then(function (users) {
-                    model.publishers = users
+                    model.publishers = users;
+                    onLoadJquery();
                 });
             if (currentUser.role === "READER"){
                 renderFollowing();
                 renderFollowers();
                 renderSubscriptions();
             }
+
+            onLoadJquery();
         }
 
         init();
+
+
 
         function renderSubscriptions() {
             userService
@@ -58,6 +63,90 @@
                 });
         }
 
+        function onLoadJquery() {
+            $timeout(function () {
+                $(document).ready(function(){
+
+                    $('.img-slider').slick({
+                        infinite: true,
+                        speed: 500,
+                        fade: true,
+                        cssEase: 'linear',
+                        autoplayspeed: 2000
+                    });
+
+
+                    $('.category-cards').slick({
+                        infinite: true,
+                        slidesToShow: 4,
+                        slidesToScroll: 1,
+                        responsive: [
+                            {
+                                breakpoint: 1900,
+                                settings: {
+                                    slidesToShow: 4,
+                                    slidesToScroll: 1
+                                }
+                            },
+                            {
+                                breakpoint: 999,
+                                settings: {
+                                    slidesToShow: 2,
+                                    slidesToScroll: 1
+                                }
+                            },
+                            {
+                                breakpoint: 500,
+                                settings: {
+                                    slidesToShow: 1,
+                                    slidesToScroll: 1
+                                }
+                            }]
+                    });
+                    $('.posts-display')
+                        .slick({
+                            infinite: true,
+                            slidesToShow: 3,
+                            slidesToScroll: 2,
+                            arrows: false,
+                            fade: true,
+                            asNavFor: '.posts-display',
+                            responsive: [
+                                {
+                                    breakpoint: 1900,
+                                    settings: {
+                                        slidesToShow: 4,
+                                        slidesToScroll: 1
+                                    }
+                                },
+                                {
+                                    breakpoint: 999,
+                                    settings: {
+                                        slidesToShow: 3,
+                                        slidesToScroll: 2
+                                    }
+                                },
+                                {
+                                    breakpoint: 500,
+                                    settings: {
+                                        slidesToShow: 1,
+                                        slidesToScroll: 1
+                                    }
+                                }]
+                        })
+                        .on('init', function(event){
+                            $scope.showslick = true
+                        });
+                    $('#slider-for').slick({
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        arrows: false,
+                        fade: true,
+                        asNavFor: '#slider-nav'
+                    });
+                });
+            }, 300)
+        }
         function renderUser(user) {
             model.user = user;
 

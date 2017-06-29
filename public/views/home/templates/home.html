@@ -3,155 +3,108 @@
 
 <!--content-->
 <div class="container">
-    <h1 class="homepage">This is a static line for sidharth.</h1>
 
+    <h1 class="homepage"><b>Press-Portal</b> welcomes you to one stop access to all the latest news! </h1>
 
+    <!--Top Slider-->
     <div class="img-slider">
-        <div style="background-image:url('images/tech-slider.jpg')">
-            <h4>Want to subscribe to publisher blogs?<br>
-                Save their Posts?<br>
-                Follow you fellow Readers?
-                Become a registered Reader!
+        <div class="slider1">
+            <h4 class="slider-text">
+                <b>Be a Reader today! Subscribe to Publishers! Save their Posts!</b>
             </h4>
         </div>
-        <div style="background-image:url('images/slider.jpg')">
-            <h4>Hello! This is a line on the image.Please edit me.</h4>
+        <div class="slider2">
+            <h4 class="slider-text">
+                <b>Have your own news blog! Publish new articles! Be a Publisher!
+                </b>
+            </h4>
         </div>
-        <div style="background-image:url('images/business-slider.jpg')">
-            <h4 class="slider-text">Hello! This is a line on the image.Please edit me.</h4>
+        <div class="slider3">
+            <h4 class="slider-text">
+                <b></b>BBC!! TechRadar!! Look up for search button, Go Search!</h4>
+            </h4>
         </div>
     </div>
 
-
+    <!--Sports Colun-->
     <div class="row">
-        <div class="col-sm-9 col-xs-12">
+        <div class="col-sm-12 col-xs-12">
             <h2 class="homepage2">SPORTS</h2>
             <div class="row category-cards">
-                <div class="card h-card">
+                <div class="tik-ja card h-card"
+                     ng-repeat="post in model.sports">
                     <h4 class="card-title h-card-title">
-                        This is the title of your post Sidharth ok
+                        {{post.title}}
                     </h4>
                     <div class="card-author h-card-author ">
-                        Hardik Gogia
+                        {{post.author}}
                     </div>
                     <div class="card-img h-card-img">
-                        <img src="../../../images/wexor-tmg-26886.jpg" alt="card-img h-card-img">
+                        <img src="{{post.urlToImage}}" alt="card-img h-card-img">
                     </div>
-                    <p class="card-desc h-card-desc">Lorem Ipsum is simply dummy text of the unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                    <div class="card-source">
+                    <div ng-click="model.goToUrl(post.url)"
+                         class="card-source">
                         <a href="#">Source</a>
                     </div>
-                    <div class="card-date">23-06-2017</div>
-                </div>
-                <div class="card h-card">
-                    <h4 class="card-title h-card-title">
-                        This is the title of your post Sidharth ok
-                    </h4>
-                    <div class="card-author h-card-author">
-                        Hardik Gogia
-                    </div>
-                    <div class="card-img h-card-img">
-                        <img src="../../../images/wexor-tmg-26886.jpg" alt="card-img h-card-img">
-                    </div>
-                    <p class="card-desc h-card-desc">Lorem Ipsum is simply dummy text of the unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                    <div class="card-source">
-                        <a href="#">Source</a>
-                    </div>
-                    <div class="card-date">23-06-2017</div>
-                </div>
-                <div class="card h-card">
-                    <h4 class="card-title h-card-title">
-                        This is the title of your post Sidharth ok
-                    </h4>
-                    <div class="card-author h-card-author">
-                        Hardik Gogia
-                    </div>
-                    <div class="card-img h-card-img">
-                        <img src="../../../images/wexor-tmg-26886.jpg" alt="card-img h-card-img">
-                    </div>
-                    <p class="card-desc h-card-desc">Lorem Ipsum is simply dummy text of the unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                    <div class="card-source">
-                        <a href="#">Source</a>
-                    </div>
-                    <div class="card-date">23-06-2017</div>
-                </div>
-                <div class="card h-card ">
-                    <h4 class="card-title h-card-title">
-                        This is the title of your post Sidharth ok
-                    </h4>
-                    <div class="card-author h-card-author">
-                        Hardik Gogia
-                    </div>
-                    <div class="card-img h-card-img">
-                        <img src="../../../images/wexor-tmg-26886.jpg" alt="card-img h-card-img">
-                    </div>
-                    <p class="card-desc h-card-desc">Lorem Ipsum is simply dummy text of the unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                    <div class="card-source">
-                        <a href="#">Source</a>
-                    </div>
-                    <div class="card-date">23-06-2017</div>
-                </div>
-                <div class="card h-card">
-                    <h4 class="card-title h-card-title">
-                        This is the title of your post Sidharth ok
-                    </h4>
-                    <div class="card-author h-card-author">
-                        Hardik Gogia
-                    </div>
-                    <div class="card-img h-card-img">
-                        <img src="../../../images/wexor-tmg-26886.jpg" alt="card-img h-card-img">
-                    </div>
-                    <p class="card-desc h-card-desc">Lorem Ipsum is simply dummy text of the unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                    <div class="card-source">
-                        <a href="#">Source</a>
-                    </div>
-                    <div class="card-date">23-06-2017</div>
-                </div>
-                <div class="card h-card">
-                    <h4 class="card-title h-card-title">
-                        This is the title of your post Sidharth ok
-                    </h4>
-                    <div class="card-author h-card-author">
-                        Hardik Gogia
-                    </div>
-                    <div class="card-img h-card-img">
-                        <img src="../../../images/wexor-tmg-26886.jpg" alt="card-img h-card-img">
-                    </div>
-                    <p class="card-desc h-card-desc">Lorem Ipsum is simply dummy text of the unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                    <div class="card-source">
-                        <a href="#">Source</a>
-                    </div>
-                    <div class="card-date">23-06-2017</div>
+                    <p class="card-desc h-card-desc">{{post.description}}</p>
+                    <div class="card-date">{{post.publishedAt | date : 'short'}}</div>
                 </div>
             </div>
         </div>
 
-        <!--Trending-->
-        <div class="container-fluid">
-            <div class="col-sm-3 col-xs-12 trending-div">
-                <h3 class="homepage3">Trending</h3>
-                <a class="home"><i class="fa fa-star i-home" aria-hidden="true"></i> External Link 1</a><br>
-                <a class="home"><i class="fa fa-star i-home" aria-hidden="true"></i> External Link 2</a>
-                <br>
-                <a class="home"><i class="fa fa-star i-home" aria-hidden="true"></i> External Link 3</a>
-                <br>
-                <a class="home"><i class="fa fa-star i-home" aria-hidden="true"></i> External Link 4</a>
+        <!--Business-->
+        <div class="col-sm-12 col-xs-12">
+            <h2 class="homepage2">BUSINESS</h2>
+            <div class="row category-cards ">
+                <div class="tik-ja  card h-card"
+                     ng-repeat="post in model.business">
+                    <h4 class="card-title h-card-title">
+                        {{post.title}}
+                    </h4>
+                    <div class="card-author h-card-author ">
+                        {{post.author}}
+                    </div>
+                    <div class="card-img h-card-img">
+                        <img src="{{post.urlToImage}}"
+                             alt="card-img h-card-img">
+                    </div>
+                    <div ng-click="model.goToUrl(post.url)"
+                         class="card-source">
+                        <a href="#">Source</a>
+                    </div>
+                    <p class="card-desc h-card-desc">{{post.description}}</p>
+                    <div class="card-date">{{post.publishedAt | date : 'short'}}</div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--Technology-->
+        <div class="col-sm-12 col-xs-12">
+            <h2 class="homepage2">TECHNOLOGY</h2>
+            <div class="row category-cards ">
+                <div class="card h-card tik-ja"
+                     ng-repeat="post in model.tech">
+                    <h4 class="card-title h-card-title">
+                        {{post.title}}
+                    </h4>
+                    <div class="card-author h-card-author ">
+                        {{post.author}}
+                    </div>
+                    <div class="card-img h-card-img">
+                        <img src="{{post.urlToImage}}" alt="card-img h-card-img">
+                    </div>
+                    <div ng-click="model.goToUrl(post.url)"
+                         class="card-source">
+                        <a href="#">Source</a>
+                    </div>
+                    <p class="card-desc h-card-desc">{{post.description}}</p>
+                    <div class="card-date">{{post.publishedAt | date : 'short'}}</div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-
 <!-- footer -->
-<nav class="navbar navbar-default navbar-fixed-bottom">
-    <div class="navbar-header col-xs-12">
-        <a class="navbar-brand"
-           href="#!/profile">
-            <span class="glyphicon glyphicon-user"></span>
-        </a>
-        <a class="navbar-brand pull-right"
-           href="#!/profile">
-            <span class="glyphicon glyphicon-user"></span>
-        </a>
-    </div>
-</nav>
+<div ng-include="'views/common/footer.view.client.html'"></div>
