@@ -12,7 +12,7 @@ var bcrypt = require("bcrypt-nodejs");
 //Facebook and Google Login
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
-//
+
 // var googleConfig = {
 //     clientID     : '222671963957-205m5fibvtpc223bpdsid045fd4vjg1u.apps.googleusercontent.com',
 //     clientSecret : 'Gm8CnkQKjc4_SkE9-naJmnGa',

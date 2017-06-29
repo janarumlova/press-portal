@@ -78,6 +78,7 @@ h2{
 }
 .card-title{
     font-weight: 600;
+    cursor: pointer;
 }
 .card-author{
     margin-bottom: 5px;

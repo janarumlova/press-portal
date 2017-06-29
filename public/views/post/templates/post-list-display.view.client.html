@@ -37,8 +37,13 @@
                     <img src="{{post.imageUrl}}" alt="card-img h-card-img">
                 </div>
                 <p class="card-desc h-card-desc">{{post.description}}</p>
-                <div class="card-source">
-                    <a href="{{post.sourceUrl}}">Source</a>
+                <div class="col-xs-12">
+                    <div class=" col-xs-8 card-source">
+                        <a href="{{post.sourceUrl}}">Source</a>
+                    </div>
+                    <span class="brown-text pull-right col-xs-4">
+                        Read More...
+                    </span>
                 </div>
                 <div class="card-date">{{post.dateCreated | date : 'short'}}</div>
             </div>

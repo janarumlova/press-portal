@@ -1,39 +1,12 @@
 <nav class="navbar navbar-default navbar-fixed-bottom">
-    <div class="navbar-header col-xs-12">
-        <!--<span class=" navbar-brand text-center">Copyright &copy; Press-Portal 2017</span>-->
+    <div ng-if="model.user"
+         class="navbar-header col-xs-12">
+        <a class="navbar-brand" href="#!profile">
+            <b><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></b>
+        </a>
         <a class="navbar-brand pull-right"
            href="https://newsapi.org/">
             <b>NEWS API</b>
         </a>
     </div>
 </nav>
-
-<!--&lt;!&ndash; footer &ndash;&gt;-->
-<!--<nav class="navbar navbar-default footer navbar-fixed-bottom">-->
-    <!--<div class="container-fluid">-->
-        <!--&lt;!&ndash; Brand and toggle get grouped for better mobile display &ndash;&gt;-->
-        <!--<div class="navbar-header">-->
-            <!--&lt;!&ndash;<button type="button"&ndash;&gt;-->
-                    <!--&lt;!&ndash;class="navbar-toggle collapsed"&ndash;&gt;-->
-                    <!--&lt;!&ndash;data-toggle="collapse"&ndash;&gt;-->
-                    <!--&lt;!&ndash;data-target="#bs-example-navbar-collapse-2"&ndash;&gt;-->
-                    <!--&lt;!&ndash;aria-expanded="false">&ndash;&gt;-->
-                <!--&lt;!&ndash;<span class="sr-only">Toggle navigation</span>&ndash;&gt;-->
-                <!--&lt;!&ndash;<span class="icon-bar"></span>&ndash;&gt;-->
-                <!--&lt;!&ndash;<span class="icon-bar"></span>&ndash;&gt;-->
-                <!--&lt;!&ndash;<span class="icon-bar"></span>&ndash;&gt;-->
-            <!--&lt;!&ndash;</button>&ndash;&gt;-->
-            <!--<a class="navbar-brand" href="#">API</a>-->
-        <!--</div>-->
-        <!--<ul class="nav navbar-nav navbar-right">-->
-            <!--<li><a href="#">Link1</a></li>-->
-            <!--<li><a href="#">Link2</a></li>-->
-        <!--</ul>-->
-        <!--&lt;!&ndash; Collect the nav links, forms, and other content for toggling &ndash;&gt;-->
-        <!--&lt;!&ndash;<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">&ndash;&gt;-->
-            <!--&lt;!&ndash;<ul class="nav navbar-nav navbar-right">&ndash;&gt;-->
-                <!--&lt;!&ndash;<li><a href="#">Link1</a></li>&ndash;&gt;-->
-            <!--&lt;!&ndash;</ul>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&lt;!&ndash; /.navbar-collapse &ndash;&gt;&ndash;&gt;-->
-    <!--</div>&lt;!&ndash; /.container-fluid &ndash;&gt;-->
-<!--</nav>-->
