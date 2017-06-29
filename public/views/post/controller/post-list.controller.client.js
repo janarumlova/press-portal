@@ -18,11 +18,27 @@
 
         function init() {
             renderUser(currentUser);
+            renderSubscribers();
             postService
                     .findPostsByPublisher()
                     .then(renderPosts);
         }
         init();
+
+        function renderSubscribers() {
+            userService
+                .findSubscribers()
+                .then(function(subscribers) {
+                    model.subscribers = subscribers
+                });
+        }
+        function findSubscribers() {
+            userService
+                .findSubscribers()
+                .then(function (subscribers) {
+                    model.subscribers = subscribers;
+                });
+        }
 
         function renderUser (user) {
             model.user = user;

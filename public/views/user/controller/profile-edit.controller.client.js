@@ -77,6 +77,13 @@
                     model.subscribers = subscribers
                 });
         }
+        function findSubscribers() {
+            userService
+                .findSubscribers()
+                .then(function (subscribers) {
+                    model.subscribers = subscribers;
+                });
+        }
 
         function renderSubscriptions() {
             userService

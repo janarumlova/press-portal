@@ -19,6 +19,7 @@
 
         function init() {
             if(currentUser.role === 'PUBLISHER') {
+                renderSubscribers();
                 postService
                     .findPostsByPublisher()
                     .then(renderPosts);
@@ -26,6 +27,21 @@
             renderUser(currentUser);
         }
         init();
+
+        function renderSubscribers() {
+            userService
+                .findSubscribers()
+                .then(function(subscribers) {
+                    model.subscribers = subscribers
+                });
+        }
+        function findSubscribers() {
+            userService
+                .findSubscribers()
+                .then(function (subscribers) {
+                    model.subscribers = subscribers;
+                });
+        }
 
         function renderUser (user) {
             model.user = user;

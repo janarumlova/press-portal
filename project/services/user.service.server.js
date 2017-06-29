@@ -13,18 +13,6 @@ var bcrypt = require("bcrypt-nodejs");
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 
-// var googleConfig = {
-//     clientID     : '222671963957-205m5fibvtpc223bpdsid045fd4vjg1u.apps.googleusercontent.com',
-//     clientSecret : 'Gm8CnkQKjc4_SkE9-naJmnGa',
-//     callbackURL  : '/auth/google/callback'
-// };
-//
-// var facebookConfig = {
-//     clientID     : '1093632250736728',
-//     clientSecret : '34c72e7877802295b1a10682fdac6e85',
-//     callbackURL  : '/auth/facebook/callback'
-// };
-
 var facebookConfig = {
     clientID     : process.env.FACEBOOK_CLIENT_ID,
     clientSecret : process.env.FACEBOOK_CLIENT_SECRET,

@@ -32,13 +32,29 @@
                 renderFollowers();
                 renderSubscriptions();
             }
-
+            if(currentUser.role === 'PUBLISHER'){
+                renderSubscribers();
+            }
             onLoadJquery();
         }
 
         init();
 
 
+        function renderSubscribers() {
+            userService
+                .findSubscribers()
+                .then(function(subscribers) {
+                    model.subscribers = subscribers
+                });
+        }
+        function findSubscribers() {
+            userService
+                .findSubscribers()
+                .then(function (subscribers) {
+                    model.subscribers = subscribers;
+                });
+        }
 
         function renderSubscriptions() {
             userService
