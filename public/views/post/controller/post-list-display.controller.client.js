@@ -113,7 +113,7 @@
                         asNavFor: '#slider-nav'
                     });
                 });
-            }, 300)
+            }, 500)
         }
 
         function initSlick() {
