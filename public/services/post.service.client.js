@@ -15,7 +15,8 @@
             subscribe: subscribe,
             deletePost: deletePost,
             findAllPosts: findAllPosts,
-            deletePostByAdmin: deletePostByAdmin
+            deletePostByAdmin: deletePostByAdmin,
+            saveSearchPost: saveSearchPost
 
         };
         return api;
@@ -96,6 +97,14 @@
         function createPost(newPost){
             var url = "/api/createPost";
             return $http.post(url, newPost)
+                .then(function (response) {
+                    return response.data;
+                });
+        }
+
+        function saveSearchPost(post) {
+            var url = "/api/createSearchPost";
+            return $http.post(url, post)
                 .then(function (response) {
                     return response.data;
                 });

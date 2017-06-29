@@ -76,16 +76,16 @@
     </li>
 
     <li ng-if="model.role === 'READER' || model.user.role === 'READER'"
-        class="list-group-item "
+        class="brown-text list-group-item "
         ng-click="model.savedPosts()">
         <i class="fa fa-bookmark" aria-hidden="true"></i>
         Saved Posts
     </li>
 
     <li ng-if="model.role === 'READER' || model.user.role === 'READER'"
-        class="list-group-item "
+        class=" brown-text list-group-item "
         ng-click="model.showReaders()">
-        <i class="fa fa-book" aria-hidden="true"></i>
+        <i class="fa fa-book " aria-hidden="true"></i>
         All Readers
     </li>
 
@@ -93,7 +93,7 @@
 
     <li ng-if="model.role === 'READER' || model.user.role === 'READER'
         || model.role === 'PUBLISHER' || model.user.role === 'PUBLISHER'"
-        class="list-group-item "
+        class=" brown-text list-group-item "
         ng-click="model.showPublishers()">
         <i class="fa fa-book" aria-hidden="true"></i>
         All Publishers

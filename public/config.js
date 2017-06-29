@@ -14,6 +14,14 @@
                     currentUser: checkCurrentUser
                 }
             })
+            .when('/savedPost', {
+                templateUrl: 'views/post/templates/post-list-saved.view.client.html',
+                controller: 'postListSavedController',
+                controllerAs: 'model',
+                resolve: {
+                    currentUser: checkCurrentUser
+                }
+            })
             .when('/post/new', {
                 templateUrl: 'views/post/templates/post-new.view.client.html',
                 controller: 'postNewController',
@@ -25,14 +33,6 @@
             .when('/post', {
                 templateUrl: 'views/post/templates/post-list.view.client.html',
                 controller: 'postListController',
-                controllerAs: 'model',
-                resolve: {
-                    currentUser: checkCurrentUser
-                }
-            })
-            .when('/savedPost', {
-                templateUrl: 'views/post/templates/post-list-saved.view.client.html',
-                controller: 'postListSavedController',
                 controllerAs: 'model',
                 resolve: {
                     currentUser: checkCurrentUser
@@ -54,6 +54,14 @@
                     currentUser: checkCurrentUser
                 }
             })
+            .when('/userSearch', {
+                templateUrl: 'views/search/templates/usersearch.view.client.html',
+                controller: 'userSearchController',
+                controllerAs: 'model',
+                resolve: {
+                    currentUser: checkCurrentUser
+                }
+            })
             .when('/publisher', {
                 templateUrl: 'views/user/templates/publisher-list.view.client.html',
                 controller: 'publisherListController',
@@ -61,14 +69,6 @@
                 resolve: {
                     currentUser: checkCurrentUser
                 }
-            })
-            .when('/search', {
-                templateUrl: 'views/search/templates/search.view.client.html',
-                controller: 'searchController',
-                controllerAs: 'model',
-                // resolve: {
-                //     currentUser: checkCurrentUser
-                // }
             })
             .when('/reader', {
                 templateUrl: 'views/user/templates/reader-list.view.client.html',
@@ -85,6 +85,11 @@
                 resolve: {
                     currentUser: checkCurrentUser
                 }
+            })
+            .when('/search', {
+                templateUrl: 'views/search/templates/search.view.client.html',
+                controller: 'searchController',
+                controllerAs: 'model'
             })
             .when('/login', {
                 templateUrl: 'views/user/templates/login.view.client.html',

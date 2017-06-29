@@ -3,6 +3,7 @@ var postModel = require('../model/post/post.model.server');
 
 app.put("/api/assignment/user/:postId/edit", updatePostByPublisher);
 app.post('/api/createPost', createPost);
+app.post("/api/createSearchPost", createSearchPost);
 app.get('/api/publisherPost', findPostsByPublisher);
 app.get("/api/readerPost", findPostsForReader);
 app.get("/api/post", findAllPosts);
@@ -111,6 +112,18 @@ function findPostsForReader(req, res) {
 }
 
 function createPost(req, res) {
+    var post = req.body;
+    post._publisher = req.user._id;
+    postModel
+        .createPost(req.user._id, post)
+        .then(function (post) {
+            res.json(post);
+        }, function (err) {
+            res.send(err);
+        });
+}
+
+function createSearchPost(req, res) {
     var post = req.body;
     post._publisher = req.user._id;
     postModel

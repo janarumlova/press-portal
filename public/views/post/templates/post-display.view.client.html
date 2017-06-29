@@ -38,7 +38,7 @@
                     <i class="fa fa-pencil-square edit-icon brown-text " aria-hidden="true"></i>
                     Edit Post
                 </button>
-                <button ng-show="model.role === 'READER' || model.user.role === 'READER'"
+                <button ng-show="model.user.role === 'READER'"
                         ng-click="model.savePost()"
                         class="btn btn-primary">
                     <i class="fa fa-bookmark edit-icon brown-text" aria-hidden="true"></i>

@@ -29,15 +29,6 @@
             return name === authorName;
         }
 
-        function addComment(comment) {
-            comment.post = model.postId;
-            commentService
-                .createComment(model.postId, comment)
-                .then(function (response) {
-                    model.messgage = "Comment was added successfully!";
-                    $location.url('/post/'+model.postId+'/display');
-                });
-        }
         function renderComment() {
             commentService
                 .findAllCommentsForPost(model.postId)
@@ -60,11 +51,12 @@
         function editPost(postId) {
             $location.url("/post/"+postId+"/edit");
         }
+
         function savePost() {
             userService.savePost(model.post)
                 .then(function (response) {
                     model.message = "Post saved to My Posts!";
-                    $location.url("/profile");
+                    $location.url("/savedPost");
                 });
         }
 
@@ -77,5 +69,16 @@
                     // $location.url('/post/'+model.postId+'/display');
                 });
         }
+
+        function addComment(comment) {
+            comment.post = model.postId;
+            commentService
+                .createComment(model.postId, comment)
+                .then(function (response) {
+                    model.messgage = "Comment was added successfully!";
+                    init();
+                });
+        }
+
     }
 })();

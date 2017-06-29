@@ -1,12 +1,9 @@
-/**
- * Created by sidharththapar on 6/28/17.
- */
 (function() {
     angular
         .module('WAM')
-        .controller('searchController', searchController);
+        .controller('userSearchController', userSearchController);
 
-    function searchController(userService, postService, $location, searchService, $window) {
+    function userSearchController(currentUser, postService, $location, searchService, $window) {
 
         var model = this;
 
@@ -16,13 +13,13 @@
         model.goToUrl = goToUrl;
 
         function init() {
-            // renderUser(currentUser);
+            renderUser(currentUser);
         }
         init();
 
-        // function renderUser(user) {
-        //     model.user = user;
-        // }
+        function renderUser(user) {
+            model.user = user;
+        }
 
         function goToUrl(url) {
             // $window.location.href = url;
@@ -30,7 +27,7 @@
         }
 
         function savePost(article) {
-            if(model.user){
+            if(model.user.role === 'READER'){
                 var newArticle = {};
                 newArticle.title = article.title;
                 newArticle.description = article.description;
@@ -39,16 +36,16 @@
                 newArticle._publisher = article.author;
                 newArticle.dateCreated = article.publishedAt;
 
-                userService.savePost(newArticle)
+                postService.saveSearchPost(newArticle)
                     .then(function (response) {
                         model.message = "Post saved to My Posts!";
-                        $location.url("/profile");
+                        $location.url("/savedPost");
                     });
             }
             else{
-                init();
-                model.error = "You have to be a registered Reader to save the post";
+                model.error = 'Please register as a Reader to save the post';
             }
+
         }
 
         function searchNewsDetails(article) {
