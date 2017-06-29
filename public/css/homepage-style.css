@@ -251,10 +251,6 @@ button.accordion.active, button.accordion:hover {
     margin-bottom: 10px;
 }
 
-/*.card-img-top{*/
-/*max-height: 180;*/
-/*}*/
-
 .login-ul{
     padding: 0;
     margin: 0;
@@ -306,12 +302,6 @@ a{
     padding: 7px;
     margin-top: 20%;
 }
-/*@media only screen and (max-width: 367px) {*/
-    /*!* For mobile phones: *!*/
-    /*.trending-div{*/
-        /*width: 5px;*/
-    /*}*/
-/*}*/
 .btn-block{
     width: 100% !important;
 }
@@ -374,8 +364,6 @@ a{
     background-image:url('https://ak5.picdn.net/shutterstock/videos/8634352/thumb/1.jpg');
 }
 
-
-
 .card.h-card.tik-ja{
     height: 400px;
 }
@@ -391,5 +379,9 @@ a{
     color: blue;
     text-decoration: underline;
     cursor: pointer;
+}
+
+.edit-pencil{
+    padding-top: 3.9px;
 }
 

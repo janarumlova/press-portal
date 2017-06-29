@@ -29,8 +29,6 @@ userModel.removeFollower = removeFollower;
 
 module.exports = userModel;
 
-
-
 function findFollows(userId) {
     return userModel.find({'followers': userId});
 }
