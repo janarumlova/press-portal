@@ -12,3 +12,4 @@ mongoose.Promise = require('q').Promise;
 require("../project/services/user.service.server");
 require("../project/services/post.service.server");
 require("../project/services/comment.service.server");
+require("../project/services/search.service.server");
