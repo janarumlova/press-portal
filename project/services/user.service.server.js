@@ -12,7 +12,7 @@ var bcrypt = require("bcrypt-nodejs");
 //Facebook and Google Login
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
-
+//
 var facebookConfig = {
     clientID     : process.env.FACEBOOK_CLIENT_ID,
     clientSecret : process.env.FACEBOOK_CLIENT_SECRET,
@@ -24,6 +24,7 @@ var googleConfig = {
     clientSecret : process.env.GOOGLE_CLIENT_SECRET,
     callbackURL  : process.env.GOOGLE_CALLBACK_URL
 };
+
 passport.use(new GoogleStrategy(googleConfig, googleStrategy));
 passport.use('facebook', new FacebookStrategy(facebookConfig, facebookStrategy));
 

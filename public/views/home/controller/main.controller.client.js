@@ -9,8 +9,8 @@
         model.goToUrl = goToUrl;
 
         function init() {
-            searchSportsNews('bbc-sport');
-            searchBusinessNews('bloomberg');
+            searchSportsNews('the-sport-bible');
+            searchBusinessNews('bbc-news');
             searchTechNews('techradar');
             onLoadJquery();
         }
